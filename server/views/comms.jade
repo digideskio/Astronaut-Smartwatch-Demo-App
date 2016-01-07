@@ -1,0 +1,71 @@
+extends layout
+block content
+    - var options = ['Good', 'Weak', 'Bad']
+    h2 Comms
+
+    form(role='form' id='comms_form')
+        .row
+            h4 S band status
+
+            .col-sm-2
+                span UP I
+                select(name="s_up1", data-width="100%").form-control.input-small
+                 for opt in options
+                    option(selected=model.comms.sband.up1 == opt) #{opt}
+            .col-sm-2
+                span UP II
+                select(name="s_up2", data-width="100%").form-control.input-small
+                    for opt in options
+                        option(selected=model.comms.sband.up2 == opt) #{opt}
+            .col-sm-2
+                span DOWN I
+                select(name="s_down1", data-width="100%").form-control.input-small
+                    for opt in options
+                        option(selected=model.comms.sband.down1 == opt) #{opt}
+            .col-sm-2
+                span DOWN II
+                select(name="s_down2", data-width="100%").form-control.input-small
+                    for opt in options
+                        option(selected=model.comms.sband.down2 == opt) #{opt}
+
+        .row
+            h4 Ku band status
+            .col-sm-2
+                span UP I
+                select(name="ku_up1", data-width="100%").form-control.input-small
+                    for opt in options
+                        option(selected=model.comms.kuband.up1 == opt) #{opt}
+            .col-sm-2
+                span UP II
+                select(name="ku_up2", data-width="100%").form-control.input-small
+                    for opt in options
+                        option(selected=model.comms.kuband.up2 == opt) #{opt}
+            .col-sm-2
+                span DOWN I
+                select(name="ku_down1", data-width="100%").form-control.input-small
+                    for opt in options
+                        option(selected=model.comms.kuband.down1 == opt) #{opt}
+            .col-sm-2
+                span DOWN II
+                select(name="ku_down2", data-width="100%").form-control.input-small
+                    for opt in options
+                        option(selected=model.comms.kuband.down2 == opt) #{opt}
+
+        .row
+            h4 Network status
+            .col-sm-2
+                span IAC
+                select(name="iac", data-width="100%").form-control.input-small
+                    for opt in options
+                        option(selected=model.comms.iac == opt) #{opt}
+            .col-sm-2
+                span OCA
+                select(name="oca", data-width="100%").form-control.input-small
+                    for opt in options
+                        option(selected=model.comms.oca == opt) #{opt}
+            .col-sm-2
+
+        .row
+            br
+            br
+            button(type='submit').btn.btn-primary Save

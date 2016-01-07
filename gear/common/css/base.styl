@@ -1,0 +1,51 @@
+@import 'reset.styl'
+
+//Fonts
+@font-face
+  font-family OpenSans
+  font-style normal
+  src url(../fonts/OpenSans-Regular.ttf)
+
+@font-face
+  font-family OpenSans
+  font-weight oblique
+  font-style normal
+  src url(../fonts/OpenSans-Semibold.ttf)
+
+@font-face
+  font-family OpenSans
+  font-weight 300
+  font-style normal
+  src url(../fonts/OpenSans-Light.ttf)
+
+//Variables
+color-gray-dark = #999999
+color-gray = #d8d8d8
+color-blue = #1ec3ff
+color-black-light = #1A1A1A
+color-yellow-dark = rgba(255, 232, 32, 0.14)
+color-green-dark = rgba(30, 223, 122, 0.14)
+color-orange-red = #fc3d21
+color-blue-clear = #2094fa
+
+//Functions
+circle(size, color)
+  width size
+  height size
+  display inline-block
+  border-radius 50%
+  text-align center
+  vertical-align: middle
+  background-color color
+  margin 0 5px
+
+border-radius()
+  -webkit-border-radius arguments
+  border-radius arguments
+
+*
+  font-family: OpenSans, Verdana, Lucida Sans, Arial, Helvetica, sans-serif;
+
+body
+  margin: 0 auto
+  background-color: black

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets" id="http://nasa.com/watch" version="1.0.0" viewmodes="maximized">
+    <tizen:application id="z27jbB7mzx.watch" package="z27jbB7mzx" required_version="2.2"/>
+    <access origin="*" subdomains="true"></access>
+    <content src="index.html"/>
+    <feature name="http://tizen.org/feature/screen.size.all"/>
+    <icon src="icon.png"/>
+    <name>watch</name>
+    <tizen:profile name="wearable"/>
+    <feature name="http://tizen.org/feature/screen.size.normal"/>
+    <feature name="http://tizen.org/feature/network.internet"/>
+    <icon src="icon.png"/>
+    <tizen:privilege name="http://tizen.org/privilege/application.launch"/>
+    <tizen:privilege name="http://tizen.org/privilege/internet"/>
+    
+    <tizen:setting background-support="enable" encryption="disable" hwkey-event="enable"/>
+</widget>

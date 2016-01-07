@@ -1,0 +1,28 @@
+extends layout
+block content
+    h2 Roles
+    table(id='users-table').table.table-bordered.table-striped
+        thead
+            tr
+                th Name
+                th
+        tbody
+            each user in list.users
+                tr
+                    td.col-sm-3
+                        input(type='text' value='#{user.name}' name='name' placeholder='Name').form-control
+                    td
+                        button(data-remove).btn.btn-danger Delete
+
+    h4 New user
+    table(id='add-user-table').table.table-bordered.table-striped
+        tbody(id='user-add-body')
+            tr
+                td.col-sm-3
+                    input(type='text' name='name' placeholder='Name').form-control
+                td
+                    button(id='user-add').btn.btn-success Add
+
+    br
+    br
+    button(type='submit' id='users-save').btn.btn-primary Save

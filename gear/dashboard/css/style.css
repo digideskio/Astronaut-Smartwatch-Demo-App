@@ -1,0 +1,193 @@
+html,
+body,
+div,
+span,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+abbr,
+address,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+samp,
+small,
+strong,
+sub,
+sup,
+var,
+b,
+i,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+figcaption,
+figure,
+footer,
+header,
+menu,
+nav,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+}
+body {
+  line-height: 1;
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+menu,
+nav,
+section {
+  display: block;
+}
+nav ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+a {
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+}
+input,
+select {
+  vertical-align: middle;
+}
+@font-face {
+  font-family: OpenSans;
+  font-style: normal;
+  src: url("../fonts/OpenSans-Regular.ttf");
+}
+@font-face {
+  font-family: OpenSans;
+  font-weight: oblique;
+  font-style: normal;
+  src: url("../fonts/OpenSans-Semibold.ttf");
+}
+@font-face {
+  font-family: OpenSans;
+  font-weight: 300;
+  font-style: normal;
+  src: url("../fonts/OpenSans-Light.ttf");
+}
+* {
+  font-family: OpenSans, Verdana, Lucida Sans, Arial, Helvetica, sans-serif;
+}
+body {
+  margin: 0 auto;
+  background-color: #000;
+}
+.dashboard-content,
+.dashboard-content-top,
+.dashboard-content-mid {
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  -webkit-align-items: center;
+  justify-content: center;
+  -webkit-justify-content: center;
+  width: 100%;
+}
+.dashboard-content-top {
+  padding: 30px 50px 20px 30px;
+}
+.dashboard-content-mid {
+  padding: 30px;
+}
+.icon-group {
+  margin: auto;
+  align-items: center;
+  -webkit-align-items: center;
+  justify-content: center;
+  -webkit-justify-content: center;
+  display: flex;
+  display: -webkit-flex;
+}
+.top-icon {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+.alert-count {
+  color: #fc3d21;
+  font-size: 30px;
+}
+.red-line {
+  height: 30px;
+  border-right: 2px solid #fc3d21;
+  margin: 0 8px 0 8px;
+}
+.clock {
+  font-size: 48px;
+  color: #fff;
+  margin: auto;
+}
+.user-team {
+  font-size: 30px;
+  color: #fff;
+  margin: auto;
+}
+.timeline-progress {
+  height: 30px;
+}

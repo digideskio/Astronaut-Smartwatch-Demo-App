@@ -1,0 +1,89 @@
+extends layout
+
+block content
+    - var scheduleOptions = { 0 : 'Scheduled', 1 : 'Canceled'}
+    - var criticalityOptions = { 0 : 'Low', 1 : 'High'}
+
+    h2 Event List
+    table(id='event-table').table.table-bordered.table-striped
+        thead
+            tr
+                th Name
+                th Date
+                th StartTime
+                th EndTime
+                th Criticality
+                th Status
+                th Notes
+                th Location
+                th Color
+        tbody
+            each event in list.events
+                tr
+                    td
+                        input(type='text' value='#{event.name}' name='name' placeholder='Event Name').form-control
+                    td.col-sm-1
+                        input(type='text' id='event-date' value='#{event.date}' name='date' placeholder='1/1/2015' data-provide="datepicker" data-date-format="dd/mm/yyyy").form-control
+                    td.col-sm-1
+                        .input-group.bootstrap-timepicker.timepicker
+                        input(type="text" data-provide="timepicker" data-template="modal" data-minute-step="1" data-modal-backdrop="true" id='event-start-time' value='#{event.startTime}' name='startTime' data-show-meridian="false" placeholder='00:00').form-control
+                    td.col-sm-1
+                        input(type='text' value='#{event.endTime}' name='endTime' placeholder='00:00').form-control
+                    td
+                        select(value='#{event.criticality}' name='criticality' placeholder='Low').form-control.input-sm
+                            each val, index in criticalityOptions
+                                option(selected=event.criticality == index) #{val}
+                    td
+                        select(value='#{event.status}' name='status' placeholder='0').form-control.input-sm
+                            each val, index in scheduleOptions
+                                option(selected=event.status == index) #{val}
+                    td
+                        input(type='text' value='#{event.notes}' name='notes' placeholder='Notes...').form-control
+                    td
+                        input(type='text' value='#{event.location}' name='location' placeholder='Location').form-control
+                    td.col-sm-1
+                        .input-group.event-color.col-sm-1
+                            input(type='text' value=event.color name='color').form-control.col-sm-1
+                            span.input-group-addon
+                                i
+                    td
+                        button(data-remove).btn.btn-danger.btn-xs Delete
+
+    h4 New event
+    table(id='add-event-table').table.table-bordered.table-striped
+        tbody(id='event-add-body')
+                tr
+                    td
+                        input(type='text' name='name' placeholder='Event Name').form-control
+                    td.col-sm-1
+                        input(name='date' placeholder='1/1/2015' data-provide="datepicker" data-date-format="dd/mm/yyyy").form-control
+                    td.col-sm-1
+                        .input-group.bootstrap-timepicker.timepicker
+                        input(type="text" data-provide="timepicker" data-template="modal" data-minute-step="1" data-modal-backdrop="true" name='startTime' data-show-meridian="false" placeholder='00:00').form-control
+                    td.col-sm-1
+                        input(type='text' name='endTime' placeholder='00:00').form-control
+                    td.col-sm-1
+                        select(name='criticality' placeholder='Low').form-control.input-sm
+                            each val, index in criticalityOptions
+                                option(selected=index == 0) #{val}
+                    td.col-sm-1
+                        select(name='status' placeholder='0').form-control.input-sm
+                            each val, index in scheduleOptions
+                                option(selected=index == 0) #{val}
+                    td
+                        input(type='text' name='notes' placeholder='Notes...').form-control
+                    td
+                        input(type='text' name='location' placeholder='Location').form-control
+                    td.col-sm-1
+                        .input-group.event-color.col-sm-1
+                            input(type='text' value='#337ab7' name='color').form-control.col-sm-1
+                            span.input-group-addon
+                                i
+                    td
+                        button(id='event-add').btn.btn-success.btn-xs Add
+
+
+
+    br
+    br
+    button(type='submit' id='events-save').btn.btn-primary Save

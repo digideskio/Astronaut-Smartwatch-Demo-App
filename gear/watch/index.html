@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <title>Astronaut Watch App</title>
+    <link rel="stylesheet" href="../common/js/lib/tau/wearable/theme/default/tau.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script type="text/javascript" src="../common/js/lib/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="../common/js/lib/tau/wearable/js/tau.min.js"></script>
+    <script type="text/javascript" src="../common/js/lib/angular/angular.js"></script>
+    <script type="text/javascript" src="../common/js/lib/angular/angular-touch.min.js"></script>
+    <script type="text/javascript" src="../common/js/lib/angular/angular-route.min.js"></script>
+    <script type="text/javascript" src="../common/js/lib/angular/angular-resource.min.js"></script>
+    <script type="text/javascript" src="../common/js/lib/angular/angular-filter.min.js"></script>
+    <script type="text/javascript" src="../common/js/lib/ng-infinite-scroll.js"></script>
+    <script type="text/javascript" src="../common/js/lib/moment-with-locales.min.js"></script>
+    <script type="text/javascript" src="js/controllers.js"></script>
+    <script type="text/javascript" src="../common/js/lib/svg.js"></script>
+</head>
+<body ng-app="Watch">
+
+<div id="hsectionchangerPage" class="ui-page ui-page-active" data-enable-page-scroll="false">
+
+    <div ng-controller="HeaderCtrl" class="header">
+        <div class="circle-white" id="nav-circle-1"></div>
+        <div class="circle-white" id="nav-circle-2"></div>
+        <div class="circle-white" id="nav-circle-3"></div>
+        <span class="screen-title" id="page-title">TIMELINE</span>
+        <div class="circle-white" id="nav-circle-4"></div>
+        <div class="circle-white" id="nav-circle-5"></div>
+        <div class="circle-white" id="nav-circle-6"></div>
+        <span class="clock">{{time |date:'HH:mm'}}</span>
+    </div>
+    <div id="hsectionchanger" class="ui-content">
+        <!-- section changer has only one child. -->
+        <div>
+            <section ng-controller="TimelineCtrl" class="ui-section-active">
+                <!--<pre>{{ events | json }}</pre>-->
+                <div class="role-selector" id="role-selector" ng-click="selectRole()">
+                    <img src="img/role-icon.png" class="display:inline"><h4 class="role">{{activeRole}}</h4>
+                </div>
+
+                <div infinite-scroll="nextPage()" infinite-scroll-disabled='isBusy' infinite-scroll-distance='1'
+                     infinite-scroll-immediate-check='true' infinite-scroll-listen-for-event="role-selected">
+                    <div id="timeline-list" ng-repeat="(key, value) in events | groupBy: 'date'">
+                        <h4>{{key}}</h4>
+                        <div class="list-item" id="list-item" ng-repeat="event in value">
+                            <div class="circle-blue"></div>
+                            <div class="list-item-text">
+                                <h1>{{event.name}}</h1>
+                                <h2>{{event.location}}</h2>
+                                <h2>{{event.startTime}}</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="events-placeholder" ng-show='busy'>Loading data...</div>
+                    <div class="events-placeholder" ng-show="!events || events.length == 0">No events</div>
+                </div>
+            </section>
+            <section ng-controller="TimersCtrl" style="text-align:center">
+                <h3>Timerwws</h3>
+            </section>
+            <section ng-controller="AlertsCtrl" style="text-align:center">
+                <h3>Alerts</h3>
+            </section>
+            <section ng-controller="CommsCtrl" style="text-align:center">
+                <div class="half-circle-left"><span class="band">S</span></div>
+                <div class="half-circle-right"><span class="band">Ku</span></div>
+            </section>
+        </div>
+    </div>
+</div>
+<div class="ui-page" id="roles">
+    <div class="ui-content">
+        <div ng-controller="HeaderCtrl" class="header">
+            <img src="img/back.png" class="back-btn" ng-click="goBack()">
+            <span class="screen-title">SELECT ROLE</span>
+            <span class="clock">{{time |date:'HH:mm'}}</span>
+        </div>
+
+        <div ng-controller="RolesCtrl" class="timeline-list ui-content">
+            <div class="list-item" id="roles-list" ng-repeat="role in roles">
+                <div class="list-item-text">
+                    <h1 ng-class="role == activeRoles ? 'selected': ''" ng-click="selectRole(role.name)">{{role.name}}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="js/main.js"></script>
+</html>
