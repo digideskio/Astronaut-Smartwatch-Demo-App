@@ -5,13 +5,11 @@ body {
 a {
   color: #00b7ff;
 }
-input[type="text"]
-{
-  font-size:12px;
+input[type="text"] {
+  font-size: 12px;
 }
-input[type="text"]
-{
-  font-size:12px;
+input[type="text"] {
+  font-size: 12px;
 }
 select {
   font-size: 12px;

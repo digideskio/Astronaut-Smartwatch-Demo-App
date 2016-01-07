@@ -270,7 +270,9 @@ h4.role {
   padding: 0;
   margin: 0;
   align-items: center;
+  -webkit-align-items: center;
   justify-content: center;
+  -webkit-justify-content: center;
 }
 .role-selector {
   padding-left: 15px;
@@ -279,7 +281,9 @@ h4.role {
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
   align-items: center;
+  -webkit-align-items: center;
   justify-content: flex-start;
+  -webkit-justify-content: flex-start;
   margin: 12px 0 12px 0;
 }
 .back-btn {
@@ -288,4 +292,10 @@ h4.role {
 }
 .selected {
   color: #f00;
+}
+.role-list-item {
+  margin: 0 0 30px 30px;
+}
+.roles-list {
+  margin-top: 15px;
 }

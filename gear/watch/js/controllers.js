@@ -1,9 +1,9 @@
 angular.module("Watch", ['ngRoute', 'ngResource', 'angular.filter', 'infinite-scroll'])
     .factory("EventsService", function ($resource) {
-        return $resource('http://10.0.0.184\:3000/api/events/:role/:day', {role: '@_role', day: '@_day'});
+        return $resource('http://10.1.8.182\:3000/api/events/:role/:day', {role: '@_role', day: '@_day'});
     })
     .factory("RolesApi", function ($resource) {
-        return $resource('http://10.0.0.184\:3000/api/roles/:role', {role: '@_role'});
+        return $resource('http://10.1.8.182\:3000/api/roles/:role', {role: '@_role'});
     })
     .config(function ($routeProvider) {
         //$routeProvider.when('/users/:id', {templateUrl:'/assets/templates/user/editUser.html', controller:controllers.UserCtrl});
@@ -30,22 +30,26 @@ angular.module("Watch", ['ngRoute', 'ngResource', 'angular.filter', 'infinite-sc
     })
     .controller('TimelineCtrl', function ($scope, EventsService, RoleService) {
         moment.locale('en-gb');
-        $scope.busy = false;
+        $scope.busy = true;
         $scope.lastQueriedDate = moment();
-        $scope.activeRole = RoleService.get();
+        $scope.activeRole = RoleService.get() || 'none';
 
         EventsService.get({role: 'none', day: $scope.lastQueriedDate.format("L")}, function (data) {
             $scope.activeRole = data.role;
             $scope.events = data.events;
+            $scope.busy = false;
         });
 
         $scope.refresh = function () {
             EventsService.get({role: $scope.activeRole, day: $scope.lastQueriedDate.format("L")}, function (data) {
+                $scope.busy = false;
                 console.log(data);
                 $scope.activeRole = data.role;
                 $scope.events = $scope.events.concat(data.events);
                 console.log("%O", $scope.events);
-                $scope.busy = false;
+            }, function(err) {
+                console.error("Can't receive events!");
+                console.error(err);
             })
         };
 
