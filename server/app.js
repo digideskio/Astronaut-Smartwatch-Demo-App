@@ -31,16 +31,16 @@ var routeAlerts = require('./controllers/alerts');
 var api = require('./controllers/api');
 
 app.use('/', admin);
-app.use('/adminEvents', routeEvents);
-app.use('/adminRoles', roteRoles);
-app.use('/adminUsers', routeUsers);
-app.use('/adminComms', routeComms);
-app.use('/adminAlerts', routeAlerts);
+app.use('/admin/events', routeEvents);
+app.use('/admin/roles', roteRoles);
+app.use('/admin/users', routeUsers);
+app.use('/admin/comms', routeComms);
+app.use('/admin/alerts', routeAlerts);
 app.use('/api', api);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-    var err = new Error('Not Found');
+    var err = new Error('Page Not Found!');
     err.status = 404;
     next(err);
 });

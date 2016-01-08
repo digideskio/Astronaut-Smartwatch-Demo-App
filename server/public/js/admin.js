@@ -8,7 +8,7 @@ $(document).ready(function () {
             var data = JSON.stringify(records);
             console.log(data);
             $.ajax({
-                url: 'adminUsers', // php script to retern json encoded string
+                url: 'admin/users', // php script to retern json encoded string
                 data: data,  // serialized data to send on server
                 dataType: 'json', // set recieving type - JSON in case of a question
                 contentType: 'application/json',
@@ -42,7 +42,7 @@ $(document).ready(function () {
             var data = JSON.stringify(records);
             console.log(data);
             $.ajax({
-                url: 'adminRoles', // php script to retern json encoded string
+                url: 'admin/roles', // php script to retern json encoded string
                 data: data,  // serialized data to send on server
                 dataType: 'json', // set recieving type - JSON in case of a question
                 contentType: 'application/json',
@@ -76,28 +76,33 @@ $(document).ready(function () {
             '#d9534f': '#d9534f'
         }
     });
-    var eventsTable = $('#event-table').editableTable();
 
-    $('#events-save').click(function () {
-        eventsTable.editableTable('get', function (records) {
-            var data = JSON.stringify(records);
-            console.log(data);
-            $.ajax({
-                url: 'adminEvents', // php script to retern json encoded string
-                data: data,  // serialized data to send on server
-                dataType: 'json', // set recieving type - JSON in case of a question
-                contentType: 'application/json',
-                type: 'POST', // set sending HTTP Request type
-                success: function (data) { // callback method for further manipulations
-                    console.log("YESS");
-                },
-                error: function (data) { // if error occured
-                    console.error("????");
-                }
-            });
-        });
-
+    $(".events-table tr").click(function(e) {
+        var eventId = this.id;
+        console.log("CLICKKK on " + eventId);
+        window.location.href = "/admin/events/" + eventId;
     });
+
+    //$('#events-save').click(function () {
+    //    eventsTable.editableTable('get', function (records) {
+    //        var data = JSON.stringify(records);
+    //        console.log(data);
+    //        $.ajax({
+    //            url: 'adminEvents', // php script to retern json encoded string
+    //            data: data,  // serialized data to send on server
+    //            dataType: 'json', // set recieving type - JSON in case of a question
+    //            contentType: 'application/json',
+    //            type: 'POST', // set sending HTTP Request type
+    //            success: function (data) { // callback method for further manipulations
+    //                console.log("YESS");
+    //            },
+    //            error: function (data) { // if error occured
+    //                console.error("????");
+    //            }
+    //        });
+    //    });
+    //
+    //});
 
     $('#event-add').click(function () {
         var addEventTable = $("#add-event-table").editableTable();
@@ -116,7 +121,7 @@ $(document).ready(function () {
             var data = JSON.stringify(records);
             console.log(data);
             $.ajax({
-                url: 'adminAlerts', // php script to retern json encoded string
+                url: 'admin/alerts', // php script to retern json encoded string
                 data: data,  // serialized data to send on server
                 dataType: 'json', // set recieving type - JSON in case of a question
                 contentType: 'application/json',
@@ -152,7 +157,7 @@ $(document).ready(function () {
         var data = JSON.stringify(jsonData);
         console.log(data);
         $.ajax({
-            url: 'adminComms', // php script to retern json encoded string
+            url: 'admin/comms', // php script to retern json encoded string
             data: data,  // serialized data to send on server
             dataType: 'json', // set recieving type - JSON in case of a question
             contentType: 'application/json',

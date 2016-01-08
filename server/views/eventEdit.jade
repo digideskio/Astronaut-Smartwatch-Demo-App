@@ -1,0 +1,48 @@
+extends layout
+
+block content
+    - var scheduleOptions = { 0 : 'Scheduled', 1 : 'Canceled'}
+    - var criticalityOptions = { 0 : 'Low', 1 : 'High'}
+
+    if event
+        h2 Edit event '#{event.name}'
+
+    form(id="event-form")
+        .form-group
+            label(for='name') Name
+            input(type='text' value='#{event.name}' name='name' placeholder='Event Name').form-control
+        .form-group
+            label(for='date') Date
+            input(name='date' placeholder='1/1/2015' data-provide="datepicker" data-date-format="dd/mm/yyyy" value='#{event.date}').form-control
+        .form-group.input-group.bootstrap-timepicker.timepicker
+            label(for='startTime') Start Time
+            input(type="text" data-provide="timepicker" data-template="modal" data-minute-step="1" data-modal-backdrop="true" name='startTime' data-show-meridian="false" placeholder='00:00' value='#{event.startTime}').form-control
+        .form-group.input-group.bootstrap-timepicker.timepicker
+            label(for='endTime') End Time
+            input(type="text" data-provide="timepicker" data-template="modal" data-minute-step="1" data-modal-backdrop="true" name='startTime' data-show-meridian="false" placeholder='00:00' value='#{event.endTime}').form-control
+        .form-group
+            label(for='criticality') Criticality
+            select(value='#{event.criticality}' name='criticality' placeholder='Low').form-control.input-sm
+                each val, index in criticalityOptions
+                    option(selected=index == event.criticality) #{val}
+        .form-group
+            label(for='status') Status
+            select(value='#{event.status}' name='status' placeholder='0').form-control.input-sm
+                each val, index in scheduleOptions
+                    if event
+                        option(selected=index == event.status) #{val}
+                    else
+                        option(selected=index == 0) #{val}
+        .form-group
+            label(for='notes') Notes
+            textarea(rows='3' value='#{event.notes}' name='notes' placeholder='Event notes...').form-control
+        .form-group
+            label(for='location') Location
+            input(type='text' value='#{event.location}' name='location' placeholder='Location').form-control
+        .form-group
+                label(for='color') Color
+                .input-group.event-color.col-sm-2
+                    input(type='text' value='#{event.color}' name='color').form-control
+                    span.input-group-addon
+                        i
+        button(type='submit' id='event-edit-save').btn.btn-primary Save

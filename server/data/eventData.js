@@ -1,6 +1,6 @@
 exports.events = [
     {
-        id: 594993,
+        id: 0,
         name: "OCT Detected",
         date: "07/01/2016",
         startTime: "10:30",
@@ -13,7 +13,7 @@ exports.events = [
         role: "ISS CDR"
     },
     {
-        id: 594993,
+        id: 1,
         name: "Exercise-Ared",
         date: "07/01/2016",
         startTime: "14:00",
@@ -26,8 +26,8 @@ exports.events = [
         role: "ISS CDR"
     },
     {
-        id: 594993,
-        name: "Exercise-Ared",
+        id: 2,
+        name: "Lunch",
         date: "08/01/2016",
         startTime: "15:00",
         endTime: "16:00",
