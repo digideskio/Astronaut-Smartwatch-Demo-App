@@ -1,6 +1,6 @@
 exports.alerts = [
     {
-        id: 594993,
+        id: 0,
         title: "Primary CC MIM Detected",
         date: "02/11/2015",
         time: "11:30",
@@ -11,7 +11,7 @@ exports.alerts = [
     },
 
     {
-        id: 594993,
+        id: 1,
         title: "Low Cabin Pressure",
         date: "02/11/2015",
         time: "11:30",
@@ -22,7 +22,7 @@ exports.alerts = [
     },
 
     {
-        id: 594993,
+        id: 2,
         title: "Primary CC MIM Detected",
         date: "02/11/2015",
         time: "11:30",

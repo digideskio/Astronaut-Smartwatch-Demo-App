@@ -1,18 +1,29 @@
 var express = require('express');
 var router = express.Router();
-
+var _ = require('underscore');
 var eventsModel = require('../data/eventData');
+var userModel = require('../data/userData');
+var roleModel = require('../data/roleData');
+
+var criticalityOptions = ['Low', 'High'];
+var statusOptions = ['Scheduled', 'Canceled'];
 
 router.get('/', function (req, res, next) {
     res.render('events', {
         title: 'Events',
-        list: eventsModel
+        list: eventsModel,
+        users: userModel.users,
+        roles: roleModel.roles
     });
 });
 
 router.get('/add', function (req, res) {
     res.render('eventAdd', {
-        title: 'Add Event'
+        title: 'Add Event',
+        users: userModel.users,
+        roles: roleModel,
+        criticalityOptions: criticalityOptions,
+        statusOptions: statusOptions
     });
 });
 
@@ -25,23 +36,37 @@ router.get('/:eventId/edit', function (req, res) {
     console.log("Editing event " + filteredEvent.name);
     res.render('eventEdit', {
         title: 'Event Edit',
-        event: filteredEvent
+        event: filteredEvent,
+        users: userModel.users,
+        roles: roleModel.roles,
+        criticalityOptions: criticalityOptions,
+        statusOptions: statusOptions
     });
 });
 
 router.get('/:eventId/delete', function(req, res) {
     var eventId = Number(req.params.eventId);
     for(var i=0; i < eventsModel.events.length; i++) {
-        console.log("Comparing " + eventsModel.events[i].id + " and " + eventId);
         if(eventsModel.events[i].id == eventId) {
-            eventsModel.events = eventsModel.events.splice(i, 1);
-            res.location('/admin/events');
-            res.redirect('/admin/events');
-            return;
+            eventsModel.events.splice(i, 1);
+            break;
         }
     }
 
-    res.sendStatus(404);
+    res.location('/admin/events');
+    res.redirect('/admin/events');
+});
+
+router.post('/:eventId/edit', function(req, res) {
+    var eventId = req.params.eventId;
+    console.log("Editing event : ", req.body.name);
+    console.log('New data = %O', req.body);
+    var eventIndex = _.findIndex(eventsModel.events, function(e) { return e.id ==eventId});
+    console.log('INDEX = ' + eventIndex);
+    eventsModel.events[eventIndex] = req.body;
+    eventsModel.events[eventIndex].id = eventId;
+    res.location('/admin/events');
+    res.redirect('/admin/events');
 });
 
 router.post('/', function (req, res) {

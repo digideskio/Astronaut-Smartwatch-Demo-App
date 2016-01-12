@@ -1,44 +1,51 @@
 extends layout
 
 block content
-    - var scheduleOptions = { 0 : 'Scheduled', 1 : 'Canceled'}
-    - var criticalityOptions = { 0 : 'Low', 1 : 'High'}
-
     h2 Add Event
 
-    form(id="event-form")
+    form(id="add-event-form")
         .form-group
             label(for='name') Name
-            input(type='text' name='name' placeholder='Event Name').form-control
+            input(type='text' name='name' id='name' placeholder='Event Name').form-control
+        .form-group
+            label(for='role') Role
+            select(name='role' id='role').form-control.input-sm
+                each val in roles.roles
+                    option(selected=index == 0) #{val.name}
         .form-group
             label(for='date') Date
-            input(name='date' placeholder='1/31/2016' data-provide="datepicker" data-date-format="dd/mm/yyyy").form-control
+            input(name='date' id='date' placeholder='1/31/2016' data-provide="datepicker" data-date-format="dd/mm/yyyy").form-control
         .form-group.input-group.bootstrap-timepicker.timepicker
             label(for='startTime') Start Time
-            input(type="text" data-provide="timepicker" data-template="modal" data-minute-step="1" data-modal-backdrop="true" name='startTime' data-show-meridian="false" placeholder='00:00').form-control
+            input(type="text" id='startTime' data-provide="timepicker" data-template="modal" data-minute-step="1" data-modal-backdrop="true" name='startTime' data-show-meridian="false" placeholder='00:00').form-control
         .form-group.input-group.bootstrap-timepicker.timepicker
             label(for='endTime') End Time
-            input(type="text" data-provide="timepicker" data-template="modal" data-minute-step="1" data-modal-backdrop="true" name='startTime' data-show-meridian="false" placeholder='00:00').form-control
+            input(type="text" id='endTime' data-provide="timepicker" data-template="modal" data-minute-step="1" data-modal-backdrop="true" name='endTime' data-show-meridian="false" placeholder='00:00').form-control
         .form-group
             label(for='criticality') Criticality
-            select(name='criticality' placeholder='Low').form-control.input-sm
-                each val, index in criticalityOptions
-                    option(selected=index == 0) #{val}
+            select(name='criticality' id='criticality').form-control.input-sm
+                each val in criticalityOptions
+                    option(selected=index == 0 id=index) #{val}
         .form-group
             label(for='status') Status
-            select(name='status' placeholder='0').form-control.input-sm
-                each val, index in scheduleOptions
+            select(name='status' id='status').form-control.input-sm
+                each val in statusOptions
                     option(selected=index == 0) #{val}
         .form-group
             label(for='notes') Notes
-            textarea(rows='3' name='notes' placeholder='Event notes...').form-control
+            textarea(rows='3' name='notes' id='notes' placeholder='Event notes...').form-control
         .form-group
             label(for='location') Location
-            input(type='text' name='location' placeholder='Location').form-control
+            input(type='text' name='location' id='location' placeholder='Location').form-control
+        .form-group
+            label(for='attendees') Attendees
+            select(id='attendees' multiple="multiple" name='attendees[]').form-control.input-sm
+                each val in users
+                    option(selected=index == 0 id=index value=val) #{val}
         .form-group
                 label(for='color') Color
                 .input-group.event-color.col-sm-2
-                    input(type='text' value='#{event.color}' name='color' placeholder='#5cb85c').form-control
+                    input(type='text' value='#5cb85c' id='color' name='color' placeholder='#5cb85c').form-control
                     span.input-group-addon
                         i
         button(type='submit' id='event-add').btn.btn-primary Add

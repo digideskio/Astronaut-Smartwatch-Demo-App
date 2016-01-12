@@ -12,7 +12,7 @@ block content
                     td.col-sm-3
                         input(type='text' value='#{role.name}' name='name' placeholder='Name').form-control
                     td
-                        button(data-remove).btn.btn-danger Delete
+                        a(href='/admin/roles/#{role.name}/delete').btn.btn-danger Delete
     h4 New user
     table(id='add-role-table').table.table-bordered.table-striped
         tbody(id='role-add-body')

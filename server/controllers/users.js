@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var _ = require('underscore');
 
 var usersModel = require('../data/userData');
 
@@ -15,6 +16,25 @@ router.post('/', function (req, res) {
     usersModel.users = req.body;
     res.sendStatus(200);
 });
+
+router.get('/:userName/delete', function (req, res) {
+    var userName = req.params.userName;
+    var userIndex = _.findIndex(usersModel.users, function (e) {
+        return e.name == userName
+    });
+    usersModel.users.splice(userIndex, 1);
+
+    res.location('/admin/users');
+    res.redirect('/admin/users');
+});
+
+router.post('/:userName/add', function (req, res) {
+    var userName = req.params.userName;
+    usersModel.users.push(userName);
+    res.location('/admin/users');
+    res.redirect('/admin/users');
+});
+
 
 
 module.exports = router;

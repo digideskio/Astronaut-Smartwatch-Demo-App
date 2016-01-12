@@ -1,17 +1,17 @@
 extends layout
 
 block content
-    - var scheduleOptions = { 0 : 'Scheduled', 1 : 'Canceled'}
-    - var criticalityOptions = { 0 : 'Low', 1 : 'High'}
-
     h2 Event List
 
-    a(href='/admin/events/add').button.button-success Add event
+    br
+    a(href='/admin/events/add' style='font-size=16px;').btn.btn-primary Add event
+    br
     br
     table(id='events-table').table.table-bordered.table-striped.table-hover
         thead
             tr
                 th Name
+                th Role
                 th Date
                 th StartTime
                 th EndTime
@@ -19,20 +19,23 @@ block content
                 th Status
                 th Notes
                 th Location
+                th Attendees
                 th Color
         tbody
             each event in list.events
-                tr(id='#{event.id}')
+                tr
                     td #{event.name}
+                    td.col-sm1 #{event.role}
                     td.col-sm-1 #{event.date}
                     td.col-sm-1 #{event.startTime}
                     td.col-sm-1 #{event.endTime}
-                    td #{criticalityOptions[event.criticality]}
-                    td #{scheduleOptions[event.status]}
+                    td #{event.criticality}
+                    td #{event.status}
                     td #{event.notes}
                     td #{event.location}
+                    td.col-sm-1 #{event.attendees}
                     td(style="background-color:#{event.color};")
                     td
-                        a(href='/admin/events/#{event.id}/edit') Edit
+                        a(href='/admin/events/#{event.id}/edit').btn Edit
                     td
-                        a(href='/admin/events/#{event.id}/delete') Delete
+                        a(href='/admin/events/#{event.id}/delete').btn.btn-danger Delete

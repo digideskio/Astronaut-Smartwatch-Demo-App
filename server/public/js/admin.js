@@ -1,6 +1,9 @@
 $(document).ready(function () {
 
-    //USERS
+    /**
+     * USERS
+     */
+
     var usersTable = $('#users-table').editableTable();
 
     $('#users-save').click(function () {
@@ -8,7 +11,7 @@ $(document).ready(function () {
             var data = JSON.stringify(records);
             console.log(data);
             $.ajax({
-                url: 'admin/users', // php script to retern json encoded string
+                url: '/admin/users', // php script to retern json encoded string
                 data: data,  // serialized data to send on server
                 dataType: 'json', // set recieving type - JSON in case of a question
                 contentType: 'application/json',
@@ -31,6 +34,7 @@ $(document).ready(function () {
             usersTable.editableTable('add', records[0], {at: 0});
         });
     });
+
     /**
      * ROLES
      */
@@ -42,7 +46,7 @@ $(document).ready(function () {
             var data = JSON.stringify(records);
             console.log(data);
             $.ajax({
-                url: 'admin/roles', // php script to retern json encoded string
+                url: '/admin/roles', // php script to retern json encoded string
                 data: data,  // serialized data to send on server
                 dataType: 'json', // set recieving type - JSON in case of a question
                 contentType: 'application/json',
@@ -65,7 +69,11 @@ $(document).ready(function () {
             rolesTable.editableTable('add', records[0], {at: 0});
         });
     });
-    // EVENTS
+
+    /**
+     * EVENTS
+     */
+
     $('.event-color').colorpicker({
         colorSelectors: {
             '#777777': '#777777',
@@ -76,33 +84,66 @@ $(document).ready(function () {
             '#d9534f': '#d9534f'
         }
     });
+    //
+    //$(".events-table tr").click(function(e) {
+    //    var eventId = this.id;
+    //    window.location.href = "/admin/events/" + eventId;
+    //});
 
-    $(".events-table tr").click(function(e) {
-        var eventId = this.id;
-        console.log("CLICKKK on " + eventId);
-        window.location.href = "/admin/events/" + eventId;
+    var attendees = [];
+    $("#attendees").multiselect({
+        onChange: function () {
+            console.log("YYY = " + $('#attendees').val().name);
+            //$("#attendees option:selected").each(function(index, user) {
+            //    attendees.push($(this).val());
+            //});
+        }
     });
 
-    //$('#events-save').click(function () {
-    //    eventsTable.editableTable('get', function (records) {
-    //        var data = JSON.stringify(records);
-    //        console.log(data);
-    //        $.ajax({
-    //            url: 'adminEvents', // php script to retern json encoded string
-    //            data: data,  // serialized data to send on server
-    //            dataType: 'json', // set recieving type - JSON in case of a question
-    //            contentType: 'application/json',
-    //            type: 'POST', // set sending HTTP Request type
-    //            success: function (data) { // callback method for further manipulations
-    //                console.log("YESS");
-    //            },
-    //            error: function (data) { // if error occured
-    //                console.error("????");
-    //            }
-    //        });
-    //    });
-    //
-    //});
+    function saveEvent(form, url, method) {
+        event.preventDefault();
+        var array = jQuery(form).serializeArray();
+        var json = {};
+
+        $.each(array, function() {
+            json[this.name] = this.value || '';
+        });
+        json['attendees'] = $('#attendees').val().toString().split(',');
+
+        json = JSON.stringify(json);
+
+        $.ajax({
+            type: method,
+            url: url,
+            data: json,
+            contentType: 'application/json',
+            dataType: "json",
+            success: function (response) {
+                window.location = '/admin/events';
+            },
+            error: function (err) {
+                window.location = '/admin/events';
+            }
+        });
+
+        return false;
+    }
+
+    $('form#event-edit').bind('submit', function(e) {
+        var form = this;
+        var url = '/admin/events/' + $(this).data('event-id') + '/edit';
+        saveEvent(form, url, "POST");
+        event.preventDefault();
+        return false;
+    });
+
+    $('form#add-event-form').bind('submit', function(e) {
+        var form = this;
+        var url = '/admin/events/';
+        saveEvent(form, url, "POST");
+        event.preventDefault();
+        return false;
+    });
 
     $('#event-add').click(function () {
         var addEventTable = $("#add-event-table").editableTable();
@@ -113,15 +154,48 @@ $(document).ready(function () {
         });
     });
 
-    // ALERTS
+    /**
+     * ALERTS
+     */
     var alertsTable = $('#alerts-table').editableTable();
+
+    $('form#add-alert-form').bind('submit', function(e) {
+        var form = this;
+        var url = '/admin/alerts/add';
+
+        event.preventDefault();
+        var array = jQuery(form).serializeArray();
+        var json = {};
+
+        $.each(array, function() {
+            json[this.name] = this.value || '';
+        });
+
+        json = JSON.stringify(json);
+
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: json,
+            contentType: 'application/json',
+            dataType: "json",
+            success: function (response) {
+                window.location = '/admin/alerts';
+            },
+            error: function (err) {
+                window.location = '/admin/alerts';
+            }
+        });
+
+        return false;
+    });
 
     $('#alerts-save').click(function () {
         alertsTable.editableTable('get', function (records) {
             var data = JSON.stringify(records);
             console.log(data);
             $.ajax({
-                url: 'admin/alerts', // php script to retern json encoded string
+                url: '/admin/alerts', // php script to retern json encoded string
                 data: data,  // serialized data to send on server
                 dataType: 'json', // set recieving type - JSON in case of a question
                 contentType: 'application/json',
@@ -146,7 +220,10 @@ $(document).ready(function () {
         });
     });
 
-    // Comms
+    /**
+     * COMMS
+     */
+
     $('#comms_form').submit(function (event) {
         console.log($(this).serialize());
         var jsonData = {};
@@ -157,7 +234,7 @@ $(document).ready(function () {
         var data = JSON.stringify(jsonData);
         console.log(data);
         $.ajax({
-            url: 'admin/comms', // php script to retern json encoded string
+            url: '/admin/comms', // php script to retern json encoded string
             data: data,  // serialized data to send on server
             dataType: 'json', // set recieving type - JSON in case of a question
             contentType: 'application/json',

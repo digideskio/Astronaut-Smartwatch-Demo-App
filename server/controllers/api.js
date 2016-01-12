@@ -27,6 +27,7 @@ router.get('/events/:role/:date', function(req, res, next) {
         events: filteredEvents
     };
 
+    console.error(response);
     res.json(response);
 });
 

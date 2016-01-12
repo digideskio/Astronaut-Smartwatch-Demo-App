@@ -1,9 +1,14 @@
 extends layout
 
 block content
-    - var statusOptions = { 0 : 'Alarm', 1 : 'Critical'}
+    - var statusOptions = [ 'Alarm', 'Critical'];
 
     h2 Alerts List
+    br
+    a(href='/admin/alerts/add' style='font-size=16px;').btn.btn-primary Add alert
+    br
+    br
+
     table(id='alerts-table').table.table-bordered.table-striped.table-hover
         thead
             tr
@@ -25,35 +30,13 @@ block content
                         input(type="text" data-provide="timepicker" data-template="modal" data-minute-step="1" data-modal-backdrop="true" value='#{alert.time}' name='time' data-show-meridian="false" placeholder='00:00').form-control
                     td
                         select(value='#{alert.status}' name='status' placeholder='Low').form-control.input-sm
-                            each val, index in statusOptions
-                                option(selected=alert.status == index) #{val}
+                            each val in statusOptions
+                                option(selected=alert.status == val) #{val}
                     td.col-sm-1
                         input(type='text' value='#{alert.ack}' name='ack' placeholder='...').form-control
                     td.col-sm-1
                         input(type='text' value='#{alert.annun}' name='annun' placeholder='...').form-control
                     td
-                        button(data-remove).btn.btn-danger Delete
+                        a(href='/admin/alerts/#{alert.id}/delete').btn.btn-danger Delete
 
-    h4 New alert
-    table(id='add-alert-table').table.table-bordered.table-striped
-        tbody(id='alert-add-body')
-                tr
-                    td
-                        input(type='text' name='title' placeholder='Alert title').form-control
-                    td.col-sm-2
-                        input(name='date' placeholder='1/1/2015' data-provide="datepicker" data-date-format="dd/mm/yyyy").form-control
-                    td.col-sm-1
-                        input(type="text" data-provide="timepicker" data-template="modal" data-minute-step="1" data-modal-backdrop="true" name='time' data-show-meridian="false" placeholder='00:00').form-control
-                    td
-                        select(name='status' placeholder='Low').form-control.input-sm
-                            each val, index in statusOptions
-                                option(selected=index == 0) #{val}
-                    td.col-sm-1
-                        input(type='text' name='ack' placeholder='...').form-control
-                    td.col-sm-1
-                        input(type='text' name='annun' placeholder='...').form-control
-                    td
-                        button(id='alert-add').btn.btn-success Add
-    br
-    br
     button(type='submit' id='alerts-save').btn.btn-primary Save
