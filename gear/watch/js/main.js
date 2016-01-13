@@ -24,6 +24,7 @@ function updateNavStatus(activePage) {
 }
 
 (function() {
+    tau.defaults.pageTransition = "slideup";
 
     var page = document.getElementById( "hsectionchangerPage" ),
         changer = document.getElementById( "hsectionchanger" ),

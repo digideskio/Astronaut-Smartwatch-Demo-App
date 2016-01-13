@@ -117,6 +117,7 @@ select {
 @font-face {
   font-family: OpenSans;
   font-style: normal;
+  font-weight: 900;
   src: url("../fonts/OpenSans-Regular.ttf");
 }
 @font-face {
@@ -142,6 +143,7 @@ h1 {
   font-size: 30px;
   color: #fff;
   margin-bottom: 5px;
+  display: block;
 }
 h2 {
   font-size: 24px;
@@ -298,4 +300,119 @@ h4.role {
 }
 .roles-list {
   margin-top: 15px;
+}
+.alerts-list {
+  margin-top: 30px;
+}
+.alert-critical {
+  background-color: #f00;
+}
+.alerts-count {
+  font-size: 24px;
+  color: #fff;
+}
+.critical-alerts-count {
+  font-size: 26px;
+  color: #f00;
+}
+.alerts-counters {
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  -webkit-align-items: center;
+  justify-content: center;
+  -webkit-justify-content: center;
+  margin-top: 20px;
+}
+.detail-header-parent {
+  display: flex;
+  display: -webkit-flex;
+  align-items: stretch;
+  -webkit-align-items: stretch;
+  margin-top: 20px;
+  margin-left: 14px;
+}
+.detail-color {
+  border: solid #00b7ff;
+  border-width: 10px;
+  margin-left: 16px;
+  -webkit-border-radius: 8px;
+  border-radius: 8px;
+  height: auto;
+  width: 18px;
+  box-sizing: border-box;
+}
+.detail-main-info {
+  width: 100%;
+  margin-left: 24px;
+}
+.detail-name {
+  margin-bottom: 20px;
+}
+.detail-small {
+  margin-top: 14px;
+}
+.detail-title {
+  margin-top: 50px;
+}
+.detail-timer {
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  -webkit-align-items: center;
+  margin-left: 25px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+.detail-timer-time {
+  flex-grow: 1;
+  -webkit-flex-grow: 1;
+  font-size: 48px;
+  color: #999;
+  margin-left: 20px;
+  font-weight: 300;
+}
+.detail-timer-delete {
+  width: 40px;
+  height: 40px;
+  margin-right: 20px;
+}
+.list-title {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  padding-right: 10px;
+  width: 300px;
+  margin-top: 20px;
+  margin-bottom: 8px;
+}
+.alert-sub-title {
+  color: #999;
+  display: inline;
+  width: 130px;
+  float: left;
+  font-size: 30px;
+}
+.alert-info {
+  display: inline;
+}
+.alert-info-box {
+  width: 100%;
+  margin-top: 40px;
+  padding-left: 80px;
+}
+.alert-row {
+  margin-bottom: 10px;
+  display: block;
+  width: 100%;
+}
+.alert-detail-critical {
+  border: solid #f00;
+  border-width: 10px;
+  margin-left: 16px;
+  -webkit-border-radius: 8px;
+  border-radius: 8px;
+  height: auto;
+  width: 18px;
+  box-sizing: border-box;
 }

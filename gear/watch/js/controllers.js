@@ -1,12 +1,13 @@
 angular.module("Watch", ['ngRoute', 'ngResource', 'angular.filter', 'infinite-scroll'])
-    .factory("EventsService", function ($resource) {
-        return $resource('http://10.1.8.182\:3000/api/events/:role/:day', {role: '@_role', day: '@_day'});
+    .constant('apiRoot', 'http://localhost:3000/api')
+    .factory("EventsService", function ($resource, apiRoot) {
+        return $resource(apiRoot + '/events/:role/:day', {role: '@_role', day: '@_day'});
     })
-    .factory("RolesApi", function ($resource) {
-        return $resource('http://10.1.8.182\:3000/api/roles/:role', {role: '@_role'});
+    .factory("AlertsService", function ($resource, apiRoot) {
+        return $resource(apiRoot + '/alerts/:alert', {alert: '@_alert'});
     })
-    .config(function ($routeProvider) {
-        //$routeProvider.when('/users/:id', {templateUrl:'/assets/templates/user/editUser.html', controller:controllers.UserCtrl});
+    .factory("RolesApi", function ($resource, apiRoot) {
+        return $resource(apiRoot + '/roles/:role', {role: '@_role'});
     })
     .config(function ($locationProvider) {
         return $locationProvider.html5Mode(true).hashPrefix("!");
@@ -28,7 +29,13 @@ angular.module("Watch", ['ngRoute', 'ngResource', 'angular.filter', 'infinite-sc
 
         return activeRoleInfo;
     })
-    .controller('TimelineCtrl', function ($scope, EventsService, RoleService) {
+    .factory('CurrentData', function () {
+        return {
+            event: {},
+            alert: {}
+        };
+    })
+    .controller('TimelineCtrl', function ($scope, EventsService, RoleService, CurrentData) {
         moment.locale('en-gb');
         $scope.busy = true;
         $scope.lastQueriedDate = moment();
@@ -40,23 +47,25 @@ angular.module("Watch", ['ngRoute', 'ngResource', 'angular.filter', 'infinite-sc
             $scope.busy = false;
         });
 
+        $scope.showEvent = function (event) {
+            CurrentData.event = event;
+            console.log("New active event = " + CurrentData.event.name);
+            tau.changePage('event-details');
+        };
+
         $scope.refresh = function () {
             EventsService.get({role: $scope.activeRole, day: $scope.lastQueriedDate.format("L")}, function (data) {
                 $scope.busy = false;
-                console.log(data);
                 $scope.activeRole = data.role;
                 $scope.events = $scope.events.concat(data.events);
-                console.log("%O", $scope.events);
-            }, function(err) {
+            }, function (err) {
                 console.error("Can't receive events!");
-                console.error(err);
             })
         };
 
         $scope.nextPage = function () {
             $scope.busy = true;
             $scope.lastQueriedDate = $scope.lastQueriedDate.add(1, 'days');
-            console.log("next page for " + $scope.lastQueriedDate.format('L'));
             $scope.refresh();
         };
 
@@ -68,16 +77,13 @@ angular.module("Watch", ['ngRoute', 'ngResource', 'angular.filter', 'infinite-sc
             function () {
                 return RoleService.get();
             },
-            function (newVal, oldVal) {
-                console.log("NEW VAL");
-                if (newVal !== oldVal) {
-                    $scope.events = [];
-                    $scope.busy = true;
-                    $scope.activeRole = newVal;
-                    $scope.lastQueriedDate = moment();
-                    $scope.refresh();
-                    $scope.$emit('role-selected');
-                }
+            function (newVal) {
+                $scope.events = [];
+                $scope.busy = true;
+                $scope.activeRole = newVal;
+                $scope.lastQueriedDate = moment();
+                $scope.refresh();
+                $scope.$emit('role-selected');
             },
             true);
     })
@@ -87,18 +93,24 @@ angular.module("Watch", ['ngRoute', 'ngResource', 'angular.filter', 'infinite-sc
     .controller('TimersCtrl', function ($scope, $rootScope) {
 
     })
-    .controller('AlertsCtrl', function ($scope, $rootScope) {
+    .controller('AlertsCtrl', function ($scope, AlertsService, CurrentData) {
+        moment.locale('en-gb');
+        $scope.busy = false;
+        $scope.alerts = AlertsService.query();
 
+        $scope.showAlert = function (alert) {
+            CurrentData.alert = alert;
+            console.log("New active alert = " + CurrentData.alert.title);
+            tau.changePage('alert-details');
+        };
     })
-    .controller('HeaderCtrl', function ($scope, $interval, RoleService) {
-        $scope.activeRole = RoleService.get();
+    .controller('HeaderCtrl', function ($scope, $interval) {
         $scope.time = new Date();
         $interval(function () {
             $scope.time = new Date();
         }, 1000);
 
         $scope.goBack = function () {
-            console.log("Going back to timeline");
             tau.back();
         };
     })
@@ -107,13 +119,17 @@ angular.module("Watch", ['ngRoute', 'ngResource', 'angular.filter', 'infinite-sc
         $scope.roles = RolesApi.query();
 
         $scope.goBack = function () {
-            console.log("Going back to timeline");
             tau.back();
         };
 
         $scope.selectRole = function (name) {
-            console.log("New active role = " + name);
             RoleService.set(name);
             $scope.goBack();
         };
+    })
+    .controller('EventDetailCtrl', function ($scope, CurrentData) {
+        $scope.currentData = CurrentData;
+    })
+    .controller('AlertDetailCtrl', function ($scope, CurrentData) {
+        $scope.currentData = CurrentData;
     });
