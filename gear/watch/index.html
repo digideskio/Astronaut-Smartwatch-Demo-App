@@ -62,7 +62,7 @@
             <section ng-controller="TimersCtrl" style="text-align:center">
                 <h3>Timers</h3>
             </section>
-            <section ng-controller="AlertsCtrl" class="ui-section-active">
+            <section ng-controller="AlertsCtrl">
                 <div class="alerts-counters"><span class="alerts-count">{{alerts.length}} new&nbsp;|&nbsp;</span><span
                         class="critical-alerts-count">{{(alerts | filter: {status:'Critical'}).length}} critical</span>
                 </div>
@@ -96,10 +96,10 @@
             <span class="clock">{{time |date:'HH:mm'}}</span>
         </div>
 
-        <div ng-controller="RolesCtrl" class="roles-list ui-content">
+        <div ng-controller="RolesCtrl as Roles" class="roles-list ui-content">
             <div class="list-item" id="roles-list" ng-repeat="role in roles">
                 <div class="role-list-item">
-                    <h1 ng-class="{'selected': role == activeRole}" ng-click="selectRole(role.name)">
+                    <h1 ng-class="{'selected-role': role.name == Roles.activeRole.name}" ng-click="selectRole(role.name)">
                         {{role.name}}</h1>
                 </div>
             </div>
@@ -116,7 +116,7 @@
 
         <div ng-controller="EventDetailCtrl">
             <div class="detail-header-parent">
-                <div class="detail-color"></div>
+                <div class="detail-color" ng-style="{'border-color' : currentData.event.color}"></div>
                 <div class="detail-main-info">
                     <h1 class="detail-name">{{currentData.event.name}}</h1>
                     <h2 class="detail-small">{{currentData.event.location}}</h2>

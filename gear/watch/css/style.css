@@ -292,9 +292,6 @@ h4.role {
   margin-right: 10px;
   display: inline;
 }
-.selected {
-  color: #f00;
-}
 .role-list-item {
   margin: 0 0 30px 30px;
 }
@@ -375,7 +372,7 @@ h4.role {
 .detail-timer-delete {
   width: 40px;
   height: 40px;
-  margin-right: 20px;
+  margin-right: 24px;
 }
 .list-title {
   white-space: nowrap;
@@ -415,4 +412,7 @@ h4.role {
   height: auto;
   width: 18px;
   box-sizing: border-box;
+}
+.selected-role {
+  font-size: 40px;
 }
