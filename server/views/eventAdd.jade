@@ -17,10 +17,10 @@ block content
             input(name='date' id='date' placeholder='1/31/2016' data-provide="datepicker" data-date-format="dd/mm/yyyy").form-control
         .form-group.input-group.bootstrap-timepicker.timepicker
             label(for='startTime') Start Time
-            input(type="text" id='startTime' data-provide="timepicker" data-template="modal" data-minute-step="1" data-modal-backdrop="true" name='startTime' data-show-meridian="false" placeholder='00:00').form-control
+            input(type="text" id='startTime' data-provide="timepicker" data-template="dropdown" data-minute-step="1" name='startTime' data-show-inputs='false' data-show-meridian="false" placeholder='00:00').form-control
         .form-group.input-group.bootstrap-timepicker.timepicker
             label(for='endTime') End Time
-            input(type="text" id='endTime' data-provide="timepicker" data-template="modal" data-minute-step="1" data-modal-backdrop="true" name='endTime' data-show-meridian="false" placeholder='00:00').form-control
+            input(type="text" id='endTime' data-provide="timepicker" data-template="dropdown" data-minute-step="1" data-show-inputs='false' name='endTime' data-show-meridian="false" placeholder='00:00').form-control
         .form-group
             label(for='criticality') Criticality
             select(name='criticality' id='criticality').form-control.input-sm

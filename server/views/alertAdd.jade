@@ -14,12 +14,18 @@ block content
             input(name='date' id='date' placeholder='1/31/2016' data-provide="datepicker" data-date-format="dd/mm/yyyy").form-control
         .form-group.input-group.bootstrap-timepicker.timepicker
             label(for='time') Time
-            input(type="text" id='time' data-provide="timepicker" data-template="modal" data-minute-step="1" data-modal-backdrop="true" name='time' data-show-meridian="false" placeholder='00:00').form-control
+            input(type="text" id='time' data-provide="timepicker" data-template="dropdown" data-minute-step="1" data-show-inputs='false' data-show-seconds='true'  name='time' data-show-meridian="false" placeholder='00:00:00').form-control
+        .form-group
+            label(for='system') System
+            input(type='text' name='system' id='system' placeholder='CDH').form-control
         .form-group
             label(for='status') Status
             select(name='status' id='status').form-control.input-sm
                 each val in statusOptions
                     option(selected=index == 0) #{val}
+        .form-group
+            label(for='cleared') Cleared
+            input(type='text' name='cleared' id='cleared' placeholder='C').form-control
         .form-group
             label(for='ack') Ack
             textarea(rows='3' name='ack' id='ack' placeholder='...').form-control

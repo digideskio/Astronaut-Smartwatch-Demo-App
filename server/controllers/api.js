@@ -3,7 +3,7 @@ var router = express.Router();
 var cors = require('cors');
 var eventsModel = require('../data/eventData');
 var rolesModel = require('../data/roleData');
-
+var alertsModel = require('../data/alertData');
 
 router.get('/events', function (req, res, next) {
     res.json(eventsModel.events);
@@ -33,6 +33,10 @@ router.get('/events/:role/:date', function(req, res, next) {
 
 router.get('/roles', function(req, res) {
    res.json(rolesModel.roles);
+});
+
+router.get('/alerts', function(req, res) {
+    res.json(alertsModel.alerts);
 });
 
 module.exports = router;

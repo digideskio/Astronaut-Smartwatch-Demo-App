@@ -11,16 +11,16 @@ block content
             label(for='role') Role
             select(name='role' id='role').form-control.input-sm
                 each val in roles
-                    option(selected=val == event.role.name) #{val.name}
+                    option(selected=val.name == event.role) #{val.name}
         .form-group
             label(for='date') Date
             input(name='date' id='date' placeholder='1/1/2015' data-provide="datepicker" data-date-format="dd/mm/yyyy" value='#{event.date}').form-control
         .form-group.input-group.bootstrap-timepicker.timepicker
             label(for='startTime') Start Time
-            input(type="text" data-provide="timepicker" data-template="modal" data-minute-step="1" data-modal-backdrop="true" id='startTime' name='startTime' data-show-meridian="false" placeholder='00:00' value='#{event.startTime}').form-control
+            input(type="text" data-provide="timepicker" data-template="dropdown" data-show-inputs='false' data-minute-step="1" id='startTime' name='startTime' data-show-meridian="false" placeholder='00:00' value='#{event.startTime}').form-control
         .form-group.input-group.bootstrap-timepicker.timepicker
             label(for='endTime') End Time
-            input(type="text" data-provide="timepicker" data-template="modal" data-minute-step="1" data-modal-backdrop="true" id='endTime' name='endTime' data-show-meridian="false" placeholder='00:00' value='#{event.endTime}').form-control
+            input(type="text" data-provide="timepicker" data-template="dropdown" data-minute-step="1" data-show-inputs='false' id='endTime' name='endTime' data-show-meridian="false" placeholder='00:00' value='#{event.endTime}').form-control
         .form-group
             label(for='criticality') Criticality
             select(id='criticality' name='criticality').form-control.input-sm
@@ -41,7 +41,7 @@ block content
             label(for='attendees') Attendees
             select(id='attendees' multiple="multiple" name='attendees[]').form-control.input-sm
                 each val in users
-                    option(selected=event.attendees.indexOf(val) != -1 id=index value=val.name) #{val.name}
+                    option(selected=event.attendees.indexOf(val.name) != -1 id=index value=val.name) #{val.name}
         .form-group
                 label(for='color') Color
                 .input-group.event-color.col-sm-2
