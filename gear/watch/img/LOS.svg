@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="316px" height="79px" viewBox="0 0 316 79" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.4.4 (17249) - http://www.bohemiancoding.com/sketch -->
+    <title>AOS/LOS</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="d-10-b" sketch:type="MSLayerGroup" transform="translate(-3.000000, -515.000000)">
+            <g id="Écrans">
+                <g id="D10.-Comms">
+                    <g id="AOS/LOS" transform="translate(3.000000, 515.000000)">
+                        <g id="+20’" transform="translate(132.000000, 52.000000)" font-size="24" font-family="Open Sans" fill="#FFFFFF" sketch:type="MSTextLayer" font-weight="normal">
+                            <text id="+20-’">
+                                <tspan x="0.66" y="26">+20 ’</tspan>
+                            </text>
+                        </g>
+                        <g id="+40’" transform="translate(233.000000, 52.000000)" font-size="24" font-family="Open Sans" fill="#FFFFFF" sketch:type="MSTextLayer" font-weight="normal">
+                            <text id="+40-‘">
+                                <tspan x="0.66" y="26">+4</tspan>
+                                <tspan x="28.1053125" y="26">0 ‘</tspan>
+                            </text>
+                        </g>
+                        <path d="M55.49189,59 L49,72 L62,72 L55.49189,59 L55.49189,59 Z" id="Now" stroke="#FFFFFF" stroke-width="2" fill="#FFFFFF" sketch:type="MSShapeGroup"></path>
+                        <rect id="Signal" fill="#2094FA" sketch:type="MSShapeGroup" x="166" y="26" width="135" height="19" rx="10"></rect>
+                        <rect id="Signal" fill="#2094FA" sketch:type="MSShapeGroup" x="192" y="5" width="110" height="19" rx="10"></rect>
+                        <rect id="Signal" fill="#2094FA" sketch:type="MSShapeGroup" x="16" y="5" width="110" height="19" rx="10"></rect>
+                        <g id="Graduations-longues" transform="translate(5.000000, 0.000000)" stroke="#FFFFFF" stroke-width="3" sketch:type="MSShapeGroup">
+                            <path d="M0.5,0 L0.5,50" id="Long"></path>
+                            <path d="M50.5,0 L50.5,50" id="Long"></path>
+                            <path d="M100.5,0 L100.5,50" id="Long"></path>
+                            <path d="M150.5,0 L150.5,50" id="Long"></path>
+                            <path d="M200.5,0 L200.5,50" id="Long"></path>
+                            <path d="M250.5,0 L250.5,50" id="Long"></path>
+                            <path d="M300.5,0 L300.5,50" id="Long"></path>
+                        </g>
+                        <g id="Graduations-courtes" transform="translate(0.000000, 15.000000)" stroke="#FFFFFF" stroke-opacity="0.5" sketch:type="MSShapeGroup">
+                            <path d="M15.5,0 L15.5,20" id="Line-Copy-11"></path>
+                            <path d="M95.5,0 L95.5,20" id="Line-Copy-12"></path>
+                            <path d="M135.5,0 L135.5,20" id="Line-Copy-13"></path>
+                            <path d="M175.5,0 L175.5,20" id="Line-Copy-14"></path>
+                            <path d="M215.5,0 L215.5,20" id="Line-Copy-15"></path>
+                            <path d="M295.5,0 L295.5,20" id="Line-Copy-17"></path>
+                            <path d="M25.5,0 L25.5,20" id="Line-Copy-26"></path>
+                            <path d="M65.5,0 L65.5,20" id="Line-Copy-19"></path>
+                            <path d="M145.5,0 L145.5,20" id="Line-Copy-21"></path>
+                            <path d="M185.5,0 L185.5,20" id="Line-Copy-22"></path>
+                            <path d="M225.5,0 L225.5,20" id="Line-Copy-23"></path>
+                            <path d="M265.5,0 L265.5,20" id="Line-Copy-24"></path>
+                            <path d="M35.5,0 L35.5,20" id="Line-Copy-34"></path>
+                            <path d="M75.5,0 L75.5,20" id="Line-Copy-27"></path>
+                            <path d="M115.5,0 L115.5,20" id="Line-Copy-28"></path>
+                            <path d="M195.5,0 L195.5,20" id="Line-Copy-30"></path>
+                            <path d="M235.5,0 L235.5,20" id="Line-Copy-31"></path>
+                            <path d="M275.5,0 L275.5,20" id="Line-Copy-32"></path>
+                            <path d="M315.5,0 L315.5,20" id="Line-Copy-33"></path>
+                            <path d="M45.5,0 L45.5,20" id="Line-Copy-42"></path>
+                            <path d="M85.5,0 L85.5,20" id="Line-Copy-35"></path>
+                            <path d="M125.5,0 L125.5,20" id="Line-Copy-36"></path>
+                            <path d="M165.5,0 L165.5,20" id="Line-Copy-37"></path>
+                            <path d="M245.5,0 L245.5,20" id="Line-Copy-39"></path>
+                            <path d="M285.5,0 L285.5,20" id="Line-Copy-40"></path>
+                            <path d="M20.5,0 L20.5,20" id="Line-Copy-86"></path>
+                            <path d="M60.5,0 L60.5,20" id="Line-Copy-49"></path>
+                            <path d="M100.5,0 L100.5,20" id="Line-Copy-50"></path>
+                            <path d="M140.5,0 L140.5,20" id="Line-Copy-51"></path>
+                            <path d="M180.5,0 L180.5,20" id="Line-Copy-52"></path>
+                            <path d="M220.5,0 L220.5,20" id="Line-Copy-53"></path>
+                            <path d="M260.5,0 L260.5,20" id="Line-Copy-54"></path>
+                            <path d="M300.5,0 L300.5,20" id="Line-Copy-55"></path>
+                            <path d="M30.5,0 L30.5,20" id="Line-Copy-56"></path>
+                            <path d="M70.5,0 L70.5,20" id="Line-Copy-57"></path>
+                            <path d="M110.5,0 L110.5,20" id="Line-Copy-58"></path>
+                            <path d="M150.5,0 L150.5,20" id="Line-Copy-59"></path>
+                            <path d="M190.5,0 L190.5,20" id="Line-Copy-60"></path>
+                            <path d="M230.5,0 L230.5,20" id="Line-Copy-61"></path>
+                            <path d="M270.5,0 L270.5,20" id="Line-Copy-62"></path>
+                            <path d="M310.5,0 L310.5,20" id="Line-Copy-63"></path>
+                            <path d="M40.5,0 L40.5,20" id="Line-Copy-64"></path>
+                            <path d="M80.5,0 L80.5,20" id="Line-Copy-65"></path>
+                            <path d="M120.5,0 L120.5,20" id="Line-Copy-66"></path>
+                            <path d="M160.5,0 L160.5,20" id="Line-Copy-67"></path>
+                            <path d="M200.5,0 L200.5,20" id="Line-Copy-68"></path>
+                            <path d="M240.5,0 L240.5,20" id="Line-Copy-69"></path>
+                            <path d="M280.5,0 L280.5,20" id="Line-Copy-70"></path>
+                            <path d="M50.5,0 L50.5,20" id="Line-Copy-72"></path>
+                            <path d="M0.5,0 L0.5,20" id="Line-Copy-75"></path>
+                            <path d="M10.5,0 L10.5,20" id="Line-Copy-76"></path>
+                            <path d="M90.5,0 L90.5,20" id="Line-Copy-77"></path>
+                            <path d="M130.5,0 L130.5,20" id="Line-Copy-78"></path>
+                            <path d="M170.5,0 L170.5,20" id="Line-Copy-79"></path>
+                            <path d="M210.5,0 L210.5,20" id="Line-Copy-80"></path>
+                            <path d="M250.5,0 L250.5,20" id="Line-Copy-81"></path>
+                            <path d="M290.5,0 L290.5,20" id="Line-Copy-82" opacity="0.495802239"></path>
+                        </g>
+                        <g id="S" transform="translate(172.000000, 22.000000)" font-size="20" font-family="Open Sans" fill="#000000" sketch:type="MSTextLayer" font-weight="633">
+                            <text>
+                                <tspan x="0" y="21">S</tspan>
+                            </text>
+                        </g>
+                        <g id="Ku" transform="translate(221.000000, 1.000000)" font-size="20" font-family="Open Sans" fill="#000000" sketch:type="MSTextLayer" font-weight="633">
+                            <text>
+                                <tspan x="0" y="21">Ku</tspan>
+                            </text>
+                        </g>
+                        <g id="Ku" transform="translate(22.000000, 0.000000)" font-size="20" font-family="Open Sans" fill="#000000" sketch:type="MSTextLayer" font-weight="633">
+                            <text>
+                                <tspan x="0" y="21">Ku</tspan>
+                            </text>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

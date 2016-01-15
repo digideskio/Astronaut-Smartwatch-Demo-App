@@ -132,6 +132,12 @@ select {
   font-style: normal;
   src: url("../fonts/OpenSans-Light.ttf");
 }
+@font-face {
+  font-family: OpenSans;
+  font-weight: 633;
+  font-style: normal;
+  src: url("../fonts/OpenSans-ExtraBold.ttf");
+}
 * {
   font-family: OpenSans, Verdana, Lucida Sans, Arial, Helvetica, sans-serif;
 }
@@ -415,4 +421,27 @@ h4.role {
 }
 .selected-role {
   font-size: 40px;
+}
+.comms-circles-cont {
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  -webkit-align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.networks-cont {
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  -webkit-align-items: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+.aos-cont {
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  -webkit-align-items: center;
+  margin-bottom: 30px;
 }

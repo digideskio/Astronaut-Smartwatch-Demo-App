@@ -9,6 +9,9 @@ angular.module("Watch", ['ngRoute', 'ngResource', 'angular.filter', 'infinite-sc
     .factory("RolesApi", function ($resource, apiRoot) {
         return $resource(apiRoot + '/roles/:role', {role: '@_role'});
     })
+    .factory("CommsApi", function ($resource, apiRoot) {
+        return $resource(apiRoot + '/comms/:commId', {commId: '@_commId'});
+    })
     .config(function ($locationProvider) {
         return $locationProvider.html5Mode(true).hashPrefix("!");
     })
@@ -87,8 +90,124 @@ angular.module("Watch", ['ngRoute', 'ngResource', 'angular.filter', 'infinite-sc
             },
             true);
     })
-    .controller('CommsCtrl', function ($scope, $rootScope) {
+    .controller('CommsCtrl', function ($scope, CommsApi) {
+        $scope.colorGood = '#1EDF7A';
+        $scope.colorWeak = '#FFE620';
+        $scope.colorBad = '#FC3D21';
 
+        $scope.onInitSvg = function () {
+            var commsSnap = Snap("#comms-bands");
+            $scope.s1UpWeak = commsSnap.select("#s-one-up-yellow");
+            $scope.s1UpBad = commsSnap.select("#s-one-up-red");
+            $scope.s2UpWeak = commsSnap.select("#s-two-up-yellow");
+            $scope.s2UpBad = commsSnap.select("#s-two-up-red");
+            $scope.s1DownWeak = commsSnap.select("#s-one-bottom-yellow");
+            $scope.s1DownBad = commsSnap.select("#s-one-bottom-red");
+            $scope.s2DownWeak = commsSnap.select("#s-two-bottom-yellow");
+            $scope.s2DownBad = commsSnap.select("#s-two-bottom-red");
+
+            $scope.ku1UpWeak = commsSnap.select("#ku-one-up-yellow");
+            $scope.ku1UpBad = commsSnap.select("#ku-one-up-red");
+            $scope.ku2UpWeak = commsSnap.select("#ku-two-up-yellow");
+            $scope.ku2UpBad = commsSnap.select("#ku-two-up-red");
+            $scope.ku1DownWeak = commsSnap.select("#ku-one-down-yellow");
+            $scope.ku1DownBad = commsSnap.select("#ku-one-bottom-red");
+            $scope.ku2DownWeak = commsSnap.select("#ku-two-down-yellow");
+            $scope.ku2DownBad = commsSnap.select("#ku-two-bottom-red");
+
+            var networksSnap = Snap("#networks");
+            $scope.oca = networksSnap.select("#OCA");
+            $scope.iac = networksSnap.select("#IAC");
+            $scope.refreshComms();
+        };
+
+        $scope.refreshComms = function() {
+            CommsApi.get(function(commsData) {
+                $scope.updateMainComms(commsData);
+                $scope.updateNetworks(commsData);
+            });
+        };
+        
+        $scope.updateNetworks = function (commsData) {
+            $scope.applyColor($scope.oca, commsData.oca);
+            $scope.applyColor($scope.iac, commsData.iac);
+        };
+
+        $scope.applyColor = function (elem, status) {
+            switch(status) {
+                case 'Good':
+                    elem.attr( {
+                        stroke: $scope.colorGood,
+                        fill: $scope.colorGood
+                    });
+                    break;
+                case 'Weak':
+                    elem.attr( {
+                        stroke: $scope.colorWeak,
+                        fill: $scope.colorWeak
+                    });
+                    break;
+                case 'Bad':
+                    elem.attr( {
+                        stroke: $scope.colorBad,
+                        fill: $scope.colorBad
+                    });
+                    break;
+            }
+        };
+
+        $scope.updateMainComms = function(commsData) {
+            console.log("S1U = " + commsData.sband.up1);
+            $scope.s1UpWeak.attr({
+                visibility: commsData.sband.up1 == 'Weak' ? 'visible' : 'hidden'
+            });
+            $scope.s1UpBad.attr({
+                visibility: commsData.sband.up1 == 'Bad' ? 'visible' : 'hidden'
+            });
+            $scope.s2UpWeak.attr({
+                visibility: commsData.sband.up2 == 'Weak' ? 'visible' : 'hidden'
+            });
+            $scope.s2UpBad.attr({
+                visibility: commsData.sband.up2 == 'Bad' ? 'visible' : 'hidden'
+            });
+            $scope.s1DownWeak.attr({
+                visibility: commsData.sband.down1 == 'Weak' ? 'visible' : 'hidden'
+            });
+            $scope.s1DownBad.attr({
+                visibility: commsData.sband.down1 == 'Bad' ? 'visible' : 'hidden'
+            });
+            $scope.s2DownWeak.attr({
+                visibility: commsData.sband.down2 == 'Weak' ? 'visible' : 'hidden'
+            });
+            $scope.s2DownBad.attr({
+                visibility: commsData.sband.down2 == 'Bad' ? 'visible' : 'hidden'
+            });
+
+            $scope.ku1UpWeak.attr({
+                visibility: commsData.kuband.up1 == 'Weak' ? 'visible' : 'hidden'
+            });
+            $scope.ku1UpBad.attr({
+                visibility: commsData.kuband.up1 == 'Bad' ? 'visible' : 'hidden'
+            });
+            $scope.ku2UpWeak.attr({
+                visibility: commsData.kuband.up2 == 'Weak' ? 'visible' : 'hidden'
+            });
+            $scope.ku2UpBad.attr({
+                visibility: commsData.kuband.up2 == 'Bad' ? 'visible' : 'hidden'
+            });
+            $scope.ku1DownWeak.attr({
+                visibility: commsData.kuband.down1 == 'Weak' ? 'visible' : 'hidden'
+            });
+            $scope.ku1DownBad.attr({
+                visibility: commsData.kuband.down1 == 'Bad' ? 'visible' : 'hidden'
+            });
+            $scope.ku2DownWeak.attr({
+                visibility: commsData.kuband.down2 == 'Weak' ? 'visible' : 'hidden'
+            });
+            $scope.ku2DownBad.attr({
+                visibility: commsData.kuband.down2 == 'Bad' ? 'visible' : 'hidden'
+            });
+        }
     })
     .controller('TimersCtrl', function ($scope, $rootScope) {
 
@@ -132,4 +251,17 @@ angular.module("Watch", ['ngRoute', 'ngResource', 'angular.filter', 'infinite-sc
     })
     .controller('AlertDetailCtrl', function ($scope, CurrentData) {
         $scope.currentData = CurrentData;
-    });
+    })
+    .directive('sbLoad', ['$parse', function ($parse) {
+        return {
+            restrict: 'A',
+            link: function (scope, elem, attrs) {
+                var fn = $parse(attrs.sbLoad);
+                elem.on('load', function (event) {
+                    scope.$apply(function () {
+                        fn(scope, {$event: event});
+                    });
+                });
+            }
+        };
+    }]);

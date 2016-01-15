@@ -16,7 +16,7 @@
     <script type="text/javascript" src="common/js/lib/ng-infinite-scroll.js"></script>
     <script type="text/javascript" src="common/js/lib/moment-with-locales.min.js"></script>
     <script type="text/javascript" src="js/controllers.js"></script>
-    <script type="text/javascript" src="common/js/lib/svg.js"></script>
+    <script type="text/javascript" src="common/js/lib/snap.svg-min.js"></script>
 </head>
 <body ng-app="Watch">
 
@@ -81,9 +81,18 @@
                     <div class="events-placeholder" ng-show="!busy && (!alerts || alerts.length == 0)">No events</div>
                 </div>
             </section>
-            <section ng-controller="CommsCtrl" style="text-align:center">
-                <div class="half-circle-left"><span class="band">S</span></div>
-                <div class="half-circle-right"><span class="band">Ku</span></div>
+            <section ng-controller="CommsCtrl" >
+                <div class="comms-circles-cont">
+                    <object style="margin: auto;" type="image/svg+xml" id="comms-bands" data="img/comms-circles.svg"
+                            sb-load="onInitSvg()"></object>
+                </div>
+                <div class="networks-cont">
+                    <object style="margin: auto;" type="image/svg+xml" id="networks" data="img/iac-oca.svg"></object>
+                </div>
+                <div class="aos-cont">
+                    <object style="margin: auto;" type="image/svg+xml" id="aos" data="img/LOS.svg"></object>
+                </div>
+
             </section>
         </div>
     </div>
@@ -99,7 +108,8 @@
         <div ng-controller="RolesCtrl as Roles" class="roles-list ui-content">
             <div class="list-item" id="roles-list" ng-repeat="role in roles">
                 <div class="role-list-item">
-                    <h1 ng-class="{'selected-role': role.name == Roles.activeRole.name}" ng-click="selectRole(role.name)">
+                    <h1 ng-class="{'selected-role': role.name == Roles.activeRole.name}"
+                        ng-click="selectRole(role.name)">
                         {{role.name}}</h1>
                 </div>
             </div>
@@ -121,7 +131,8 @@
                     <h1 class="detail-name">{{currentData.event.name}}</h1>
                     <h2 class="detail-small">{{currentData.event.location}}</h2>
                     <h2 class="detail-small">{{currentData.event.date}}</h2>
-                    <h2 class="detail-small">{{currentData .event.startTime}} - {{currentData.event.endTime}}</h2>
+                    <h2 class="detail-small">{{currentData .event.startTime}} -
+                        {{currentData.event.endTime}}</h2>
                 </div>
             </div>
             <div class="detail-main-info">
@@ -152,7 +163,8 @@
 
         <div ng-controller="EventDetailCtrl">
             <div class="detail-header-parent">
-                <div class="detail-color" ng-class="{'alert-detail-critical' : currentData.alert.status == 'Critical'}"></div>
+                <div class="detail-color"
+                     ng-class="{'alert-detail-critical' : currentData.alert.status == 'Critical'}"></div>
                 <div class="detail-main-info">
                     <h1 class="detail-name">{{currentData.alert.title}}</h1>
                     <h2 class="detail-small">{{currentData.alert.time}}</h2>
@@ -189,3 +201,5 @@
 </body>
 <script type="text/javascript" src="js/main.js"></script>
 </html>
+
+<!--elem-ready="onCommsSvgReady()"-->

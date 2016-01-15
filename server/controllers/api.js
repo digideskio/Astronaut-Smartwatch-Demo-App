@@ -4,6 +4,7 @@ var cors = require('cors');
 var eventsModel = require('../data/eventData');
 var rolesModel = require('../data/roleData');
 var alertsModel = require('../data/alertData');
+var commsModel = require('../data/commsData');
 
 router.get('/events', function (req, res, next) {
     res.json(eventsModel.events);
@@ -37,6 +38,10 @@ router.get('/roles', function(req, res) {
 
 router.get('/alerts', function(req, res) {
     res.json(alertsModel.alerts);
+});
+
+router.get('/comms', function(req, res) {
+    res.json(commsModel.comms);
 });
 
 module.exports = router;
