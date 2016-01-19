@@ -24,3 +24,13 @@ td {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+.comms-group-label {
+  margin-bottom: 15px;
+  margin-top: 15px;
+}
+.comms-band-label {
+  margin-right: 15px;
+}
+.comms-select {
+  margin-right: 30px;
+}

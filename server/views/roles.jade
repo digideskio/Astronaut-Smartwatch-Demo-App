@@ -13,7 +13,10 @@ block content
                         input(type='text' value='#{role.name}' name='name' placeholder='Name').form-control
                     td
                         a(href='/admin/roles/#{role.name}/delete').btn.btn-danger Delete
-    h4 New user
+    button(type='submit' id='roles-save').btn.btn-primary Save
+    br
+    br
+    h4 New Role
     table(id='add-role-table').table.table-bordered.table-striped
         tbody(id='role-add-body')
             tr
@@ -21,6 +24,3 @@ block content
                     input(type='text' name='name' placeholder='Name').form-control
                 td
                     button(id='role-add').btn.btn-success Add
-    br
-    br
-    button(type='submit' id='roles-save').btn.btn-primary Save

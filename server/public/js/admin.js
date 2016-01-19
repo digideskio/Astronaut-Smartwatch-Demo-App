@@ -27,11 +27,26 @@ $(document).ready(function () {
     });
 
     $('#user-add').click(function () {
-        var userTable = $("#add-user-table").editableTable();
-        userTable.editableTable('get', function (records) {
+        event.preventDefault();
+        var addUserTable = $("#add-user-table").editableTable();
+        addUserTable.editableTable('get', function (records) {
             var newUser = JSON.stringify(records[0]);
-            console.log(newUser);
-            usersTable.editableTable('add', records[0], {at: 0});
+            $.ajax({
+                url: '/admin/users/add', // php script to retern json encoded string
+                data: newUser,  // serialized data to send on server
+                dataType: 'json', // set recieving type - JSON in case of a question
+                contentType: 'application/json',
+                type: 'POST', // set sending HTTP Request type
+                success: function (data) { // callback method for further manipulations
+                    console.log("YESS");
+                    window.location = '/admin/users';
+                },
+                error: function (data) { // if error occured
+                    console.error("????");
+                    window.location = '/admin/users';
+                }
+            });
+            return false;
         });
     });
 
@@ -61,14 +76,31 @@ $(document).ready(function () {
         });
     });
 
+
     $('#role-add').click(function () {
-        var roleTable = $("#add-role-table").editableTable();
-        roleTable.editableTable('get', function (records) {
-            var newUser = JSON.stringify(records[0]);
-            console.log(newUser);
-            rolesTable.editableTable('add', records[0], {at: 0});
+        event.preventDefault();
+        var addRoleTable = $("#add-role-table").editableTable();
+        addRoleTable.editableTable('get', function (records) {
+            var newRole = JSON.stringify(records[0]);
+            $.ajax({
+                url: '/admin/roles/add', // php script to retern json encoded string
+                data: newRole,  // serialized data to send on server
+                dataType: 'json', // set recieving type - JSON in case of a question
+                contentType: 'application/json',
+                type: 'POST', // set sending HTTP Request type
+                success: function (data) { // callback method for further manipulations
+                    console.log("YESS");
+                    window.location = '/admin/roles';
+                },
+                error: function (data) { // if error occured
+                    console.error("????");
+                    window.location = '/admin/roles';
+                }
+            });
+            return false;
         });
     });
+
 
     /**
      * EVENTS
@@ -211,44 +243,55 @@ $(document).ready(function () {
 
     });
 
-    $('#alert-add').click(function () {
-        var addAlertTable = $("#add-alert-table").editableTable();
-        addAlertTable.editableTable('get', function (records) {
-            var newEvent = JSON.stringify(records[0]);
-            console.log(newEvent);
-            alertsTable.editableTable('add', records[0], {at: 0});
-        });
-    });
-
     /**
      * COMMS
      */
 
-    $('#comms_form').submit(function (event) {
-        console.log($(this).serialize());
-        var jsonData = {};
-        var form = $('#comms_form');
-        $.each($(form).serializeArray(), function () {
-            jsonData[this.name] = this.value;
-        });
-        var data = JSON.stringify(jsonData);
-        console.log(data);
-        $.ajax({
-            url: '/admin/comms', // php script to retern json encoded string
-            data: data,  // serialized data to send on server
-            dataType: 'json', // set recieving type - JSON in case of a question
-            contentType: 'application/json',
-            type: 'POST', // set sending HTTP Request type
-            success: function (data) { // callback method for further manipulations
-                console.log("YESS");
-            },
-            error: function (data) { // if error occured
-                console.error("????");
-            }
-        });
-        event.preventDefault();
-        return false;
+    var commsTable = $('#comms-table').editableTable();
+
+    $('#comms-save').click(function (event) {
+        commsTable.editableTable('get', function (records) {
+            var data = JSON.stringify(records);
+            console.log(data);
+            $.ajax({
+                url: '/admin/comms', // php script to retern json encoded string
+                data: data,  // serialized data to send on server
+                dataType: 'json', // set recieving type - JSON in case of a question
+                contentType: 'application/json',
+                type: 'POST', // set sending HTTP Request type
+                success: function (data) { // callback method for further manipulations
+                    console.log("YESS");
+                    window.location = '/admin/comms';
+                },
+                error: function (data) { // if error occured
+                    console.error("????");
+                }
+            });
+        })
     });
 
+    $('#outages-add').click(function () {
+        event.preventDefault();
+        var addOutageTable = $("#add-outage-table").editableTable();
+        addOutageTable.editableTable('get', function (records) {
+            var newOutage = JSON.stringify(records[0]);
+            $.ajax({
+                url: '/admin/comms/outages/add', // php script to retern json encoded string
+                data: newOutage,  // serialized data to send on server
+                dataType: 'json', // set recieving type - JSON in case of a question
+                contentType: 'application/json',
+                type: 'POST', // set sending HTTP Request type
+                success: function (data) { // callback method for further manipulations
+                    console.log("YESS");
+                    window.location = '/admin/comms';
+                },
+                error: function (data) { // if error occured
+                    console.error("????");
+                    window.location = '/admin/comms';
+                }
+            });
+            return false;
+        });
+    });
 
 });

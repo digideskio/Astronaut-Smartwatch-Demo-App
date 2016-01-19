@@ -3,69 +3,117 @@ block content
     - var options = ['Good', 'Weak', 'Bad']
     h2 Comms
 
-    form(role='form' id='comms_form')
-        .row
-            h4 S band status
+    table(id='comms-table').table.table-bordered.table-striped.table-hover
+        thead
+            tr
+                th Band
+                th 1 UP
+                th 2 UP
+                th 1 Down
+                th 2 Down
+        tbody
+            tr
+                td
+                    span S
+                td
+                    select(id='s-up1' name="s_up1", data-width="100%").form-control.input-small
+                        for opt in options
+                            option(selected=model.comms.sband.up1 == opt) #{opt}
+                td
+                    select(id='s-up2' name="s_up2", data-width="100%").form-control.input-small
+                        for opt in options
+                            option(selected=model.comms.sband.up2 == opt) #{opt}
+                td
+                    select(name="s_down1", data-width="100%").form-control.input-small
+                        for opt in options
+                            option(selected=model.comms.sband.down1 == opt) #{opt}
+                td
+                    select(name="s_down2", data-width="100%").form-control.input-small
+                        for opt in options
+                            option(selected=model.comms.sband.down2 == opt) #{opt}
+            tr
+                td
+                    span Ku
+                td
+                    select(name="ku_up1", data-width="100%").form-control.input-small
+                        for opt in options
+                            option(selected=model.comms.kuband.up1 == opt) #{opt}
+                td
+                    select(name="ku_up2", data-width="100%").form-control.input-small
+                        for opt in options
+                            option(selected=model.comms.kuband.up2 == opt) #{opt}
+                td
+                    select(name="ku_down1", data-width="100%").form-control.input-small
+                        for opt in options
+                            option(selected=model.comms.kuband.down1 == opt) #{opt}
+                td
+                    select(name="ku_down2", data-width="100%").form-control.input-small
+                        for opt in options
+                            option(selected=model.comms.kuband.down2 == opt) #{opt}
+            tr
+                td
+                    span IAC
+                td
+                    select(name="iac", data-width="100%").form-control.input-small
+                        for opt in options
+                            option(selected=model.comms.iac == opt) #{opt}
+            tr
+                td
+                    span OCA
+                td
+                    select(name="oca", data-width="100%").form-control.input-small
+                        for opt in options
+                            option(selected=model.comms.oca == opt) #{opt}
+    button(id='comms-save').btn.btn-primary Save
 
-            .col-sm-2
-                span UP I
-                select(name="s_up1", data-width="100%").form-control.input-small
-                 for opt in options
-                    option(selected=model.comms.sband.up1 == opt) #{opt}
-            .col-sm-2
-                span UP II
-                select(name="s_up2", data-width="100%").form-control.input-small
-                    for opt in options
-                        option(selected=model.comms.sband.up2 == opt) #{opt}
-            .col-sm-2
-                span DOWN I
-                select(name="s_down1", data-width="100%").form-control.input-small
-                    for opt in options
-                        option(selected=model.comms.sband.down1 == opt) #{opt}
-            .col-sm-2
-                span DOWN II
-                select(name="s_down2", data-width="100%").form-control.input-small
-                    for opt in options
-                        option(selected=model.comms.sband.down2 == opt) #{opt}
+    br
+    br
+    h4 Planned Outages
 
-        .row
-            h4 Ku band status
-            .col-sm-2
-                span UP I
-                select(name="ku_up1", data-width="100%").form-control.input-small
-                    for opt in options
-                        option(selected=model.comms.kuband.up1 == opt) #{opt}
-            .col-sm-2
-                span UP II
-                select(name="ku_up2", data-width="100%").form-control.input-small
-                    for opt in options
-                        option(selected=model.comms.kuband.up2 == opt) #{opt}
-            .col-sm-2
-                span DOWN I
-                select(name="ku_down1", data-width="100%").form-control.input-small
-                    for opt in options
-                        option(selected=model.comms.kuband.down1 == opt) #{opt}
-            .col-sm-2
-                span DOWN II
-                select(name="ku_down2", data-width="100%").form-control.input-small
-                    for opt in options
-                        option(selected=model.comms.kuband.down2 == opt) #{opt}
+    table(id='comms-outages-table').table.table-bordered.table-striped.table-hover
+        thead
+            tr
+                th Band
+                th Date
+                th Start Time
+                th End Time
+                th
+        tbody
+            each out in model.outages
+                tr
+                    td.col-lg-1
+                        select(value='#{out.band}' name='band').form-control.input-sm
+                            option(selected=out.band=='S') S
+                            option(selected=out.band=='Ku') Ku
+                    td.col-sm-2
+                        input(value='#{out.date}' name='date' placeholder='1/1/2015' data-provide="datepicker" data-date-format="dd/mm/yyyy").form-control
+                    td.col-sm-1
+                        input(type="text" data-provide="timepicker" data-template="dropdown" data-show-seconds='false' data-minute-step="1" value='#{out.startTime}' data-show-inputs='false' name='startTime' data-show-meridian="false" placeholder='00:00').form-control
+                    td.col-sm-1
+                        input(type="text" data-provide="timepicker" data-template="dropdown" data-show-seconds='false' data-minute-step="1" value='#{out.endTime}' data-show-inputs='false' name='endTime' data-show-meridian="false" placeholder='00:00').form-control
+                    td.col-sm1
+                        a(href='/admin/comms/outages/#{out.id}/delete').btn.btn-danger Delete
 
-        .row
-            h4 Network status
-            .col-sm-2
-                span IAC
-                select(name="iac", data-width="100%").form-control.input-small
-                    for opt in options
-                        option(selected=model.comms.iac == opt) #{opt}
-            .col-sm-2
-                span OCA
-                select(name="oca", data-width="100%").form-control.input-small
-                    for opt in options
-                        option(selected=model.comms.oca == opt) #{opt}
-            .col-sm-2
-
-        .row
-            br
-            br
-            button(type='submit').btn.btn-primary Save
+    br
+    h4 Add new outage
+    table(id='add-outage-table').table.table-bordered.table-striped.table-hover
+        thead
+            tr
+                th Band
+                th Date
+                th Start Time
+                th End Time
+        tbody
+                tr
+                    td.col-lg-1
+                        select(name='band').form-control.input-sm
+                            option(selected) S
+                            option() Ku
+                    td.col-sm-2
+                        input(name='date' placeholder='1/1/2015' data-provide="datepicker" data-date-format="dd/mm/yyyy").form-control
+                    td.col-sm-1
+                        input(type="text" data-provide="timepicker" data-template="dropdown" data-show-seconds='false' data-minute-step="1" data-show-inputs='false' name='startTime' data-show-meridian="false" placeholder='00:00').form-control
+                    td.col-sm-1
+                        input(type="text" data-provide="timepicker" data-template="dropdown" data-show-seconds='false' data-minute-step="1" data-show-inputs='false' name='endTime' data-show-meridian="false" placeholder='00:00').form-control
+                    td
+                        a(href='' id='outages-add').btn.btn-success Add

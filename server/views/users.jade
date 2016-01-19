@@ -14,6 +14,10 @@ block content
                     td
                         a(href='/admin/users/#{user.name}/delete').btn.btn-danger Delete
 
+    button(type='submit' id='users-save').btn.btn-primary Save
+    br
+    br
+    br
     h4 New user
     table(id='add-user-table').table.table-bordered.table-striped
         tbody(id='user-add-body')
@@ -23,6 +27,3 @@ block content
                 td
                     button(id='user-add').btn.btn-success Add
 
-    br
-    br
-    button(type='submit' id='users-save').btn.btn-primary Save

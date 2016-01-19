@@ -27,9 +27,8 @@ router.get('/:roleName/delete', function (req, res) {
     res.redirect('/admin/roles');
 });
 
-router.post('/:roleName/add', function (req, res) {
-    var roleName = req.params.roleName;
-    roleModel.roles.push(roleName);
+router.post('/add', function (req, res) {
+    roleModel.roles.push(req.body);
     res.location('/admin/roles');
     res.redirect('/admin/roles');
 });

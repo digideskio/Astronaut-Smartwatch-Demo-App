@@ -28,9 +28,8 @@ router.get('/:userName/delete', function (req, res) {
     res.redirect('/admin/users');
 });
 
-router.post('/:userName/add', function (req, res) {
-    var userName = req.params.userName;
-    usersModel.users.push(userName);
+router.post('/add', function (req, res) {
+    usersModel.users.push(req.body);
     res.location('/admin/users');
     res.redirect('/admin/users');
 });

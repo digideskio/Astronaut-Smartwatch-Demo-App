@@ -16,3 +16,11 @@ exports.comms = {
     iac : 'Good',
     oca: 'Bad'
 };
+
+exports.outages = [ {
+    id: 0,
+    band: 'S',
+    date: '1/16/2016',
+    startTime: '12:00',
+    endTime: '12:30'
+}];
