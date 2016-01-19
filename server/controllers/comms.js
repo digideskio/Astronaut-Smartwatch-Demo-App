@@ -1,9 +1,18 @@
 var express = require('express');
 var router = express.Router();
 var _ = require('underscore');
+var moment = require('moment');
 
 
 var commsModel = require('../data/commsData');
+
+function sortOutages() {
+    commsModel.outages.sort(function(l, r) {
+        var a = moment(l.date + " " + l.startTime, "DD/MM/YYYY HH:mm");
+        var b = moment(r.date + " " + r.startTime, "DD/MM/YYYY HH:mm");
+        return b.isBefore(a);
+    })
+}
 
 router.get('/', function (req, res, next) {
     res.render('comms', {
@@ -35,6 +44,8 @@ router.post('/outages/add', function (req, res) {
         newOutage.id = 0;
     }
     commsModel.outages.push(newOutage);
+    sortOutages();
+
     res.location('/admin/comms');
     res.redirect('/admin/comms');
 });
@@ -45,7 +56,7 @@ router.get('/outages/:id/delete', function (req, res) {
         return e.id == id
     });
     commsModel.outages.splice(outIndex, 1);
-
+    sortOutages();
     res.location('/admin/comms');
     res.redirect('/admin/comms');
 });

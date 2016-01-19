@@ -4,6 +4,16 @@ var _ = require('underscore');
 var eventsModel = require('../data/eventData');
 var userModel = require('../data/userData');
 var roleModel = require('../data/roleData');
+var moment = require('moment');
+
+
+function sortEvents() {
+    eventsModel.events.sort(function(l, r) {
+        var a = moment(l.date + " " + l.startTime, "DD/MM/YYYY HH:mm");
+        var b = moment(r.date + " " + r.startTime, "DD/MM/YYYY HH:mm");
+        return b.isBefore(a);
+    })
+}
 
 var criticalityOptions = ['Low', 'High'];
 var statusOptions = ['Scheduled', 'Canceled'];
@@ -52,7 +62,7 @@ router.get('/:eventId/delete', function(req, res) {
             break;
         }
     }
-
+    sortEvents();
     res.location('/admin/events');
     res.redirect('/admin/events');
 });
@@ -65,6 +75,7 @@ router.post('/:eventId/edit', function(req, res) {
     console.log('INDEX = ' + eventIndex);
     eventsModel.events[eventIndex] = req.body;
     eventsModel.events[eventIndex].id = eventId;
+    sortEvents();
     res.location('/admin/events');
     res.redirect('/admin/events');
 });
@@ -74,6 +85,7 @@ router.post('/', function (req, res) {
     var newEvent = req.body;
     newEvent.id = eventsModel.events[eventsModel.events.length - 1].id + 1;
     eventsModel.events.push(newEvent);
+    sortEvents();
     res.location('admin/events');
     res.redirect('admin/events');
 

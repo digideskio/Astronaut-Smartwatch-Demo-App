@@ -41,7 +41,7 @@ block content
             label(for='attendees') Attendees
             select(id='attendees' multiple="multiple" name='attendees[]').form-control.input-sm
                 each val in users
-                    option(selected=index == 0 id=index value=val) #{val}
+                    option(selected=index == 0 id=index value=val.name) #{val.name}
         .form-group
                 label(for='color') Color
                 .input-group.event-color.col-sm-2
