@@ -15,6 +15,7 @@
     <script type="text/javascript" src="common/js/lib/angular/angular-filter.min.js"></script>
     <script type="text/javascript" src="common/js/lib/ng-infinite-scroll.js"></script>
     <script type="text/javascript" src="common/js/lib/moment-with-locales.min.js"></script>
+    <script type="text/javascript" src="common/js/lib/moment-range.min.js"></script>
     <script type="text/javascript" src="js/controllers.js"></script>
     <script type="text/javascript" src="common/js/lib/snap.svg-min.js"></script>
 </head>
@@ -81,7 +82,7 @@
                     <div class="events-placeholder" ng-show="!busy && (!alerts || alerts.length == 0)">No events</div>
                 </div>
             </section>
-            <section ng-controller="CommsCtrl" >
+            <section ng-controller="CommsCtrl">
                 <div class="comms-circles-cont">
                     <object style="margin: auto;" type="image/svg+xml" id="comms-bands" data="img/comms-circles.svg"
                             sb-load="onInitSvg()"></object>
@@ -90,7 +91,7 @@
                     <object style="margin: auto;" type="image/svg+xml" id="networks" data="img/iac-oca.svg"></object>
                 </div>
                 <div class="aos-cont">
-                    <object style="margin: auto;" type="image/svg+xml" id="aos" data="img/LOS.svg"></object>
+                    <object type="image/svg+xml" id="aos" data="img/LOS.svg"></object>
                 </div>
 
             </section>

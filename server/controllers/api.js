@@ -41,7 +41,7 @@ router.get('/alerts', function(req, res) {
 });
 
 router.get('/comms', function(req, res) {
-    res.json(commsModel.comms);
+    res.json(commsModel);
 });
 
 module.exports = router;

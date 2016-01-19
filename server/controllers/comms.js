@@ -29,7 +29,11 @@ router.post('/', function (req, res) {
 router.post('/outages/add', function (req, res) {
     var newOutage = req.body;
     console.log("New outage: " + newOutage);
-    newOutage.id = commsModel.outages[commsModel.outages.length - 1].id + 1;
+    if(commsModel.outages && commsModel.outages.length > 0) {
+        newOutage.id = commsModel.outages[commsModel.outages.length - 1].id + 1;
+    } else {
+        newOutage.id = 0;
+    }
     commsModel.outages.push(newOutage);
     res.location('/admin/comms');
     res.redirect('/admin/comms');
