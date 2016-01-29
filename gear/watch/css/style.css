@@ -445,3 +445,24 @@ h4.role {
   -webkit-align-items: center;
   margin-bottom: 30px;
 }
+.progress-wrapper {
+  margin: 20px auto;
+  font-size: 40px;
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  -webkit-align-items: center;
+  justify-content: center;
+  -webkit-justify-content: center;
+}
+.glyphicon {
+  font-size: 50px;
+}
+td.form-group.uib-time > input {
+  font-size: 40px;
+  height: inherit;
+  width: 100px;
+}
+.uib-timepicker {
+  width: 100%;
+}

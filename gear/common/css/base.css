@@ -117,6 +117,7 @@ select {
 @font-face {
   font-family: OpenSans;
   font-style: normal;
+  font-weight: 900;
   src: url("../fonts/OpenSans-Regular.ttf");
 }
 @font-face {
@@ -131,6 +132,16 @@ select {
   font-style: normal;
   src: url("../fonts/OpenSans-Light.ttf");
 }
+@font-face {
+  font-family: OpenSans;
+  font-weight: 633;
+  font-style: normal;
+  src: url("../fonts/OpenSans-ExtraBold.ttf");
+}
 * {
   font-family: OpenSans, Verdana, Lucida Sans, Arial, Helvetica, sans-serif;
+}
+body {
+  margin: 0 auto;
+  background-color: #000;
 }

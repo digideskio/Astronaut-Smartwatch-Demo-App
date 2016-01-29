@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
     <title>Astronaut Watch App</title>
     <link rel="stylesheet" href="common/js/lib/tau/wearable/theme/default/tau.min.css">
+    <link rel="stylesheet" href="common/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">
+
     <script type="text/javascript" src="common/js/lib/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="common/js/lib/tau/wearable/js/tau.min.js"></script>
     <script type="text/javascript" src="common/js/lib/angular/angular.js"></script>
@@ -13,11 +15,20 @@
     <script type="text/javascript" src="common/js/lib/angular/angular-route.min.js"></script>
     <script type="text/javascript" src="common/js/lib/angular/angular-resource.min.js"></script>
     <script type="text/javascript" src="common/js/lib/angular/angular-filter.min.js"></script>
+    <script type="text/javascript" src="common/js/lib/roundProgress.min.js"></script>
     <script type="text/javascript" src="common/js/lib/ng-infinite-scroll.js"></script>
     <script type="text/javascript" src="common/js/lib/moment-with-locales.min.js"></script>
     <script type="text/javascript" src="common/js/lib/moment-range.min.js"></script>
-    <script type="text/javascript" src="js/controllers.js"></script>
     <script type="text/javascript" src="common/js/lib/snap.svg-min.js"></script>
+    <script type="text/javascript" src="common/js/lib/ui-bootstrap-custom-tpls-1.1.1.js"></script>
+    <script type="text/javascript" src="js/controllers.js"></script>
+    <script type="text/javascript" src="js/api.js"></script>
+    <script type="text/javascript" src="js/comms.js"></script>
+    <script type="text/javascript" src="js/timeline.js"></script>
+    <script type="text/javascript" src="js/timers.js"></script>
+    <script type="text/javascript" src="js/alerts.js"></script>
+    <script type="text/javascript" src="js/state.js"></script>
+    <script type="text/javascript" src="js/directives.js"></script>
 </head>
 <body ng-app="Watch">
 
@@ -36,7 +47,7 @@
     <div id="hsectionchanger" class="ui-content">
         <!-- section changer has only one child. -->
         <div>
-            <section ng-controller="TimelineCtrl" class="ui-section-active">
+            <section ng-controller="TimelineCtrl">
                 <!--<pre>{{ events | json }}</pre>-->
                 <div class="role-selector" id="role-selector" ng-click="selectRole()">
                     <img src="img/role-icon.png" class="display:inline"><h4 class="role">{{activeRole}}</h4>
@@ -60,8 +71,123 @@
                     <div class="events-placeholder" ng-show="!busy && (!events || events.length == 0)">No events</div>
                 </div>
             </section>
-            <section ng-controller="TimersCtrl" style="text-align:center">
-                <h3>Timers</h3>
+            <section ng-controller="TimersCtrl" class="ui-section-active">
+                <!--<input type="time" name="demo-date" id="demo-date" data-format="HH:mm" value="00:00" style="visibility: hidden;"/>-->
+                <div class="progress-container">
+                    <div class="progress-wrapper">
+                        <div
+                                round-progress
+                                max="3600"
+                                current="timerz.get(0).current"
+                                color="#fff"
+                                bgcolor="transparent"
+                                radius="110"
+                                stroke="17"
+                                semi="false"
+                                rounded="false"
+                                clockwise="timerz[0] && timerz[0].countdown"
+                                responsive="false"
+                                duration="800"
+                                animation="easeOutCubic"
+                                ng-show="getTimer(0)"
+                        >
+                            <div
+                                    round-progress
+                                    max="100"
+                                    current="99"
+                                    color="#fff"
+                                    bgcolor="transparent"
+                                    radius="110"
+                                    offset="8"
+                                    stroke="2"
+                                    semi="false"
+                                    rounded="false"
+                                    clockwise="false"
+                                    responsive="false"
+                                    duration="800"
+                                    animation="easeInOutQuart"
+                                    animation-delay="0"
+                                    ng-show="isTimerPassHour(0)"
+                            ></div>
+                            <div
+                                    round-progress
+                                    max="100"
+                                    current="15"
+                                    color="#fff"
+                                    bgcolor="transparent"
+                                    radius="110"
+                                    stroke="17"
+                                    semi="false"
+                                    rounded="false"
+                                    clockwise="false"
+                                    responsive="false"
+                                    duration="800"
+                                    animation="easeInOutQuart"
+                                    animation-delay="0"
+                                    ng-show="getTimer(1)"
+                                    offset="25">
+                                <div
+                                        round-progress
+                                        max="100"
+                                        current="99"
+                                        color="#fff"
+                                        bgcolor="transparent"
+                                        radius="110"
+                                        offset="33"
+                                        stroke="2"
+                                        semi="false"
+                                        rounded="false"
+                                        clockwise="false"
+                                        responsive="false"
+                                        duration="800"
+                                        animation="easeInOutQuart"
+                                        animation-delay="0"
+                                        ng-show="isTimerPassHour(1)"
+                                ></div>
+                            </div>
+                            <div
+                                    round-progress
+                                    max="100"
+                                    current="15"
+                                    color="#fff"
+                                    bgcolor="transparent"
+                                    radius="110"
+                                    stroke="17"
+                                    semi="false"
+                                    rounded="false"
+                                    clockwise="false"
+                                    responsive="false"
+                                    duration="800"
+                                    animation="easeInOutQuart"
+                                    animation-delay="0"
+                                    ng-show="getTimer(2)"
+                                    offset="48">
+                                <div
+                                        round-progress
+                                        max="100"
+                                        current="99"
+                                        color="#fff"
+                                        bgcolor="transparent"
+                                        radius="110"
+                                        offset="56"
+                                        stroke="2"
+                                        semi="false"
+                                        rounded="false"
+                                        clockwise="false"
+                                        responsive="false"
+                                        duration="800"
+                                        animation="easeInOutQuart"
+                                        animation-delay="0"
+                                        ng-show="isTimerPassHour(2)"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="detail-timer">
+                    <img src="img/start.png" ng-click="setTimer()" style="width: 60px; height: 60px">
+                    <div class="detail-timer-time">30:00</div>
+                    <img src="img/clear.png" class="detail-timer-delete">
+                </div>
             </section>
             <section ng-controller="AlertsCtrl">
                 <div class="alerts-counters"><span class="alerts-count">{{alerts.length}} new&nbsp;|&nbsp;</span><span
@@ -196,6 +322,20 @@
                 </div>
             </div>
 
+        </div>
+    </div>
+</div>
+<div class="ui-page" id="set-timer">
+    <div class="ui-content">
+        <div ng-controller="HeaderCtrl" class="header" ng-click="goBack()">
+            <img src="img/back.png" class="back-btn">
+            <span class="screen-title">Set Timer</span>
+            <span class="clock">{{time |date:'HH:mm'}}</span>
+        </div>
+        <div ng-controller="SetTimerCtrl" class="contents">
+            <uib-timepicker ng-model="timer" readonly-input="true" show-spinners="true"
+                            show-seconds="true"
+                            show-meridian="false"></uib-timepicker>
         </div>
     </div>
 </div>
