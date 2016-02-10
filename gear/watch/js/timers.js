@@ -6,7 +6,13 @@ angular.module('Watch')
         timeLeftYellow: 900, // 15 minutes
         timeLeftGreen: 1800 // 30 minutes
     })
-    .controller('TimersCtrl', function ($scope, $interval, AppState, timerConfig) {
+    .service('TimerTick', function ($rootScope, $interval) {
+        $interval(function () {
+            $rootScope.$emit("timerTick");
+        }, 1000);
+        return {};
+    })
+    .controller('TimersCtrl', function ($scope, $rootScope, AppState, timerConfig, TimerTick) {
         $scope.selectedTimer = AppState.getTimer(0);
 
         $scope.onInitMainSvg = function () {
@@ -25,6 +31,12 @@ angular.module('Watch')
             });
         };
 
+        $scope.showTimerDetails = function (index) {
+            AppState.activeTimer = index;
+            AppState.currentScreen = 'timer-details';
+            tau.changePage('timer-details');
+        };
+
         $scope.getTimer = function (ind) {
             return AppState.getTimer(ind);
         };
@@ -36,7 +48,6 @@ angular.module('Watch')
         };
 
         $scope.setCountDown = function () {
-            console.error("ADDING COUNTDOWN");
             AppState.setNewCountdown(true);
             AppState.currentScreen = 'set-timer';
             tau.changePage('set-timer');
@@ -78,7 +89,7 @@ angular.module('Watch')
             }
         };
 
-        $interval(function () {
+        $rootScope.$on('timerTick', function (event, data) {
             for (var i = 0; i < AppState.totalTimers(); i++) {
                 var timer = AppState.getTimer(i);
                 if (!AppState.isActive(i)) {
@@ -91,7 +102,7 @@ angular.module('Watch')
                 }
             }
             $scope.updateMainDisplay();
-        }, 1000);
+        });
 
         $scope.updateTimer = function (index, timer) {
             if (timer.elapsed >= timer.total) {
@@ -121,7 +132,6 @@ angular.module('Watch')
             } else {
                 timer.current = timer.elapsed;
             }
-
         };
 
         $scope.updateMainDisplay = function () {
@@ -154,7 +164,6 @@ angular.module('Watch')
         };
 
         $scope.playPause = function (index) {
-            console.error("PLAY PAUSE");
             AppState.setActive(index, !AppState.isActive(index));
         };
 
@@ -175,12 +184,10 @@ angular.module('Watch')
         $rootScope.$on('close', function (event, data) {
             if (data == 'set-timer') {
                 var totalTime = $scope.timer.getSeconds() + $scope.timer.getMinutes() * 60 + $scope.timer.getHours() * 3600;
-                console.error("TOTAL = " + totalTime);
                 if (totalTime == 0) {
                     return;
                 }
 
-                console.error("COUNTDOWN? " + AppState.isNewTimerCountdown);
                 var elapsed = AppState.isNewTimerCountdown ? totalTime : 0;
                 var newTimer = {
                     name: AppState.totalTimers() + 1,
@@ -194,4 +201,128 @@ angular.module('Watch')
                 $scope.timer = new Date("1/1/16 0:00");
             }
         });
+    })
+    .controller('TimerDetailsCtrl', function ($scope, $rootScope, AppState, timerConfig, TimerTick) {
+        $scope.timerIndex = AppState.activeTimer;
+        $scope.timer = AppState.getTimer(AppState.activeTimer);
+
+        $scope.onTimerDetailSvgReady = function () {
+            var mainSnap = Snap("#timer-details-svg");
+            $scope.timerName = mainSnap.select("#name-value");
+            $scope.timerProgress = mainSnap.select("#current-value");
+        };
+
+        $scope.removeTimer = function () {
+            AppState.removeTimer($scope.timerIndex);
+        };
+
+        $scope.playPause = function () {
+            AppState.setActive($scope.timerIndex, !AppState.isActive($scope.timerIndex));
+        };
+
+        $scope.updateTimer = function () {
+            var timer = AppState.getTimer($scope.timerIndex);
+
+            if (timer.elapsed >= timer.total) {
+                timer.elapsed = timer.total;
+                AppState.setActive(index, false);
+            } else {
+                timer.elapsed += timerConfig.tick;
+            }
+
+            if (timer.elapsed > timerConfig.circleMax) {
+                timer.current = timer.current - timerConfig.circleMax * (timer.current / timerConfig.circleMax);
+            } else {
+                timer.current = timer.elapsed;
+            }
+        };
+
+        $scope.updateCountdown = function () {
+            var timer = AppState.getTimer($scope.timerIndex);
+            if (timer.elapsed <= 0) {
+                timer.elapsed = 0;
+                AppState.setActive(index, false);
+            } else {
+                timer.elapsed -= timerConfig.tick;
+            }
+
+            if (timer.total - timer.elapsed > timerConfig.circleMax) {
+                timer.current = timer.current - timerConfig.circleMax * (timer.current / timerConfig.circleMax);
+            } else {
+                timer.current = timer.elapsed;
+            }
+
+        };
+
+        $scope.updateMainDisplay = function () {
+            if (!$scope.timerName) {
+                return;
+            }
+
+            var timer = AppState.getTimer($scope.timerIndex);
+            if (timer) {
+                $scope.timerName.attr({text: "0" + timer.name});
+                var format = timer.countdown ? "-HH:mm:ss" : "HH:mm:ss";
+                var current = moment.duration(timer.current, 'seconds').format(format, {trim: false});
+                $scope.timerProgress.attr({text: current});
+            } else {
+                $scope.timerName.attr({text: ""});
+                $scope.timerProgress.attr({text: ""});
+            }
+        };
+
+        $scope.getTimerColor = function () {
+            if (!AppState.getTimer($scope.timerIndex)) {
+                return;
+            }
+
+            var timer = AppState.getTimer($scope.timerIndex);
+            var timeLeft = 0;
+            if (timer.countdown) {
+                timeLeft = timer.elapsed;
+            } else {
+                timeLeft = timer.total - timer.elapsed;
+            }
+
+            if (timeLeft <= timerConfig.timeLeftOrange) {
+                return 'EE8421';
+            } else if (timeLeft <= timerConfig.timeLeftYellow) {
+                return 'F7E53B';
+            } else if (timeLeft <= timerConfig.timeLeftGreen) {
+                return '81D135';
+            } else {
+                return '#FFF';
+            }
+        };
+
+        $scope.isTimerPassHour = function () {
+            if (!AppState.getTimer($scope.timerIndex)) {
+                return;
+            }
+
+            var timer = AppState.getTimer($scope.timerIndex);
+            if (timer.countdown) {
+                return timer.total - timer.elapsed >= timerConfig.circleMax;
+            } else {
+                return timer.elapsed >= timerConfig.circleMax;
+            }
+        };
+
+        $rootScope.$on('timerTick', function (event, data) {
+            //if (AppState.isActive($scope.timerIndex)) {
+            //    var timer = AppState.getTimer($scope.timerIndex);
+            //    if (timer.countdown) {
+            //        $scope.updateCountdown();
+            //    } else {
+            //        $scope.updateTimer();
+            //    }
+            //}
+            $scope.updateMainDisplay();
+        });
+
+        $scope.getTimerCurrent = function () {
+            var timer = AppState.getTimer($scope.timerIndex);
+            if (timer) return timer.current;
+            else return 0;
+        }
     });

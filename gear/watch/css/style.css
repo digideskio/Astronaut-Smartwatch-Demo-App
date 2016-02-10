@@ -451,7 +451,7 @@ h4.role {
   top: 0;
   left: 0;
   z-index: 10;
-  margin: 23px 0 0 43px;
+  margin: 23px 0 0 50px;
   font-size: 40px;
   display: flex;
   display: -webkit-flex;
@@ -470,6 +470,7 @@ td.form-group.uib-time > input {
 }
 .uib-timepicker {
   width: 100%;
+  margin: auto;
 }
 .timerz {
   position: absolute;
@@ -522,4 +523,29 @@ td.form-group.uib-time > input {
 .timer-sub {
   font-size: 32px;
   font-weight: 400;
+}
+.timer-details-main-cont {
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  -webkit-align-items: center;
+  justify-content: center;
+  -webkit-justify-content: center;
+  width: 100%;
+  height: 310px;
+  margin-top: 30px;
+}
+.progress-wrapper-details {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  margin: 933px 0 0 50px;
+  font-size: 40px;
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  -webkit-align-items: center;
+  justify-content: center;
+  -webkit-justify-content: center;
 }

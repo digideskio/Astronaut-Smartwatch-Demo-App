@@ -2,11 +2,12 @@ angular.module("Watch", ['ngRoute', 'ngResource', 'angular.filter', 'infinite-sc
     .config(function ($locationProvider) {
         return $locationProvider.html5Mode(true).hashPrefix("!");
     })
-    .controller('HeaderCtrl', function ($scope, $interval, $rootScope, AppState) {
+    .controller('HeaderCtrl', function ($scope, $interval, $rootScope, AppState, TimerTick) {
         $scope.time = new Date();
-        $interval(function () {
+
+        $rootScope.$on('timerTick', function (event, data) {
             $scope.time = new Date();
-        }, 1000);
+        });
 
         $scope.goBack = function () {
             $rootScope.$emit("close", AppState.currentScreen);

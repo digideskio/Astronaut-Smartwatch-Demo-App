@@ -8,6 +8,7 @@ angular.module('Watch')
             event: {},
             alert: {},
             isNewTimerCountdown: false,
+            activeTimer: 0,
             timersInfo: {
                 timers: [],
                 get: function (ind) {
@@ -28,7 +29,16 @@ angular.module('Watch')
                     this.timers[index].active = active;
                 },
                 isActive: function (index) {
-                    return this.timers[index].active;
+                    if (this.timers.length == 0) {
+                        return false;
+                    } else {
+                        var timer = this.timers[index];
+                        if (timer) {
+                            return timer.active;
+                        } else {
+                            return false;
+                        }
+                    }
                 }
             }
         };

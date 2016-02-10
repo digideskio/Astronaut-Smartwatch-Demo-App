@@ -192,9 +192,9 @@
                 </div>
 
                 <div ng-repeat="tm in timerz.timers">
-                    <div class="timers-list">
+                    <div class="timers-list" ng-click="showTimerDetails($index)">
                         <div class="small-timer-cont" ng-click="playPause($index)">
-                            <div class="small-timer" >
+                            <div class="small-timer">
                                 <object type="image/svg+xml" id="pause" data="img/play.svg">
                                 </object>
                             </div>
@@ -392,6 +392,57 @@
             <uib-timepicker ng-model="timer" readonly-input="true" show-spinners="true"
                             show-seconds="true"
                             show-meridian="false"></uib-timepicker>
+        </div>
+    </div>
+</div>
+<div class="ui-page" id="timer-details">
+    <div class="ui-content">
+        <div ng-controller="HeaderCtrl" class="header" ng-click="goBack()">
+            <img src="img/back.png" class="back-btn">
+            <span class="screen-title">Timer Details</span>
+            <span class="clock">{{time |date:'HH:mm'}}</span>
+        </div>
+        <div class="timer-details-main-cont" ng-controller="TimerDetailsCtrl">
+            <div class="timers-main">
+                <object type="image/svg+xml" data="img/timers-main.svg" id="timer-details-svg"
+                        sb-load="onTimerDetailSvgReady()"></object>
+            </div>
+            <div class="progress-wrapper-details">
+                <div
+                        round-progress
+                        max="3600"
+                        current="getTimerCurrent()"
+                        color="{{getTimerColor()}}"
+                        bgcolor="transparent"
+                        radius="130"
+                        stroke="10"
+                        semi="false"
+                        rounded="false"
+                        clockwise="true"
+                        responsive="false"
+                        duration="800"
+                        animation="easeOutCubic"
+                >
+                    <div
+                            round-progress
+                            max="100"
+                            current="100"
+                            color="{{getTimerColor()}}"
+                            bgcolor="transparent"
+                            radius="130"
+                            offset="5"
+                            stroke="2"
+                            semi="false"
+                            rounded="false"
+                            clockwise="true"
+                            responsive="false"
+                            duration="800"
+                            animation="easeInOutQuart"
+                            animation-delay="0"
+                            ng-show="isTimerPassHour()"></div>
+
+                </div>
+            </div>
         </div>
     </div>
 </div>
