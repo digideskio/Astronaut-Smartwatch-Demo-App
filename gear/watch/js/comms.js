@@ -116,7 +116,7 @@ angular.module('Watch')
             $scope.ku2DownBad.attr({
                 visibility: commsData.kuband.down2 == 'Bad' ? 'visible' : 'hidden'
             });
-        }
+        };
 
         $scope.drawOutages = function (info) {
             $scope.aosSnap = Snap("#aos");

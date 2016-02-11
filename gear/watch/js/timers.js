@@ -140,7 +140,7 @@ angular.module('Watch')
                 var format = $scope.selectedTimer.countdown ? "-HH:mm:ss" : "HH:mm:ss";
                 var current = moment.duration($scope.selectedTimer.current, 'seconds').format(format, {trim: false});
                 $scope.selectedTimerProgress.attr({text: current});
-            } else {
+            } else if($scope.selectedTimerName) {
                 $scope.selectedTimerName.attr({text: ""});
                 $scope.selectedTimerProgress.attr({text: ""});
             }
