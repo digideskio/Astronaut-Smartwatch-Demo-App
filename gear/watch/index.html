@@ -55,19 +55,19 @@
             <span class="battery-level">{{battery.getLevel()}}%</span>
         </div>
         <div class="dashboard-clock-cont">
-            <h2 class="today-date">{{time |date:'EEE, dd/M'}}</h2>
+            <h2 class="today-date">{{time |date:'EEE, dd/MM'}}</h2>
 
             <h1 class="dashboard-clock">{{time | date:'HH:mm:ss'}}<span class="gmt">GMT</span></h1>
         </div>
         <div class="dashboard-timers">
-            <div class="dash-timers-list" ng-click="showTimerDetails($index)">
-                <div class="small-timer-cont" ng-click="playPause($index)">
+            <div ng-repeat="tm in timerz.timers">
+                <div class="dash-timers-list">
                     <div>
                         <div
                                 round-progress
                                 max="3600"
-                                current="3300"
-                                color="#fff"
+                                current="timerz.get($index).current"
+                                color="{{getTimerColor($index)}}"
                                 bgcolor="transparent"
                                 radius="20"
                                 stroke="5"
@@ -98,107 +98,21 @@
                                     ></div>
                         </div>
                     </div>
+                    <h2 class="dash-timer-title"><span>0{{$index+1}}</span>&nbsp<span>{{tm.name}}</span><br><span
+                            class="dash-timer-sub">{{timeLeft($index)}}</span></h2>
                 </div>
-                <h2 class="timer-title"><span>0</span><span>{{tm.name}}</span><br><span
-                        class="timer-sub">{{timeLeft($index)}}</span></h2>
-                <img src="img/clear.png" class="detail-timer-delete" ng-click="removeTimer($index)">
-            </div>
-            <div class="timers-list" ng-click="showTimerDetails($index)">
-                <div class="small-timer-cont" ng-click="playPause($index)">
-                    <div class="small-timer">
-                        <object type="image/svg+xml" id="dash-pause" data="img/play.svg">
-                        </object>
-                    </div>
-                    <div>
-                        <div
-                                round-progress
-                                max="3600"
-                                current="timerz.get($index).current"
-                                color="{{getTimerColor($index)}}"
-                                bgcolor="transparent"
-                                radius="32"
-                                stroke="7"
-                                semi="false"
-                                rounded="false"
-                                clockwise="true"
-                                responsive="false"
-                                duration="800"
-                                animation="easeOutCubic"
-                                >
-                            <div
-                                    round-progress
-                                    max="100"
-                                    current="100"
-                                    bgcolor="transparent"
-                                    ng-show="isTimerPassHour($index)"
-                                    radius="32"
-                                    offset="2"
-                                    stroke="2"
-                                    semi="false"
-                                    rounded="false"
-                                    clockwise="true"
-                                    responsive="false"
-                                    duration="800"
-                                    animation="easeInOutQuart"
-                                    animation-delay="0"
-                                    color="{{getTimerColor($index)}}"
-                                    ></div>
-                        </div>
-                    </div>
-                </div>
-                <h2 class="timer-title"><span>0</span><span>{{tm.name}}</span><br><span
-                        class="timer-sub">{{timeLeft($index)}}</span></h2>
-                <img src="img/clear.png" class="detail-timer-delete" ng-click="removeTimer($index)">
             </div>
 
-            <div class="timers-list" ng-click="showTimerDetails($index)">
-                <div class="small-timer-cont" ng-click="playPause($index)">
-                    <div class="small-timer">
-                        <object type="image/svg+xml" id="pause" data="img/play.svg">
-                        </object>
-                    </div>
-                    <div>
-                        <div
-                                round-progress
-                                max="3600"
-                                current="timerz.get($index).current"
-                                color="{{getTimerColor($index)}}"
-                                bgcolor="transparent"
-                                radius="32"
-                                stroke="7"
-                                semi="false"
-                                rounded="false"
-                                clockwise="true"
-                                responsive="false"
-                                duration="800"
-                                animation="easeOutCubic"
-                                >
-                            <div
-                                    round-progress
-                                    max="100"
-                                    current="100"
-                                    bgcolor="transparent"
-                                    ng-show="isTimerPassHour($index)"
-                                    radius="32"
-                                    offset="2"
-                                    stroke="2"
-                                    semi="false"
-                                    rounded="false"
-                                    clockwise="true"
-                                    responsive="false"
-                                    duration="800"
-                                    animation="easeInOutQuart"
-                                    animation-delay="0"
-                                    color="{{getTimerColor($index)}}"
-                                    ></div>
-                        </div>
-                    </div>
-                </div>
-                <h2 class="timer-title"><span>0</span><span>{{tm.name}}</span><br><span
-                        class="timer-sub">{{timeLeft($index)}}</span></h2>
-                <img src="img/clear.png" class="detail-timer-delete" ng-click="removeTimer($index)">
-            </div>
 
+        </div>
+        <div class="dashboard-alerts">
+            <h4>A:<span class="dashboard-alert-count"><br>40</span></h4>
+            <div class="flex-spacer"></div>
+            <h4>C:<span class="dashboard-alert-count"><br>40</span></h4>
+            <div class="flex-spacer"></div>
+            <h4>W:<span class="dashboard-alert-count"><br>40</span></h4>
+            <div class="flex-spacer"></div>
+            <h4>E:<span class="dashboard-alert-count"><br>40</span></h4>
         </div>
     </div>
 </div>
@@ -219,7 +133,7 @@
     <div id="hsectionchanger" class="ui-content">
         <!-- section changer has only one child. -->
         <div>
-            <section ng-controller="TimelineCtrl">
+            <section ng-controller="TimelineCtrl" class="ui-section-active">
                 <!--<pre>{{ events | json }}</pre>-->
                 <div class="role-selector" id="role-selector" ng-click="selectRole()">
                     <img src="img/role-icon.png" class="display:inline"><h4 class="role">{{activeRole}}</h4>
@@ -246,7 +160,7 @@
                     <div class="events-placeholder" ng-show="!busy && (!events || events.length == 0)">No events</div>
                 </div>
             </section>
-            <section ng-controller="TimersCtrl as tmCtrl" class="ui-section-active">
+            <section ng-controller="TimersCtrl as tmCtrl">
                 <div class="timers-main-cont">
                     <div class="timers-main">
                         <object type="image/svg+xml" id="timers-main" data="img/timers-main.svg"
@@ -409,7 +323,7 @@
                                 </div>
                             </div>
                         </div>
-                        <h2 class="timer-title"><span>0</span><span>{{tm.name}}</span><br><span
+                        <h2 class="timer-title"><span>0{{$index+1}}</span>&nbsp<span>{{tm.name}}</span><br><span
                                 class="timer-sub">{{timeLeft($index)}}</span></h2>
                         <img src="img/clear.png" class="detail-timer-delete" ng-click="removeTimer($index)">
                     </div>
@@ -419,7 +333,7 @@
                             sb-load="onInitButtonsSvg()"></object>
                 </div>
             </section>
-            <section ng-controller="AlertsCtrl">
+            <section ng-controller="AlertsCtrl" >
                 <div class="alerts-counters"><span class="alerts-count">{{alerts.length}} new&nbsp;|&nbsp;</span><span
                         class="critical-alerts-count">{{(alerts | filter: {status:'Critical'}).length}} critical</span>
                 </div>

@@ -1,10 +1,22 @@
 angular.module('Watch')
     .factory('AppState', function () {
-        tau.defaults.pageTransition = "slideup";
+        //tau.defaults.pageTransition = "slideup";
 
         var currentState = {
+            events: {
+                current: null,
+                next: null,
+
+                getCurrent: function () {
+                    return this.current;
+                },
+
+                getNext: function () {
+                    return this.next;
+                }
+            },
             currentScreen: '',
-            activeRole: '',
+            activeRole: 'ISS CDR',
             event: {},
             alert: {},
             isNewTimerCountdown: false,
@@ -15,12 +27,13 @@ angular.module('Watch')
                     return this.timers[ind];
                 },
                 set: function (ind, timer) {
+                    if(this.timers[ind]) {
+
+                    }
                     this.timers[ind] = timer;
                 },
                 remove: function (ind) {
-                    console.error("REMOVEING!!");
                     this.timers.splice(ind, 1);
-                    console.error("TOOTT " + this.timers.length);
                 },
                 count: function () {
                     return this.timers.length;

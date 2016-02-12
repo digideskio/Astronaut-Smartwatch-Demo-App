@@ -8,7 +8,7 @@ var moment = require('moment');
 
 
 function sortEvents() {
-    eventsModel.events.sort(function(l, r) {
+    eventsModel.events.sort(function (l, r) {
         var a = moment(l.date + " " + l.startTime, "DD/MM/YYYY HH:mm");
         var b = moment(r.date + " " + r.startTime, "DD/MM/YYYY HH:mm");
         return b.isBefore(a);
@@ -54,10 +54,10 @@ router.get('/:eventId/edit', function (req, res) {
     });
 });
 
-router.get('/:eventId/delete', function(req, res) {
+router.get('/:eventId/delete', function (req, res) {
     var eventId = Number(req.params.eventId);
-    for(var i=0; i < eventsModel.events.length; i++) {
-        if(eventsModel.events[i].id == eventId) {
+    for (var i = 0; i < eventsModel.events.length; i++) {
+        if (eventsModel.events[i].id == eventId) {
             eventsModel.events.splice(i, 1);
             break;
         }
@@ -67,11 +67,13 @@ router.get('/:eventId/delete', function(req, res) {
     res.redirect('/admin/events');
 });
 
-router.post('/:eventId/edit', function(req, res) {
+router.post('/:eventId/edit', function (req, res) {
     var eventId = req.params.eventId;
     console.log("Editing event : ", req.body.name);
     console.log('New data = %O', req.body);
-    var eventIndex = _.findIndex(eventsModel.events, function(e) { return e.id ==eventId});
+    var eventIndex = _.findIndex(eventsModel.events, function (e) {
+        return e.id == eventId
+    });
     console.log('INDEX = ' + eventIndex);
     eventsModel.events[eventIndex] = req.body;
     eventsModel.events[eventIndex].id = eventId;
@@ -83,7 +85,11 @@ router.post('/:eventId/edit', function(req, res) {
 router.post('/', function (req, res) {
     console.log("Creating new event: %O", req.body);
     var newEvent = req.body;
-    newEvent.id = eventsModel.events[eventsModel.events.length - 1].id + 1;
+    if(eventsModel.events.length > 0) {
+        newEvent.id = eventsModel.events[eventsModel.events.length - 1].id + 1;
+    } else {
+        newEvent.id = 0;
+    }
     eventsModel.events.push(newEvent);
     sortEvents();
     res.location('admin/events');

@@ -1,10 +1,11 @@
 angular.module("Watch")
-    .controller("DashboardCtrl", function ($rootScope, $scope, Api, System, TimerTick) {
+    .controller("DashboardCtrl", function ($rootScope, $scope, Api, System, AppState, TimerCommon) {
         $scope.colorGood = '#1EDF7A';
         $scope.colorWeak = '#FFE620';
         $scope.colorBad = '#FC3D21';
         $scope.time = new Date();
         $scope.battery = System.getBattery();
+        $scope.timerz = AppState.timersInfo;
 
         $scope.onDashboardClick = function () {
             tau.changePage('hsectionchangerPage');
@@ -99,8 +100,21 @@ angular.module("Watch")
             }
         };
 
+        $scope.isTimerPassHour = function (ind) {
+            return TimerCommon.isTimerPassHour(ind);
+        };
+
+        $scope.getTimerColor = function (ind) {
+            return TimerCommon.getTimerColor(ind);
+        };
+
+        $scope.timeLeft = function (index) {
+            return TimerCommon.timeLeft(index);
+        };
+
         $rootScope.$on('timerTick', function (event, data) {
             $scope.time = new Date();
         });
 
-    });
+    })
+;

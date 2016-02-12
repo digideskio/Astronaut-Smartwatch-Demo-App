@@ -1,15 +1,18 @@
 angular.module('Watch')
-    .controller('TimelineCtrl', function ($scope, Api, AppState) {
+    .controller('TimelineCtrl', function ($rootScope, $scope, Api, AppState) {
         moment.locale('en-gb');
         $scope.busy = true;
         $scope.lastQueriedDate = moment();
-        $scope.activeRole = AppState.getActiveRole() || 'none';
+        $scope.activeRole = AppState.getActiveRole() || 'ISS CDR';
 
-        Api.events.get({role: 'none', day: $scope.lastQueriedDate.format("L")}, function (data) {
-            $scope.activeRole = data.role;
-            $scope.events = data.events;
-            $scope.busy = false;
-        });
+        $scope.refresh = function () {
+            Api.events.get({role: $scope.activeRole, day: $scope.lastQueriedDate.format("L")}, function (data) {
+                $scope.activeRole = data.role;
+                $scope.busy = false;
+                $scope.events = data.events;
+                $scope.updateEventsState();
+            });
+        };
 
         $scope.showEvent = function (event) {
             AppState.event = event;
@@ -18,19 +21,101 @@ angular.module('Watch')
             tau.changePage('event-details');
         };
 
-        $scope.refresh = function () {
+        $rootScope.$on('timerTick', function () {
+            var now = moment();
+            var current = AppState.events.current;
+            var next = AppState.events.next;
+
+            if (current != null) {
+                var endTime = moment(current.date + " " + current.endTime, "DD/MM/YYYY HH:mm");
+                if (now.isAfter(endTime)) {
+                    $scope.updateEventsState();
+                }
+            }
+
+            if (next != null) {
+                var startTime = moment(next.date + " " + next.startTime, "DD/MM/YYYY HH:mm");
+                if (now.isAfter(startTime)) {
+                    $scope.updateEventsState();
+                }
+            }
+        });
+
+        $scope.fetchNew = function () {
             Api.events.get({role: $scope.activeRole, day: $scope.lastQueriedDate.format("L")}, function (data) {
                 $scope.busy = false;
                 $scope.activeRole = data.role;
                 $scope.events = $scope.events.concat(data.events);
+                $scope.updateEventsState();
             }, function (err) {
             })
+        };
+
+        $scope.updateEventsState = function () {
+            var updatedTimers = [];
+            for (var i = 0; i < AppState.timersInfo.timers.length; i++) {
+                var timer = AppState.timersInfo.timers[i];
+                if (timer.type != 'current' || timer.type != 'next') {
+                    updatedTimers.push(timer);
+                }
+            }
+
+            if ($scope.events && $scope.events.length > 0) {
+                var now = moment();
+                for (var j = 0; j < $scope.events.length; j++) {
+                    var event = $scope.events[j];
+                    var startTime = moment(event.date + " " + event.startTime, "DD/MM/YYYY HH:mm");
+                    var endTime = moment(event.date + " " + event.endTime, "DD/MM/YYYY HH:mm");
+                    if (now.isBetween(startTime, endTime)) {
+                        $scope.addCurrentEventTimer(updatedTimers, event, now, startTime, endTime);
+                    } else if (startTime.isAfter(now)) {
+                        $scope.addNextEventTimer(updatedTimers, event, now, startTime);
+                        break;
+                    }
+                }
+
+                AppState.timersInfo.timers = updatedTimers;
+            } else {
+                AppState.events.current = null;
+                AppState.events.next = null;
+            }
+        };
+
+        $scope.addCurrentEventTimer = function (arr, event, now, start, end) {
+            var elapsed = now.diff(start) / 1000;
+            var total = end.diff(start) / 1000;
+            arr[0] = {
+                pos: 0,
+                name: event.name,
+                elapsed: elapsed,
+                total: total,
+                countdown: false,
+                active: true,
+                current: elapsed,
+                type: 'current'
+            };
+        };
+
+        $scope.addNextEventTimer = function (arr, event, now, start) {
+            var elapsed = start.diff(now) / 1000;
+            var total = elapsed;
+            var pos = arr.length > 0 ? 1 : 0;
+            arr[pos] = {
+                pos: pos,
+                name: event.name,
+                elapsed: elapsed,
+                total: total,
+                countdown: true,
+                active: true,
+                current: elapsed,
+                type: 'current'
+            };
         };
 
         $scope.nextPage = function () {
             $scope.busy = true;
             $scope.lastQueriedDate = $scope.lastQueriedDate.add(1, 'days');
-            $scope.refresh();
+            $scope.fetchNew();
         };
 
         $scope.selectRole = function () {

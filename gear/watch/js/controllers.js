@@ -5,7 +5,7 @@ angular.module("Watch", ['ngRoute', 'ngResource', 'angular.filter', 'infinite-sc
     .controller('HeaderCtrl', function ($scope, $interval, $rootScope, AppState, TimerTick) {
         $scope.time = new Date();
 
-        $rootScope.$on('timerTick', function (event, data) {
+        $rootScope.$on('timerTick', function () {
             $scope.time = new Date();
         });
 

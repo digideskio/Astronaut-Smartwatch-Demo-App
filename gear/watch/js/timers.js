@@ -6,14 +6,61 @@ angular.module('Watch')
         timeLeftYellow: 900, // 15 minutes
         timeLeftGreen: 1800 // 30 minutes
     })
-    .service('TimerTick', function ($rootScope, $interval) {
+    .factory('TimerTick', function ($rootScope, $interval) {
         $interval(function () {
             $rootScope.$emit("timerTick");
         }, 1000);
         return {};
     })
-    .controller('TimersCtrl', function ($scope, $rootScope, AppState, timerConfig, TimerTick) {
-        $scope.selectedTimer = AppState.getTimer(0);
+    .factory("TimerCommon", function (AppState, timerConfig) {
+        return {
+            isTimerPassHour: function (index) {
+                if (AppState.getTimer(index)) {
+                    var timer = AppState.getTimer(index);
+                    if (timer.countdown) {
+                        return timer.total - timer.elapsed >= timerConfig.circleMax;
+                    } else {
+                        return timer.elapsed >= timerConfig.circleMax;
+                    }
+                }
+            },
+
+            getTimerColor: function (index) {
+                if (AppState.getTimer(index)) {
+                    var timer = AppState.getTimer(index);
+                    if (!timer.countdown) {
+                        return "#fff";
+                    }
+                    var timeLeft = 0;
+                    if (timer.countdown) {
+                        timeLeft = timer.elapsed;
+                    } else {
+                        timeLeft = timer.total - timer.elapsed;
+                    }
+
+                    if (timeLeft <= timerConfig.timeLeftOrange) {
+                        return 'EE8421';
+                    } else if (timeLeft <= timerConfig.timeLeftYellow) {
+                        return 'F7E53B';
+                    } else if (timeLeft <= timerConfig.timeLeftGreen) {
+                        return '81D135';
+                    } else {
+                        return '#FFF';
+                    }
+
+                } else {
+                    return '#FFF';
+                }
+            },
+            timeLeft: function (ind) {
+                var timer = AppState.getTimer(ind);
+                var format = timer.countdown ? "-HH:mm:ss" : "HH:mm:ss";
+                return moment.duration(timer.current, 'seconds').format(format, {trim: false});
+            }
+        }
+    })
+    .controller('TimersCtrl', function ($scope, $rootScope, AppState, timerConfig, TimerCommon) {
+        $scope.selectedTimerIndex = 0;
 
         $scope.onInitMainSvg = function () {
             var mainSnap = Snap("#timers-main");
@@ -54,39 +101,11 @@ angular.module('Watch')
         };
 
         $scope.isTimerPassHour = function (index) {
-            if (AppState.getTimer(index)) {
-                var timer = AppState.getTimer(index);
-                if (timer.countdown) {
-                    return timer.total - timer.elapsed >= timerConfig.circleMax;
-                } else {
-                    return timer.elapsed >= timerConfig.circleMax;
-                }
-            }
+            return TimerCommon.isTimerPassHour(index);
         };
 
         $scope.getTimerColor = function (index) {
-            if (AppState.getTimer(index)) {
-                var timer = AppState.getTimer(index);
-                var timeLeft = 0;
-                if (timer.countdown) {
-                    timeLeft = timer.elapsed;
-                } else {
-                    timeLeft = timer.total - timer.elapsed;
-                }
-
-                if (timeLeft <= timerConfig.timeLeftOrange) {
-                    return 'EE8421';
-                } else if (timeLeft <= timerConfig.timeLeftYellow) {
-                    return 'F7E53B';
-                } else if (timeLeft <= timerConfig.timeLeftGreen) {
-                    return '81D135';
-                } else {
-                    return '#FFF';
-                }
-
-            } else {
-                return '#FFF';
-            }
+            return TimerCommon.getTimerColor(index);
         };
 
         $rootScope.$on('timerTick', function (event, data) {
@@ -117,6 +136,8 @@ angular.module('Watch')
             } else {
                 timer.current = timer.elapsed;
             }
+
+            AppState.setTimer(index, timer);
         };
 
         $scope.updateCountdown = function (index, timer) {
@@ -132,24 +153,26 @@ angular.module('Watch')
             } else {
                 timer.current = timer.elapsed;
             }
+
+            AppState.setTimer(index, timer);
         };
 
         $scope.updateMainDisplay = function () {
-            if ($scope.selectedTimer) {
-                $scope.selectedTimerName.attr({text: "0" + $scope.selectedTimer.name});
-                var format = $scope.selectedTimer.countdown ? "-HH:mm:ss" : "HH:mm:ss";
-                var current = moment.duration($scope.selectedTimer.current, 'seconds').format(format, {trim: false});
-                $scope.selectedTimerProgress.attr({text: current});
-            } else if($scope.selectedTimerName) {
+            if (AppState.getTimer($scope.selectedTimerIndex)) {
+                if ($scope.selectedTimerName) {
+                    $scope.selectedTimerName.attr({text: "01"});
+                    var format = AppState.getTimer($scope.selectedTimerIndex).countdown ? "-HH:mm:ss" : "HH:mm:ss";
+                    var current = moment.duration(AppState.getTimer($scope.selectedTimerIndex).current, 'seconds').format(format, {trim: false});
+                    $scope.selectedTimerProgress.attr({text: current});
+                }
+            } else if ($scope.selectedTimerName) {
                 $scope.selectedTimerName.attr({text: ""});
                 $scope.selectedTimerProgress.attr({text: ""});
             }
         };
 
         $scope.timeLeft = function (index) {
-            var timer = AppState.getTimer(index);
-            var format = timer.countdown ? "-HH:mm:ss" : "HH:mm:ss";
-            return moment.duration($scope.selectedTimer.current, 'seconds').format(format, {trim: false});
+            return TimerCommon.timeLeft(index);
         };
 
         $scope.removeTimer = function (index) {
@@ -159,7 +182,7 @@ angular.module('Watch')
             if (AppState.totalTimers() == 0) {
                 $scope.selectedTimer = null;
             } else {
-                $scope.selectedTimer = AppState.getTimer(0);
+                $scope.selectedTimerIndex = 0;
             }
         };
 
@@ -173,7 +196,7 @@ angular.module('Watch')
             },
             function (newVal) {
                 $scope.timerz = AppState.timersInfo;
-                $scope.selectedTimer = AppState.getTimer(AppState.totalTimers() - 1);
+                $scope.selectedTimerIndex = AppState.totalTimers() - 1;
             },
             true);
 
@@ -190,19 +213,21 @@ angular.module('Watch')
 
                 var elapsed = AppState.isNewTimerCountdown ? totalTime : 0;
                 var newTimer = {
-                    name: AppState.totalTimers() + 1,
+                    pos: AppState.totalTimers() + 1,
+                    name: "Custom Timer",
                     elapsed: elapsed,
                     total: totalTime,
                     countdown: AppState.isNewCountdown(),
                     active: true,
-                    current: elapsed
+                    current: elapsed,
+                    type: 'custom'
                 };
                 AppState.setTimer(AppState.totalTimers(), newTimer);
                 $scope.timer = new Date("1/1/16 0:00");
             }
         });
     })
-    .controller('TimerDetailsCtrl', function ($scope, $rootScope, AppState, timerConfig, TimerTick) {
+    .controller('TimerDetailsCtrl', function ($scope, $rootScope, AppState, timerConfig, TimerCommon) {
         $scope.timerIndex = AppState.activeTimer;
         $scope.timer = AppState.getTimer(AppState.activeTimer);
 
@@ -272,40 +297,11 @@ angular.module('Watch')
         };
 
         $scope.getTimerColor = function () {
-            if (!AppState.getTimer($scope.timerIndex)) {
-                return;
-            }
-
-            var timer = AppState.getTimer($scope.timerIndex);
-            var timeLeft = 0;
-            if (timer.countdown) {
-                timeLeft = timer.elapsed;
-            } else {
-                timeLeft = timer.total - timer.elapsed;
-            }
-
-            if (timeLeft <= timerConfig.timeLeftOrange) {
-                return 'EE8421';
-            } else if (timeLeft <= timerConfig.timeLeftYellow) {
-                return 'F7E53B';
-            } else if (timeLeft <= timerConfig.timeLeftGreen) {
-                return '81D135';
-            } else {
-                return '#FFF';
-            }
+            return TimerCommon.getTimerColor($scope.timerIndex);
         };
 
         $scope.isTimerPassHour = function () {
-            if (!AppState.getTimer($scope.timerIndex)) {
-                return;
-            }
-
-            var timer = AppState.getTimer($scope.timerIndex);
-            if (timer.countdown) {
-                return timer.total - timer.elapsed >= timerConfig.circleMax;
-            } else {
-                return timer.elapsed >= timerConfig.circleMax;
-            }
+            return TimerCommon.isTimerPassHour($scope.timerIndex)
         };
 
         $rootScope.$on('timerTick', function (event, data) {
