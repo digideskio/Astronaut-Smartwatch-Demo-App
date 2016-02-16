@@ -21,7 +21,8 @@
     <script type="text/javascript" src="common/js/lib/moment-range.min.js"></script>
     <script type="text/javascript" src="common/js/lib/moment-duration-format.js"></script>
     <script type="text/javascript" src="common/js/lib/snap.svg-min.js"></script>
-    <script type="text/javascript" src="common/js/lib/ui-bootstrap-custom-tpls-1.1.1.js"></script>
+    <script type="text/javascript" src="common/js/lib/ui-bootstrap-custom-tpls-1.1.2.js"></script>
+    <script type="text/javascript" src="common/js/lib/ng-websocket.js"></script>
     <script type="text/javascript" src="js/controllers.js"></script>
     <script type="text/javascript" src="js/api.js"></script>
     <script type="text/javascript" src="js/comms.js"></script>
@@ -32,6 +33,7 @@
     <script type="text/javascript" src="js/directives.js"></script>
     <script type="text/javascript" src="js/dashboard.js"></script>
     <script type="text/javascript" src="js/system.js"></script>
+    <script type="text/javascript" src="js/notifications.js"></script>
 </head>
 <body ng-app="Watch">
 
@@ -107,10 +109,13 @@
         </div>
         <div class="dashboard-alerts">
             <h4>A:<span class="dashboard-alert-count"><br>40</span></h4>
+
             <div class="flex-spacer"></div>
             <h4>C:<span class="dashboard-alert-count"><br>40</span></h4>
+
             <div class="flex-spacer"></div>
             <h4>W:<span class="dashboard-alert-count"><br>40</span></h4>
+
             <div class="flex-spacer"></div>
             <h4>E:<span class="dashboard-alert-count"><br>40</span></h4>
         </div>
@@ -333,7 +338,7 @@
                             sb-load="onInitButtonsSvg()"></object>
                 </div>
             </section>
-            <section ng-controller="AlertsCtrl" >
+            <section ng-controller="AlertsCtrl">
                 <div class="alerts-counters"><span class="alerts-count">{{alerts.length}} new&nbsp;|&nbsp;</span><span
                         class="critical-alerts-count">{{(alerts | filter: {status:'Critical'}).length}} critical</span>
                 </div>
@@ -350,7 +355,7 @@
                         </div>
                     </div>
                     <div class="events-placeholder" ng-show='busy'>Loading data...</div>
-                    <div class="events-placeholder" ng-show="!busy && (!alerts || alerts.length == 0)">No events</div>
+                    <div class="events-placeholder" ng-show="!busy && (!alerts || alerts.length == 0)">No alerts</div>
                 </div>
             </section>
             <section ng-controller="CommsCtrl">
@@ -440,7 +445,7 @@
             <span class="clock">{{time |date:'HH:mm'}}</span>
         </div>
 
-        <div ng-controller="EventDetailCtrl">
+        <div ng-controller="AlertDetailCtrl">
             <div class="detail-header-parent">
                 <div class="detail-color"
                      ng-class="{'alert-detail-critical' : currentData.alert.status == 'Critical'}"></div>
@@ -453,31 +458,30 @@
                 </div>
             </div>
             <div class="alert-info-box">
-                <span class="alert-sub-title">System</span>
+                <div class="alert-row">
+                    <span class="alert-sub-title">System</span>
 
-                <h1 class="alert-info">{{currentData.alert.system}}</h1>
-            </div>
-
-            <div class="alert-info-box">
+                    <h1 class="aalert-info">{{currentData.alert.system}}</h1>
+                </div>
                 <div class="alert-row">
                     <span class="alert-sub-title">Status</span>
 
-                    <h1 class="alert-info">{{currentData.alert.status}}</h1>
+                    <h1 class="aalert-info">{{currentData.alert.status}}</h1>
                 </div>
                 <div class="alert-row">
                     <span class="alert-sub-title">Cleared</span>
 
-                    <h1 class="alert-info">{{currentData.alert.cleared || "C"}}</h1>
+                    <h1 class="aalert-info">{{currentData.alert.cleared || "C"}}</h1>
                 </div>
                 <div class="alert-row">
                     <span class="alert-sub-title">Ack</span>
 
-                    <h1 class="alert-info">{{currentData.alert.ack}}</h1>
+                    <h1 class="aalert-info">{{currentData.alert.ack}}</h1>
                 </div>
                 <div class="alert-row">
                     <span class="alert-sub-title">Annun</span>
 
-                    <h1 class="alert-info">{{currentData.alert.annun}}</h1>
+                    <h1 class="aalert-info">{{currentData.alert.annun}}</h1>
                 </div>
             </div>
 
@@ -546,6 +550,18 @@
 
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+<div class="footer" id="notification" ng-controller="NotificationsCtrl">
+    <div class='notification-bg' ng-click="onBgClick($event)">
+        <div class="notification" ng-show="activeNotifications.length > 0">
+            <h1 class="notification-title">{{main.title}}</h1>
+
+            <h2 class="notification-subtitle">{{main.time}}</h2>
+        </div>
+        <div class="notification" id="more" ng-show="activeNotifications.length > 1" ng-click="moreClick($event)">
+            <h1 class="notification-title">{{activeNotifications.length - 1}} more notifications</h1>
         </div>
     </div>
 </div>

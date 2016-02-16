@@ -24,7 +24,13 @@ function updateNavStatus(activePage) {
 }
 
 (function() {
-    //tau.defaults.pageTransition = "slideup";
+    //This listens for the back button press
+    document.addEventListener('tizenhwkey', function(e) {
+        if(e.keyName == "back") {
+            tau.back();
+        }
+    });
+
 
     var page = document.getElementById( "hsectionchangerPage" ),
         changer = document.getElementById( "hsectionchanger" ),

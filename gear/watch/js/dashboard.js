@@ -15,7 +15,7 @@ angular.module("Watch")
             var bluetoothSnap = Snap("#bluetooth");
             $scope.bluetooth = bluetoothSnap.select("#bluetooth-path");
             $scope.bluetooth.attr({
-                fill: System.getBluetooth() ? "#fff" : "#999"
+                fill: System.getBluetooth().status ? "#fff" : "#999"
             });
         };
 
@@ -23,7 +23,7 @@ angular.module("Watch")
             var wifiSnap = Snap("#wifi");
             $scope.wifi = wifiSnap.select("#wifi-path");
             $scope.wifi.attr({
-                fill: System.getWifi() ? "#fff" : "#999"
+                fill: System.getWifi().status ? "#fff" : "#999"
             });
         };
 

@@ -1,8 +1,8 @@
-angular.module("Watch", ['ngRoute', 'ngResource', 'angular.filter', 'infinite-scroll', 'angular-svg-round-progress', 'ui.bootstrap'])
+angular.module("Watch", ['ngRoute', 'ngResource', 'angular.filter', 'infinite-scroll', 'angular-svg-round-progress', 'ui.bootstrap', 'ngWebsocket'])
     .config(function ($locationProvider) {
         return $locationProvider.html5Mode(true).hashPrefix("!");
     })
-    .controller('HeaderCtrl', function ($scope, $interval, $rootScope, AppState, TimerTick) {
+    .controller('HeaderCtrl', function ($scope, $interval, $rootScope, AppState) {
         $scope.time = new Date();
 
         $rootScope.$on('timerTick', function () {

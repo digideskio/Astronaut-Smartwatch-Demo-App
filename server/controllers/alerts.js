@@ -2,11 +2,12 @@ var express = require('express');
 var router = express.Router();
 var _ = require('underscore');
 var moment = require('moment');
+var ws = require('../websocket');
 
 var alertsModel = require('../data/alertData');
 
 function sortAlerts() {
-    alertsModel.alerts.sort(function(l, r) {
+    alertsModel.alerts.sort(function (l, r) {
         var a = moment(l.date + " " + l.time, "DD/MM/YYYY HH:mm:ss");
         var b = moment(r.date + " " + r.time, "DD/MM/YYYY HH:mm:ss");
         return b.isBefore(a);
@@ -37,7 +38,10 @@ router.get('/add', function (req, res) {
 
 router.get('/:alertId/delete', function (req, res) {
     var alertId = req.params.alertId;
-    var alertIndex = _.findIndex(alertsModel.alerts, function(e) { return e.id == alertId});
+
+    var alertIndex = _.findIndex(alertsModel.alerts, function (e) {
+        return e.id == alertId
+    });
     alertsModel.alerts.splice(alertIndex, 1);
     sortAlerts();
     res.location('/admin/alerts');
@@ -46,9 +50,19 @@ router.get('/:alertId/delete', function (req, res) {
 
 router.post('/add', function (req, res) {
     var newAlert = req.body;
-    newAlert.id = alertsModel.alerts[alertsModel.alerts.length - 1].id + 1;
+
+    if(alertsModel.alerts.length == 0) {
+        newAlert.id = 0;
+    } else {
+        newAlert.id = alertsModel.alerts[alertsModel.alerts.length - 1].id + 1;
+    }
     alertsModel.alerts.push(newAlert);
     sortAlerts();
+
+    ws.broadcast(JSON.stringify({
+        event: 'alert',
+        data: newAlert
+    }));
     res.location('/admin/roles');
     res.redirect('/admin/roles');
 });

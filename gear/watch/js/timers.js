@@ -6,7 +6,7 @@ angular.module('Watch')
         timeLeftYellow: 900, // 15 minutes
         timeLeftGreen: 1800 // 30 minutes
     })
-    .factory('TimerTick', function ($rootScope, $interval) {
+    .run(function ($rootScope, $interval) {
         $interval(function () {
             $rootScope.$emit("timerTick");
         }, 1000);
@@ -79,9 +79,10 @@ angular.module('Watch')
         };
 
         $scope.showTimerDetails = function (index) {
-            AppState.activeTimer = index;
-            AppState.currentScreen = 'timer-details';
-            tau.changePage('timer-details');
+            //TODO:
+            //AppState.activeTimer = index;
+            //AppState.currentScreen = 'timer-details';
+            //tau.changePage('timer-details');
         };
 
         $scope.getTimer = function (ind) {

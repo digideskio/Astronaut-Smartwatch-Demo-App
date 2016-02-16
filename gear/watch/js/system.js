@@ -30,13 +30,13 @@ angular.module("Watch")
         //    systemInfo.wifi = wifi.status == "ON";
         //});
 
-        navigator.getBattery().then(function (battery) {
-            systemInfo.battery.level = Math.floor(battery.level * 100);
-
-            battery.onlevelchange = function () {
-                systemInfo.battery.level = Math.floor(battery.level * 100);
-            }
-        });
+        //navigator.getBattery().then(function (battery) {
+        //    systemInfo.battery.level = Math.floor(battery.level * 100);
+        //
+        //    battery.onlevelchange = function () {
+        //        systemInfo.battery.level = Math.floor(battery.level * 100);
+        //    }
+        //});
 
         systemInfo.getWifi = function () {
             return systemInfo.wifi;
