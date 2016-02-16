@@ -139,7 +139,7 @@
                     <img src="img/role-icon.png" class="display:inline"><h4 class="role">{{activeRole}}</h4>
                 </div>
 
-                <div infinite-scroll="nextPage()" infinite-scroll-disabled='isBusy' infinite-scroll-distance='1'
+                <div infinite-scroll="nextPage()" infinite-scroll-disabled='isBusy' infinite-scroll-distance='0'
                      infinite-scroll-immediate-check='true' infinite-scroll-listen-for-event="role-selected">
                     <div class="timeline-list" ng-repeat="(key, value) in events | groupBy: 'date'">
                         <h4>{{key}}</h4>

@@ -2,11 +2,12 @@ angular.module('Watch')
     .controller('TimelineCtrl', function ($rootScope, $scope, Api, AppState) {
         moment.locale('en-gb');
         $scope.busy = true;
-        $scope.lastQueriedDate = moment();
         $scope.activeRole = AppState.getActiveRole() || 'ISS CDR';
+        $scope.currentPage = 0;
 
         $scope.refresh = function () {
-            Api.events.get({role: $scope.activeRole, day: $scope.lastQueriedDate.format("L")}, function (data) {
+            $scope.currentPage = 0;
+            Api.events.get({role: $scope.activeRole, page: $scope.currentPage}, function (data) {
                 $scope.activeRole = data.role;
                 $scope.busy = false;
                 $scope.events = data.events;
@@ -42,7 +43,8 @@ angular.module('Watch')
         });
 
         $scope.fetchNew = function () {
-            Api.events.get({role: $scope.activeRole, day: $scope.lastQueriedDate.format("L")}, function (data) {
+            $scope.currentPage++;
+            Api.events.get({role: $scope.activeRole, page: $scope.currentPage}, function (data) {
                 $scope.busy = false;
                 $scope.activeRole = data.role;
                 $scope.events = $scope.events.concat(data.events);
@@ -55,7 +57,7 @@ angular.module('Watch')
             var updatedTimers = [];
             for (var i = 0; i < AppState.timersInfo.timers.length; i++) {
                 var timer = AppState.timersInfo.timers[i];
-                if (timer.type != 'current' || timer.type != 'next') {
+                if (timer.type != 'current' && timer.type != 'next') {
                     updatedTimers.push(timer);
                 }
             }
@@ -108,13 +110,12 @@ angular.module('Watch')
                 countdown: true,
                 active: true,
                 current: elapsed,
-                type: 'current'
+                type: 'next'
             };
         };
 
         $scope.nextPage = function () {
             $scope.busy = true;
-            $scope.lastQueriedDate = $scope.lastQueriedDate.add(1, 'days');
             $scope.fetchNew();
         };
 
@@ -131,7 +132,6 @@ angular.module('Watch')
                 $scope.events = [];
                 $scope.busy = true;
                 $scope.activeRole = newVal;
-                $scope.lastQueriedDate = moment();
                 $scope.refresh();
                 $scope.$emit('role-selected');
             },
