@@ -15,7 +15,7 @@ angular.module("Watch")
             var bluetoothSnap = Snap("#bluetooth");
             $scope.bluetooth = bluetoothSnap.select("#bluetooth-path");
             $scope.bluetooth.attr({
-                fill: System.getBluetooth().status ? "#fff" : "#999"
+                fill: System.getBluetooth().status ? "#ffffff" : "#999999"
             });
         };
 
@@ -23,7 +23,7 @@ angular.module("Watch")
             var wifiSnap = Snap("#wifi");
             $scope.wifi = wifiSnap.select("#wifi-path");
             $scope.wifi.attr({
-                fill: System.getWifi().status ? "#fff" : "#999"
+                fill: System.getWifi().status ? "#ffffff" : "#999999"
             });
         };
 
@@ -47,6 +47,11 @@ angular.module("Watch")
         $scope.refreshComms = function () {
             Api.comms.get(function (commsData) {
                 $scope.updateCommsDisplay(commsData.comms);
+            });
+
+            Api.alerts.query(function(data) {
+
+                $scope.alerts = data;
             });
         };
 

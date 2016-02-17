@@ -37,7 +37,7 @@
 </head>
 <body ng-app="Watch">
 
-<div class="ui-page " id="dashboard" ng-controller="DashboardCtrl">
+<div class="ui-page ui-page-active" id="dashboard" ng-controller="DashboardCtrl">
     <div class="dashboard-cont" ng-click="onDashboardClick()">
         <div class="dashboard-content-top">
             <object data="img/bands.svg" id="bands" type="image/svg+xml" sb-load="onBandsSvgReady()"></object>
@@ -100,7 +100,7 @@
                             ></div>
                         </div>
                     </div>
-                    <h2 class="dash-timer-title"><span>0{{$index+1}}</span>&nbsp<span>{{tm.name}}</span><br><span
+                    <h2 class="dash-timer-title">{{tm.name}}</span><br><span
                             class="dash-timer-sub">{{timeLeft($index)}}</span></h2>
                 </div>
             </div>
@@ -108,21 +108,21 @@
 
         </div>
         <div class="dashboard-alerts">
-            <h4>A:<span class="dashboard-alert-count"><br>40</span></h4>
+            <h4>A:<span class="dashboard-alert-count"><br>{{(alerts | filter:{status:'Alert'}).length}}</span></h4>
 
             <div class="flex-spacer"></div>
-            <h4>C:<span class="dashboard-alert-count"><br>40</span></h4>
+            <h4>C:<span class="dashboard-alert-count"><br>{{(alerts | filter:{status:'Critical'}).length}}</span></h4>
 
             <div class="flex-spacer"></div>
-            <h4>W:<span class="dashboard-alert-count"><br>40</span></h4>
+            <h4>W:<span class="dashboard-alert-count"><br>{{(alerts | filter:{status:'Warning'}).length}}</span></h4>
 
             <div class="flex-spacer"></div>
-            <h4>E:<span class="dashboard-alert-count"><br>40</span></h4>
+            <h4>E:<span class="dashboard-alert-count"><br>{{(alerts | filter:{status:'Emergency'}).length}}</span></h4>
         </div>
     </div>
 </div>
 
-<div id="hsectionchangerPage" class="ui-page ui-page-active" data-enable-page-scroll="false">
+<div id="hsectionchangerPage" class="ui-page " data-enable-page-scroll="false">
 
     <div ng-controller="HeaderCtrl" class="header">
         <div class="circle-white" id="nav-circle-1"></div>

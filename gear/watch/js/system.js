@@ -8,35 +8,38 @@ angular.module("Watch")
                 status: false
             },
             battery: {
-                level: 50,
+                level: 0,
                 getLevel: function () {
                     return this.level;
                 }
             }
         };
 
-        //var blueToothadapter = tizen.bluetooth.getDefaultAdapter();
-        //blueToothadapter.setChangeListener({
-        //    onstatechanged: function (powered) {
-        //        systemInfo.bluetooth = powered;
-        //    }
-        //});
-        //
-        //tizen.systeminfo.getPropertyValue("WIFI_NETWORK", function (wifi) {
-        //    systemInfo.wifi = wifi.status == "ON";
-        //});
-        //
-        //tizen.systeminfo.addPropertyValueChangeListener("WIFI_NETWORK", function (wifi) {
-        //    systemInfo.wifi = wifi.status == "ON";
-        //});
+        if (typeof tizen !== 'undefined') {
+            if (tizen.bluetooth) {
+                var blueToothadapter = tizen.bluetooth.getDefaultAdapter();
+                systemInfo.bluetooth = blueToothadapter.powered;
 
-        //navigator.getBattery().then(function (battery) {
-        //    systemInfo.battery.level = Math.floor(battery.level * 100);
-        //
-        //    battery.onlevelchange = function () {
-        //        systemInfo.battery.level = Math.floor(battery.level * 100);
-        //    }
-        //});
+            }
+            if (tizen.systeminfo) {
+                tizen.systeminfo.getPropertyValue("WIFI_NETWORK", function (wifi) {
+                    systemInfo.wifi = wifi.status == "ON";
+                });
+
+                tizen.systeminfo.addPropertyValueChangeListener("WIFI_NETWORK", function (wifi) {
+                    systemInfo.wifi = wifi.status == "ON";
+                });
+            }
+
+            	var battery = navigator.battery || navigator.webkitBattery;
+            	systemInfo.battery.level = Math.floor(battery.level * 100);
+
+                    battery.addEventListener('levelchange',  function () {
+                    	systemInfo.battery.level = Math.floor(battery.level * 100);
+                    });
+
+
+        }
 
         systemInfo.getWifi = function () {
             return systemInfo.wifi;
