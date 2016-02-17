@@ -5,7 +5,6 @@ angular.module('Watch')
         Api.alerts.query(function(data) {
             $scope.busy = false;
             $scope.alerts = data;
-            console.error('YO!: %O ',  $scope.alerts);
         });
 
         $scope.showAlert = function (alert) {

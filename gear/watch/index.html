@@ -79,7 +79,7 @@
                                 responsive="false"
                                 duration="800"
                                 animation="easeOutCubic"
-                                >
+                        >
                             <div
                                     round-progress
                                     max="100"
@@ -97,7 +97,7 @@
                                     animation="easeInOutQuart"
                                     animation-delay="0"
                                     color="{{getTimerColor($index)}}"
-                                    ></div>
+                            ></div>
                         </div>
                     </div>
                     <h2 class="dash-timer-title"><span>0{{$index+1}}</span>&nbsp<span>{{tm.name}}</span><br><span
@@ -122,7 +122,7 @@
     </div>
 </div>
 
-<div id="hsectionchangerPage" class="ui-page ui-page-active" data-enable-page-scroll="false">
+<div id="hsectionchangerPage" class="ui-page" data-enable-page-scroll="false">
 
     <div ng-controller="HeaderCtrl" class="header">
         <div class="circle-white" id="nav-circle-1"></div>
@@ -187,7 +187,7 @@
                                 duration="800"
                                 animation="easeOutCubic"
                                 ng-show="getTimer(0)"
-                                >
+                        >
                             <div
                                     round-progress
                                     max="100"
@@ -205,7 +205,7 @@
                                     animation="easeInOutQuart"
                                     animation-delay="0"
                                     ng-show="isTimerPassHour(0)"
-                                    ></div>
+                            ></div>
                             <div
                                     round-progress
                                     max="3600"
@@ -223,7 +223,7 @@
                                     animation-delay="0"
                                     offset="20"
                                     ng-show="getTimer(1)"
-                                    >
+                            >
                                 <div
                                         round-progress
                                         max="100"
@@ -241,7 +241,7 @@
                                         animation="easeInOutQuart"
                                         animation-delay="0"
                                         ng-show="isTimerPassHour(1)"
-                                        ></div>
+                                ></div>
                             </div>
                             <div
                                     round-progress
@@ -260,7 +260,7 @@
                                     animation-delay="0"
                                     offset="40"
                                     ng-show="getTimer(2)"
-                                    >
+                            >
                                 <div
                                         round-progress
                                         max="100"
@@ -278,7 +278,7 @@
                                         animation="easeInOutQuart"
                                         animation-delay="0"
                                         ng-show="isTimerPassHour(2)"
-                                        ></div>
+                                ></div>
                             </div>
                         </div>
                     </div>
@@ -306,7 +306,7 @@
                                         responsive="false"
                                         duration="800"
                                         animation="easeOutCubic"
-                                        >
+                                >
                                     <div
                                             round-progress
                                             max="100"
@@ -324,7 +324,7 @@
                                             animation="easeInOutQuart"
                                             animation-delay="0"
                                             color="{{getTimerColor($index)}}"
-                                            ></div>
+                                    ></div>
                                 </div>
                             </div>
                         </div>
@@ -358,7 +358,7 @@
                     <div class="events-placeholder" ng-show="!busy && (!alerts || alerts.length == 0)">No alerts</div>
                 </div>
             </section>
-            <section ng-controller="CommsCtrl" class="ui-section-active">
+            <section ng-controller="CommsCtrl">
                 <div class="comms-circles-cont">
                     <object style="margin: auto;" type="image/svg+xml" id="comms-bands" data="img/comms-circles.svg"
                             sb-load="onInitMainSvg()"></object>
@@ -430,7 +430,7 @@
                 <h2 class="detail-small">{{currentData.event.notes}}</h2>
             </div>
             <div class="detail-timer">
-                <img src="img/start.png" style="width: 60px; height: 60px">
+                <img src="img/start.png" style="width: 60px; height: 60px" ng-click="addTImer()">
 
                 <div class="detail-timer-time">30:00</div>
                 <img src="img/clear.png" class="detail-timer-delete">
@@ -530,7 +530,7 @@
                         responsive="false"
                         duration="800"
                         animation="easeOutCubic"
-                        >
+                >
                     <div
                             round-progress
                             max="100"
@@ -554,18 +554,18 @@
         </div>
     </div>
 </div>
-<div class="footer" id="notification" ng-controller="NotificationsCtrl">
-    <div class='notification-bg' ng-click="onBgClick($event)">
-        <div class="notification" ng-show="activeNotifications.length > 0">
-            <h1 class="notification-title">{{main.title}}</h1>
+<!--<div class="footer" id="notification" ng-controller="NotificationsCtrl">-->
+    <!--<div  ng-click="onBgClick($event)">-->
+        <!--<div class="notification" ng-click="mainClick($event)" ng-show="main">-->
+            <!--<h1 class="notification-title">{{main.title}}</h1>-->
 
-            <h2 class="notification-subtitle">{{main.time}}</h2>
-        </div>
-        <div class="notification" id="more" ng-show="activeNotifications.length > 1" ng-click="moreClick($event)">
-            <h1 class="notification-title">{{activeNotifications.length - 1}} more notifications</h1>
-        </div>
-    </div>
-</div>
+            <!--<h2 class="notification-subtitle">{{main.time}}</h2>-->
+        <!--</div>-->
+        <!--<div class="notification" id="more" ng-show="activeNotifications.length > 1" ng-click="moreClick($event)">-->
+            <!--<h1 class="notification-title">{{activeNotifications.length - 1}} more notifications</h1>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
 </body>
 <script type="text/javascript" src="js/main.js"></script>
 </html>

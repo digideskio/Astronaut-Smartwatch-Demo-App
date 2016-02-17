@@ -5,7 +5,7 @@ var eventsModel = require('../data/eventData');
 var userModel = require('../data/userData');
 var roleModel = require('../data/roleData');
 var moment = require('moment');
-
+var ws = require('../websocket');
 
 function sortEvents() {
     eventsModel.events.sort(function (l, r) {
@@ -83,15 +83,18 @@ router.post('/:eventId/edit', function (req, res) {
 });
 
 router.post('/', function (req, res) {
-    console.log("Creating new event: %O", req.body);
     var newEvent = req.body;
-    if(eventsModel.events.length > 0) {
+    if (eventsModel.events.length > 0) {
         newEvent.id = eventsModel.events[eventsModel.events.length - 1].id + 1;
     } else {
         newEvent.id = 0;
     }
     eventsModel.events.push(newEvent);
     sortEvents();
+    ws.broadcast(JSON.stringify({
+        event: 'event',
+        data: newEvent
+    }));
     res.location('admin/events');
     res.redirect('admin/events');
 

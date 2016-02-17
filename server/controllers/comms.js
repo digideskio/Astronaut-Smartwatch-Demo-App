@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var _ = require('underscore');
 var moment = require('moment');
-
+var ws = require('../websocket');
 
 var commsModel = require('../data/commsData');
 
@@ -32,6 +32,12 @@ router.post('/', function (req, res) {
     commsModel.comms.kuband.down2 = req.body[1].ku_down2;
     commsModel.comms.iac = req.body[2].iac;
     commsModel.comms.oca = req.body[3].oca;
+
+    ws.broadcast(JSON.stringify({
+        event: 'comms',
+        data: commsModel
+    }));
+
     res.sendStatus(200);
 });
 
@@ -45,6 +51,11 @@ router.post('/outages/add', function (req, res) {
     }
     commsModel.outages.push(newOutage);
     sortOutages();
+
+    ws.broadcast(JSON.stringify({
+        event: 'comms',
+        data: commsModel
+    }));
 
     res.location('/admin/comms');
     res.redirect('/admin/comms');

@@ -144,6 +144,9 @@ select {
 body {
   margin: 0 auto;
   background-color: #000;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 h1 {
   font-size: 30px;
@@ -163,6 +166,7 @@ h4 {
   color: #d8d8d8;
   padding-bottom: 6px;
   margin: 21px 0 31px 19px;
+  font-weight: 300;
 }
 h4.role {
   margin: 0 0 0 19px;
@@ -170,7 +174,6 @@ h4.role {
 }
 span {
   font-weight: 300;
-  max-width: 100px;
 }
 .contents {
   display: flex;
@@ -352,7 +355,7 @@ span {
 }
 .detail-main-info {
   width: 100%;
-  margin-left: 24px;
+  padding-left: 24px;
 }
 .detail-name {
   margin-bottom: 20px;

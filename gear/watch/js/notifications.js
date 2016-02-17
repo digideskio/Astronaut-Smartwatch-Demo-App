@@ -20,6 +20,9 @@ angular.module("Watch")
                         time: message.data.time,
                         extra: message.data
                     });
+                    $scope.main = message.data;
+                    $scope.main.type = message.type;
+
                     break;
                 case 'event':
                     $scope.activeNotifications.push({
@@ -28,11 +31,22 @@ angular.module("Watch")
                         time: message.data.date + " " + message.data.time,
                         extra: message.data
                     });
+                    $scope.main = message.data;
+                    $scope.main.title = message.data.name;
+                    $scope.main.type = message.type;
+
+                    break;
+                case 'comms':
+                    $scope.activeNotifications.push({
+                        type: 'comms',
+                        title: 'Comms updated',
+                        time: message.data.date + " " + message.data.time
+                    });
+                    $scope.main = message.data;
+                    $scope.main.title = 'Comms updated';
+                    $scope.main.type = message.type;
                     break;
             }
-
-            $scope.main = message.data;
-            $scope.main.type = message.type;
 
             if (message.type == 'alert' && message.data.status == 'Critical' || message.data.status == 'Caution') {
                 $scope.repeatVibration(message.data.status);
@@ -64,19 +78,26 @@ angular.module("Watch")
         };
 
         $scope.mainClick = function ($event) {
-
-            $scope.dismiss_($event);
             tau.changePage('hsectionchangerPage');
 
-            if ($scope.main.type == 'alert') {
-                AppState.alert = $scope.main;
-                AppState.currentScreen = 'alert-details';
-                tau.changePage('alert-details');
-            } else {
-                AppState.event = $scope.main;
-                AppState.currentScreen = 'event-details';
-                tau.changePage('event-details');
+            switch ($scope.main.type) {
+                case 'alert':
+                    AppState.alert = $scope.main;
+                    AppState.currentScreen = 'alert-details';
+                    tau.changePage('alert-details');
+                    break;
+                case 'event':
+                    AppState.event = $scope.main;
+                    AppState.currentScreen = 'event-details';
+                    tau.changePage('event-details');
+                    break;
+                case 'comms:':
+                    var sectionChanger = document.getElementById("sectionchanger");
+                    sectionChanger.setActiveSection(3);
+                    break
             }
+
+            $scope.dismiss_($event);
         };
 
         $scope.moreClick = function ($event) {
@@ -88,6 +109,7 @@ angular.module("Watch")
         };
 
         $scope.dismiss_ = function ($event) {
+            $scope.main = null;
             $scope.activeNotifications.splice(0, $scope.activeNotifications.length);
             $event.stopPropagation();
             if (navigator.vibrate) {
