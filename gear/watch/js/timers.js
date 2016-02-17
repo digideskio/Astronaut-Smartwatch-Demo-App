@@ -62,12 +62,6 @@ angular.module('Watch')
     .controller('TimersCtrl', function ($scope, $rootScope, AppState, timerConfig, TimerCommon) {
         $scope.selectedTimerIndex = 0;
 
-        $scope.onInitMainSvg = function () {
-            var mainSnap = Snap("#timers-main");
-            $scope.selectedTimerName = mainSnap.select("#name-value");
-            $scope.selectedTimerProgress = mainSnap.select("#current-value");
-        };
-
         $scope.onInitButtonsSvg = function () {
             var buttonsSnap = Snap("#timer-buttons");
             buttonsSnap.select("#Chrono").click(function () {
@@ -121,7 +115,6 @@ angular.module('Watch')
                     $scope.updateTimer(i, timer);
                 }
             }
-            $scope.updateMainDisplay();
         });
 
         $scope.updateTimer = function (index, timer) {
@@ -158,17 +151,29 @@ angular.module('Watch')
             AppState.setTimer(index, timer);
         };
 
-        $scope.updateMainDisplay = function () {
+        $scope.activeTimerName = function () {
             if (AppState.getTimer($scope.selectedTimerIndex)) {
-                if ($scope.selectedTimerName) {
-                    $scope.selectedTimerName.attr({text: "01"});
-                    var format = AppState.getTimer($scope.selectedTimerIndex).countdown ? "-HH:mm:ss" : "HH:mm:ss";
-                    var current = moment.duration(AppState.getTimer($scope.selectedTimerIndex).current, 'seconds').format(format, {trim: false});
-                    $scope.selectedTimerProgress.attr({text: current});
-                }
-            } else if ($scope.selectedTimerName) {
-                $scope.selectedTimerName.attr({text: ""});
-                $scope.selectedTimerProgress.attr({text: ""});
+                var index = $scope.selectedTimerIndex + 1;
+                return "0" + index;
+            } else {
+                return "";
+            }
+        };
+
+        $scope.activeTimerValue = function () {
+            if (AppState.getTimer($scope.selectedTimerIndex)) {
+                var format = AppState.getTimer($scope.selectedTimerIndex).countdown ? "-HH:mm:ss" : "HH:mm:ss";
+                return moment.duration(AppState.getTimer($scope.selectedTimerIndex).current, 'seconds').format(format, {trim: false});
+            } else {
+                return "";
+            }
+        };
+
+        $scope.cycle = function () {
+            if ($scope.selectedTimerIndex + 1 >= AppState.totalTimers()) {
+                $scope.selectedTimerIndex = 0;
+            } else {
+                $scope.selectedTimerIndex++;
             }
         };
 
@@ -185,6 +190,10 @@ angular.module('Watch')
             } else {
                 $scope.selectedTimerIndex = 0;
             }
+        };
+
+        $scope.isActive = function(index) {
+            return AppState.isActive(index);
         };
 
         $scope.playPause = function (index) {

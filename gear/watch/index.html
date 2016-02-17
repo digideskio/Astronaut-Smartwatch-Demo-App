@@ -122,7 +122,7 @@
     </div>
 </div>
 
-<div id="hsectionchangerPage" class="ui-page" data-enable-page-scroll="false">
+<div id="hsectionchangerPage" class="ui-page ui-page-active" data-enable-page-scroll="false">
 
     <div ng-controller="HeaderCtrl" class="header">
         <div class="circle-white" id="nav-circle-1"></div>
@@ -138,7 +138,7 @@
     <div id="hsectionchanger" class="ui-content">
         <!-- section changer has only one child. -->
         <div>
-            <section ng-controller="TimelineCtrl" class="ui-section-active">
+            <section ng-controller="TimelineCtrl">
                 <!--<pre>{{ events | json }}</pre>-->
                 <div class="role-selector" id="role-selector" ng-click="selectRole()">
                     <img src="img/role-icon.png" class="display:inline"><h4 class="role">{{activeRole}}</h4>
@@ -165,11 +165,11 @@
                     <div class="events-placeholder" ng-show="!busy && (!events || events.length == 0)">No events</div>
                 </div>
             </section>
-            <section ng-controller="TimersCtrl as tmCtrl">
+            <section ng-controller="TimersCtrl as tmCtrl" class="ui-section-active">
+
                 <div class="timers-main-cont">
                     <div class="timers-main">
-                        <object type="image/svg+xml" id="timers-main" data="img/timers-main.svg"
-                                sb-load="onInitMainSvg()"></object>
+                        <object type="image/svg+xml" id="timers-main" data="img/timers-main.svg"></object>
                     </div>
                     <div class="progress-wrapper">
                         <div
@@ -288,8 +288,14 @@
                     <div class="timers-list" ng-click="showTimerDetails($index)">
                         <div class="small-timer-cont" ng-click="playPause($index)">
                             <div class="small-timer">
-                                <object type="image/svg+xml" id="pause" data="img/play.svg">
-                                </object>
+                                <!--<object type="image/svg+xml" id="pause" data="img/play.svg" ng-show="isActive($index)">-->
+                                <!--</object>-->
+                                <!--<object type="image/svg+xml" id="pause" data="img/pause.svg" style="width: 36px; height: 36px">-->
+                                <!--</object>-->
+                                <svg width="60px" height="60px" viewBox="0 0 36 36" style="padding-left: 5px; padding-top: 4px;">
+                                        <path visibility="{{isActive($index) ? 'visible' : 'hidden'}}" fill="#ffffff" id="pause-icon" data-state="playing" d="M11,10 L17,10 17,26 11,26 M20,10 L26,10 26,26 20,26" />
+                                        <path visibility="{{isActive($index) ? 'hidden' : 'visible'}}" fill="#ffffff" id="play-icon"  data-state="paused"  d="M11,10 L18,13.74 18,22.28 11,26 M18,13.74 L26,18 26,18 18,22.28" />
+                                </svg>
                             </div>
                             <div>
                                 <div
@@ -330,12 +336,17 @@
                         </div>
                         <h2 class="timer-title"><span>0{{$index+1}}</span>&nbsp<span>{{tm.name}}</span><br><span
                                 class="timer-sub">{{timeLeft($index)}}</span></h2>
+                        <div class="flex-spacer"></div>
                         <img src="img/clear.png" class="detail-timer-delete" ng-click="removeTimer($index)">
                     </div>
                 </div>
                 <div class="timers-buttons">
                     <object type="image/svg+xml" id="timer-buttons" data="img/timers-buttons.svg"
                             sb-load="onInitButtonsSvg()"></object>
+                </div>
+                <div class="flex-cont" ng-click="cycle()">
+                    <h2 class="timer-name">{{activeTimerName()}}</h2>
+                    <h1 class="timer-value">{{activeTimerValue()}}</h1>
                 </div>
             </section>
             <section ng-controller="AlertsCtrl">
@@ -554,18 +565,18 @@
         </div>
     </div>
 </div>
-<!--<div class="footer" id="notification" ng-controller="NotificationsCtrl">-->
-    <!--<div  ng-click="onBgClick($event)">-->
-        <!--<div class="notification" ng-click="mainClick($event)" ng-show="main">-->
-            <!--<h1 class="notification-title">{{main.title}}</h1>-->
+<div class="footer" id="notification" ng-controller="NotificationsCtrl">
+    <div ng-click="onBgClick($event)">
+        <div class="notification" ng-click="mainClick($event)" ng-show="main">
+            <h1 class="notification-title">{{main.title}}</h1>
 
-            <!--<h2 class="notification-subtitle">{{main.time}}</h2>-->
-        <!--</div>-->
-        <!--<div class="notification" id="more" ng-show="activeNotifications.length > 1" ng-click="moreClick($event)">-->
-            <!--<h1 class="notification-title">{{activeNotifications.length - 1}} more notifications</h1>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</div>-->
+            <h2 class="notification-subtitle">{{main.time}}</h2>
+        </div>
+        <div class="notification" id="more" ng-show="activeNotifications.length > 1" ng-click="moreClick($event)">
+            <h1 class="notification-title">{{activeNotifications.length - 1}} more notifications</h1>
+        </div>
+    </div>
+</div>
 </body>
 <script type="text/javascript" src="js/main.js"></script>
 </html>

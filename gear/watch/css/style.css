@@ -520,13 +520,10 @@ td.form-group.uib-time > input {
 }
 .small-timer {
   position: absolute;
-  margin-left: 28px;
-  margin-top: 20px;
   z-index: 2;
   pointer-events: none;
 }
 .timer-title {
-  padding-right: 50px;
   margin-right: auto;
   color: #fff;
 }
@@ -672,4 +669,27 @@ td.form-group.uib-time > input {
   height: 100%;
   width: 100%;
   background: #000;
+}
+.timer-name {
+  padding-top: 90px;
+  color: #fff;
+}
+.timer-value {
+  color: #fff;
+  padding-top: 10px;
+}
+.flex-cont {
+  position: absolute;
+  z-index: 100;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  -webkit-align-items: center;
+  justify-content: center;
+  -webkit-justify-content: center;
+  -webkit-flex-direction: column;
+  flex-direction: column;
 }
