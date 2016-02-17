@@ -20,6 +20,7 @@
                                 <tspan x="28.1053125" y="26">0 ‘</tspan>
                             </text>
                         </g>
+                        <g id="out"></g>
                         <path d="M55.49189,59 L49,72 L62,72 L55.49189,59 L55.49189,59 Z" id="Now" stroke="#FFFFFF" stroke-width="2" fill="#FFFFFF" sketch:type="MSShapeGroup"></path>
                         <g id="Graduations-longues" transform="translate(5.000000, 0.000000)" stroke="#FFFFFF" stroke-width="3" sketch:type="MSShapeGroup">
                             <path d="M0.5,0 L0.5,50" id="Long"></path>
@@ -88,21 +89,6 @@
                             <path d="M210.5,0 L210.5,20" id="Line-Copy-80"></path>
                             <path d="M250.5,0 L250.5,20" id="Line-Copy-81"></path>
                             <path d="M290.5,0 L290.5,20" id="Line-Copy-82" opacity="0.495802239"></path>
-                        </g>
-                        <g id="S" transform="translate(172.000000, 22.000000)" font-size="20" font-family="Open Sans" fill="#000000" sketch:type="MSTextLayer" font-weight="633">
-                            <text>
-                                <tspan x="0" y="21">S</tspan>
-                            </text>
-                        </g>
-                        <g id="Ku" transform="translate(221.000000, 1.000000)" font-size="20" font-family="Open Sans" fill="#000000" sketch:type="MSTextLayer" font-weight="633">
-                            <text>
-                                <tspan x="0" y="21">Ku</tspan>
-                            </text>
-                        </g>
-                        <g id="Ku" transform="translate(22.000000, 0.000000)" font-size="20" font-family="Open Sans" fill="#000000" sketch:type="MSTextLayer" font-weight="633">
-                            <text>
-                                <tspan x="0" y="21">Ku</tspan>
-                            </text>
                         </g>
                     </g>
                 </g>

@@ -37,7 +37,7 @@
 </head>
 <body ng-app="Watch">
 
-<div class="ui-page ui-page-active" id="dashboard" ng-controller="DashboardCtrl">
+<div class="ui-page " id="dashboard" ng-controller="DashboardCtrl">
     <div class="dashboard-cont" ng-click="onDashboardClick()">
         <div class="dashboard-content-top">
             <object data="img/bands.svg" id="bands" type="image/svg+xml" sb-load="onBandsSvgReady()"></object>
@@ -122,7 +122,7 @@
     </div>
 </div>
 
-<div id="hsectionchangerPage" class="ui-page " data-enable-page-scroll="false">
+<div id="hsectionchangerPage" class="ui-page ui-page-active" data-enable-page-scroll="false">
 
     <div ng-controller="HeaderCtrl" class="header">
         <div class="circle-white" id="nav-circle-1"></div>
@@ -358,16 +358,17 @@
                     <div class="events-placeholder" ng-show="!busy && (!alerts || alerts.length == 0)">No alerts</div>
                 </div>
             </section>
-            <section ng-controller="CommsCtrl">
+            <section ng-controller="CommsCtrl" class="ui-section-active">
                 <div class="comms-circles-cont">
                     <object style="margin: auto;" type="image/svg+xml" id="comms-bands" data="img/comms-circles.svg"
-                            sb-load="onInitSvg()"></object>
+                            sb-load="onInitMainSvg()"></object>
                 </div>
                 <div class="networks-cont">
-                    <object style="margin: auto;" type="image/svg+xml" id="networks" data="img/iac-oca.svg"></object>
+                    <object style="margin: auto;" type="image/svg+xml" id="networks" data="img/iac-oca.svg"
+                            sb-load="onInitNetworksSvg()"></object>
                 </div>
                 <div class="aos-cont">
-                    <object type="image/svg+xml" id="aos" data="img/LOS.svg"></object>
+                    <object style="width: 100%" type="image/svg+xml" id="aos" data="img/LOS.svg"></object>
                 </div>
 
             </section>

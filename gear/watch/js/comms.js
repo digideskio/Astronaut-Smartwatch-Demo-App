@@ -4,7 +4,7 @@ angular.module('Watch')
         $scope.colorWeak = '#FFE620';
         $scope.colorBad = '#FC3D21';
 
-        $scope.onInitSvg = function () {
+        $scope.onInitMainSvg = function () {
             $scope.commsSnap = Snap("#comms-bands");
             $scope.s1UpWeak = $scope.commsSnap.select("#s-one-up-yellow");
             $scope.s1UpBad = $scope.commsSnap.select("#s-one-up-red");
@@ -19,11 +19,14 @@ angular.module('Watch')
             $scope.ku1UpBad = $scope.commsSnap.select("#ku-one-up-red");
             $scope.ku2UpWeak = $scope.commsSnap.select("#ku-two-up-yellow");
             $scope.ku2UpBad = $scope.commsSnap.select("#ku-two-up-red");
-            $scope.ku1DownWeak = $scope.commsSnap.select("#ku-one-down-yellow");
+            $scope.ku1DownWeak = $scope.commsSnap.select("#ku-one-bottom-yellow");
             $scope.ku1DownBad = $scope.commsSnap.select("#ku-one-bottom-red");
-            $scope.ku2DownWeak = $scope.commsSnap.select("#ku-two-down-yellow");
+            $scope.ku2DownWeak = $scope.commsSnap.select("#ku-two-bottom-yellow");
             $scope.ku2DownBad = $scope.commsSnap.select("#ku-two-bottom-red");
 
+        };
+
+        $scope.onInitNetworksSvg = function () {
             var networksSnap = Snap("#networks");
             $scope.oca = networksSnap.select("#OCA");
             $scope.iac = networksSnap.select("#IAC");
@@ -120,7 +123,7 @@ angular.module('Watch')
 
         $scope.drawOutages = function (info) {
             $scope.aosSnap = Snap("#aos");
-            var paper = $scope.aosSnap.select("#main");
+            var paper = $scope.aosSnap.select("#out");
 
             var leftOut = moment().subtract(11, 'minutes');
             var rightOut = moment().add(55, 'minutes');
@@ -128,50 +131,79 @@ angular.module('Watch')
 
             var currentOuts = [];
 
+            if (!info || info.length == 0) {
+                $scope.drawHealthyBand(paper, -10, "Ku");
+                $scope.drawHealthyBand(paper, -10, "S");
+            }
+
             for (var i = 0; i < info.length; i++) {
                 var outStart = moment(info[i].date + " " + info[i].startTime, "DD/MM/YYYY HH:mm");
                 var outEnd = moment(info[i].date + " " + info[i].endTime, "DD/MM/YYYY HH:mm");
-                if (outStart.isBetween(leftOut, rightOut) || outEnd.isBetween(leftOut, rightOut)) {
+                if (outStart.isBetween(leftOut, rightOut) || outEnd.isBetween(leftOut, rightOut) ||
+                    (outStart.isBefore(leftOut) && outEnd.isAfter(rightOut))) {
                     var x1 = moment.range(leftOut, outStart).diff('minutes') * dx;
                     var x2 = moment.range(outStart, outEnd).diff('minutes') * dx;
-                    currentOuts.push({start: x1, end: x2});
+                    currentOuts.push({start: x1, end: x2, band: info[i].band});
                 }
             }
 
-            var startX = 0;
+            $scope.processBandOutages(paper, currentOuts, 'Ku');
+            $scope.processBandOutages(paper, currentOuts, 'S');
+        };
 
-            for (var j = 0; j < currentOuts.length; j++) {
-                var rect = paper.rect(startX, 26, currentOuts[j].start, 19);
-                rect.attr({
-                    fill: '#2094FA',
-                    rx: 10
-                });
+        $scope.processBandOutages = function (paper, outages, band) {
+            var bandOutages = outages.filter(function (value) {
+                return value.band == band;
+            });
 
-                var text = paper.text((startX + 6), 43, info.band);
-                text.attr({
-                    'font-family': 'Open Sans',
-                    'font-size': '20px',
-                    'font-weight': '900',
-                    fill: '#000'
-                });
+            if (bandOutages.length != 0) {
+                var startX = 0;
 
-                startX += (currentOuts[j].start + currentOuts[j].end);
+                for (var j = 0; j < bandOutages.length; j++) {
+                    $scope.drawBandOutage(paper, startX, bandOutages[j], band);
+                    startX += (bandOutages[j].start + bandOutages[j].end);
+                }
+
+                if (startX < 480) {
+                    $scope.drawHealthyBand(paper, startX, band);
+                }
+            } else {
+                $scope.drawHealthyBand(paper, -10, band);
             }
+        };
 
-            if (startX < 480) {
-                rect = paper.rect(startX, 26, 481 - startX, 19);
-                rect.attr({
-                    fill: '#2094FA',
-                    rx: 10
-                });
-                var text = paper.text((startX + 6), 43, "S");
-                text.attr({
-                    'font-family': 'Open Sans',
-                    'font-size': '20px',
-                    'font-weight': '900',
-                    fill: '#000'
-                });
+        $scope.drawBandOutage = function (paper, startX, outage, band) {
+            var top = band == 'Ku' ? 5 : 29;
 
-            }
+            var rect = paper.rect(startX, top, outage.start, 19);
+            rect.attr({
+                fill: '#2094FA',
+                rx: 10
+            });
+
+            var text = paper.text((startX + 16), top + 15, band);
+            text.attr({
+                'font-family': 'Open Sans',
+                'font-size': '18px',
+                'font-weight': '900',
+                fill: '#000'
+            });
+
+        };
+
+        $scope.drawHealthyBand = function (paper, startX, bandName) {
+            var topOffset = bandName == 'Ku' ? 5 : 29;
+            var rect = paper.rect(startX, topOffset, 481 - startX, 16);
+            rect.attr({
+                fill: '#2094FA',
+                rx: 10
+            });
+            var text = paper.text((startX + 26), topOffset + 15, bandName);
+            text.attr({
+                'font-family': 'Open Sans',
+                'font-size': '18px',
+                'font-weight': '900',
+                fill: '#000'
+            });
         }
     });
