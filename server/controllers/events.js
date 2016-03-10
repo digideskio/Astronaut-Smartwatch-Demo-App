@@ -96,10 +96,12 @@ router.post('/', function (req, res) {
 
 });
 
-var upload = multer({ storage: multer.memoryStorage() });
-router.post('/upload', upload.single('events'), function(req, res) {
-    console.error(req.file.buffer);
-    eventsModel = req.file.buffer;
+var upload = multer({storage: multer.memoryStorage()});
+router.post('/upload', upload.single('events'), function (req, res) {
+    if (req.file) {
+        var data = req.file.buffer.toString();
+        eventsModel = JSON.parse(data);
+    }
     res.location('/admin/events');
     res.redirect('/admin/events');
 });

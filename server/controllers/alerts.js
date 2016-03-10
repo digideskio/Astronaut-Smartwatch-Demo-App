@@ -3,7 +3,7 @@ var router = express.Router();
 var _ = require('underscore');
 var moment = require('moment');
 var ws = require('../websocket');
-
+var multer = require('multer');
 var alertsModel = require('../data/alertData');
 
 function sortAlerts() {
@@ -63,8 +63,18 @@ router.post('/add', function (req, res) {
         event: 'alert',
         data: newAlert
     }));
-    res.location('/admin/roles');
-    res.redirect('/admin/roles');
+    res.location('/admin/alerts');
+    res.redirect('/admin/alerts');
+});
+
+var upload = multer({storage: multer.memoryStorage()});
+router.post('/upload', upload.single('alerts'), function (req, res) {
+    if (req.file) {
+        var data = req.file.buffer.toString();
+        alertsModel = JSON.parse(data);
+    }
+    res.location('/admin/alerts');
+    res.redirect('/admin/alerts');
 });
 
 

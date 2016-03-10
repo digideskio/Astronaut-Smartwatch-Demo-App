@@ -24,3 +24,10 @@ block content
                     input(type='text' name='name' placeholder='Name').form-control
                 td
                     button(id='role-add').btn.btn-success Add
+    br
+    form(id="users-upload-form" action='/admin/roles/upload' method='post' enctype="multipart/form-data")
+        .form-group
+            label(for='upload') Upload json data
+            input(type='file' name='roles' id='upload')
+            br
+            input(type='submit' value="Upload")

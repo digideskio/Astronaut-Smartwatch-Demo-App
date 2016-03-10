@@ -117,3 +117,12 @@ block content
                         input(type="text" data-provide="timepicker" data-template="dropdown" data-show-seconds='false' data-minute-step="1" data-show-inputs='false' name='endTime' data-show-meridian="false" placeholder='00:00').form-control
                     td
                         a(href='' id='outages-add').btn.btn-success Add
+    br
+    br
+    br
+    form(id="users-upload-form" action='/admin/comms/upload' method='post' enctype="multipart/form-data")
+        .form-group
+            label(for='upload') Upload json data
+            input(type='file' name='comms' id='upload')
+            br
+            input(type='submit' value="Upload")

@@ -3,7 +3,7 @@ var router = express.Router();
 var _ = require('underscore');
 var moment = require('moment');
 var ws = require('../websocket');
-
+var multer = require('multer');
 var commsModel = require('../data/commsData');
 
 function sortOutages() {
@@ -71,5 +71,16 @@ router.get('/outages/:id/delete', function (req, res) {
     res.location('/admin/comms');
     res.redirect('/admin/comms');
 });
+
+var upload = multer({storage: multer.memoryStorage()});
+router.post('/upload', upload.single('comms'), function (req, res) {
+    if (req.file) {
+        var data = req.file.buffer.toString();
+        commsModel = JSON.parse(data);
+    }
+    res.location('/admin/comms');
+    res.redirect('/admin/comms');
+});
+
 
 module.exports = router;

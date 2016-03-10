@@ -1,7 +1,7 @@
 extends layout
 
 block content
-    - var statusOptions = ['Caution', 'Critical', 'Notice'];
+    - var statusOptions = ['Emergency', 'Warning', 'Caution', 'Advisory'];
 
     h2 Alerts List
     br
@@ -46,3 +46,12 @@ block content
                         a(href='/admin/alerts/#{alert.id}/delete').btn.btn-danger Delete
 
     button(type='submit' id='alerts-save').btn.btn-primary Save
+    br
+    br
+    br
+    form(action='/admin/alerts/upload' method='post' enctype="multipart/form-data")
+        .form-group
+            label(for='upload') Upload json data
+            input(type='file' name='alerts' id='upload')
+            br
+            input(type='submit' value="Upload")

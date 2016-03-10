@@ -24,6 +24,11 @@ function updateNavStatus(activePage) {
 }
 
 (function() {
+
+    if(tizen) {
+        tizen.power.request("SCREEN", "SCREEN_NORMAL");
+    }
+
     //This listens for the back button press
     document.addEventListener('tizenhwkey', function(e) {
         if(e.keyName == "back") {
