@@ -13,14 +13,13 @@ exports.comms = {
         down2: 'Good'
     },
 
-    iac : 'Good',
-    oca: 'Bad'
-};
-
-exports.outages = [ {
-    id: 0,
-    band: 'S',
-    date: '16/1/2016',
-    startTime: '12:00',
-    endTime: '12:30'
-}];
+    iac: 'Good',
+    oca: 'Bad',
+    outages: [{
+        id: 0,
+        band: 'S',
+        date: '16/1/2016',
+        startTime: '12:00',
+        endTime: '12:30'
+    }]
+}

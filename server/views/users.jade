@@ -1,6 +1,7 @@
 extends layout
 block content
-    h2 Roles
+    h2 Users
+
     table(id='users-table' data-sortable).table.table-bordered.table-striped.sortable-theme-bootstrap
         thead
             tr
@@ -27,3 +28,11 @@ block content
                 td
                     button(id='user-add').btn.btn-success Add
 
+
+    br
+    form(id="users-upload-form" action='/admin/users/upload' method='post' enctype="multipart/form-data")
+        .form-group
+            label(for='upload') Upload json data
+            input(type='file' name='users' id='upload')
+            br
+            input(type='submit' value="Upload")

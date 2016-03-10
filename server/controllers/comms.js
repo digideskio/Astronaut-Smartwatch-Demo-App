@@ -7,7 +7,7 @@ var ws = require('../websocket');
 var commsModel = require('../data/commsData');
 
 function sortOutages() {
-    commsModel.outages.sort(function(l, r) {
+    commsModel.comms.outages.sort(function(l, r) {
         var a = moment(l.date + " " + l.startTime, "DD/MM/YYYY HH:mm");
         var b = moment(r.date + " " + r.startTime, "DD/MM/YYYY HH:mm");
         return b.isBefore(a);
@@ -44,12 +44,12 @@ router.post('/', function (req, res) {
 router.post('/outages/add', function (req, res) {
     var newOutage = req.body;
     console.log("New outage: " + newOutage);
-    if(commsModel.outages && commsModel.outages.length > 0) {
-        newOutage.id = commsModel.outages[commsModel.outages.length - 1].id + 1;
+    if(commsModel.comms.outages && commsModel.comms.outages.length > 0) {
+        newOutage.id = commsModel.comms.outages[commsModel.comms.outages.length - 1].id + 1;
     } else {
         newOutage.id = 0;
     }
-    commsModel.outages.push(newOutage);
+    commsModel.comms.outages.push(newOutage);
     sortOutages();
 
     ws.broadcast(JSON.stringify({
@@ -63,10 +63,10 @@ router.post('/outages/add', function (req, res) {
 
 router.get('/outages/:id/delete', function (req, res) {
     var id = req.params.id;
-    var outIndex = _.findIndex(commsModel.outages, function (e) {
+    var outIndex = _.findIndex(commsModel.comms.outages, function (e) {
         return e.id == id
     });
-    commsModel.outages.splice(outIndex, 1);
+    commsModel.comms.outages.splice(outIndex, 1);
     sortOutages();
     res.location('/admin/comms');
     res.redirect('/admin/comms');

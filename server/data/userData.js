@@ -1,11 +1,11 @@
 exports.users = [
     {
-        name: "David Daniels",
+        "name": "David Daniels"
     },
     {
-        name: "Emily Eames",
+        "name": "Emily Eames"
     },
     {
-        name: 'John Smith',
+        "name": 'John Smith'
     }
 ];

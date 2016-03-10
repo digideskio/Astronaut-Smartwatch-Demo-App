@@ -6,6 +6,7 @@ var userModel = require('../data/userData');
 var roleModel = require('../data/roleData');
 var moment = require('moment');
 var ws = require('../websocket');
+var multer = require('multer');
 
 function sortEvents() {
     eventsModel.events.sort(function (l, r) {
@@ -40,10 +41,8 @@ router.get('/add', function (req, res) {
 router.get('/:eventId/edit', function (req, res) {
     var eventId = Number(req.params.eventId);
     var filteredEvent = eventsModel.events.find(function (e) {
-        console.log("Comparing " + eventId + " and " + e.id);
         return e.id == eventId;
     });
-    console.log("Editing event " + filteredEvent.name);
     res.render('eventEdit', {
         title: 'Event Edit',
         event: filteredEvent,
@@ -69,12 +68,9 @@ router.get('/:eventId/delete', function (req, res) {
 
 router.post('/:eventId/edit', function (req, res) {
     var eventId = req.params.eventId;
-    console.log("Editing event : ", req.body.name);
-    console.log('New data = %O', req.body);
     var eventIndex = _.findIndex(eventsModel.events, function (e) {
         return e.id == eventId
     });
-    console.log('INDEX = ' + eventIndex);
     eventsModel.events[eventIndex] = req.body;
     eventsModel.events[eventIndex].id = eventId;
     sortEvents();
@@ -95,9 +91,17 @@ router.post('/', function (req, res) {
         event: 'event',
         data: newEvent
     }));
-    res.location('admin/events');
-    res.redirect('admin/events');
+    res.location('/admin/events');
+    res.redirect('/admin/events');
 
+});
+
+var upload = multer({ storage: multer.memoryStorage() });
+router.post('/upload', upload.single('events'), function(req, res) {
+    console.error(req.file.buffer);
+    eventsModel = req.file.buffer;
+    res.location('/admin/events');
+    res.redirect('/admin/events');
 });
 
 module.exports = router;

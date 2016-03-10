@@ -1,8 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var _ = require('underscore');
-
+var multer = require('multer');
 var usersModel = require('../data/userData');
+var fs = require('fs');
 
 router.get('/', function (req, res, next) {
     res.render('users', {
@@ -34,6 +35,16 @@ router.post('/add', function (req, res) {
     res.redirect('/admin/users');
 });
 
+
+var upload = multer({storage: multer.memoryStorage()});
+router.post('/upload', upload.single('users'), function (req, res) {
+    if (req.file) {
+        var data = req.file.buffer.toString();
+        usersModel = JSON.parse(data);
+    }
+    res.location('/admin/users');
+    res.redirect('/admin/users');
+});
 
 
 module.exports = router;

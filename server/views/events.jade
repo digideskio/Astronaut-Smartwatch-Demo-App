@@ -39,3 +39,11 @@ block content
                         a(href='/admin/events/#{event.id}/edit').btn Edit
                     td
                         a(href='/admin/events/#{event.id}/delete').btn.btn-danger Delete
+
+    br
+    form(action='/admin/events/upload' method='post' enctype="multipart/form-data")
+        .form-group
+            label(for='upload') Upload json data
+            input(type='file' name='events' id='upload')
+            br
+            input(type='submit' value="Upload")

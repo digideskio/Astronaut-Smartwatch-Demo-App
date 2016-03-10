@@ -116,11 +116,6 @@ $(document).ready(function () {
             '#d9534f': '#d9534f'
         }
     });
-    //
-    //$(".events-table tr").click(function(e) {
-    //    var eventId = this.id;
-    //    window.location.href = "/admin/events/" + eventId;
-    //});
 
     var attendees = [];
     $("#attendees").multiselect({

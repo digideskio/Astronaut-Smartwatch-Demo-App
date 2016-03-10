@@ -79,14 +79,14 @@ block content
                 th End Time
                 th
         tbody
-            each out in model.outages
+            each out in model.comms.outages
                 tr
                     td.col-lg-1
                         select(value='#{out.band}' name='band').form-control.input-sm
                             option(selected=out.band=='S') S
                             option(selected=out.band=='Ku') Ku
                     td.col-sm-2
-                        input(value='#{out.date}' name='date' placeholder='1/1/2015' data-provide="datepicker" data-date-format="dd/mm/yyyy").form-control
+                        input(value='#{out.date}' name='date' data-provide="datepicker" data-date-format="dd/mm/yyyy" data-date-today-highlight='true' data-date-today-btn='linked').form-control
                     td.col-sm-1
                         input(type="text" data-provide="timepicker" data-template="dropdown" data-show-seconds='false' data-minute-step="1" value='#{out.startTime}' data-show-inputs='false' name='startTime' data-show-meridian="false" placeholder='00:00').form-control
                     td.col-sm-1
@@ -110,7 +110,7 @@ block content
                             option(selected) S
                             option() Ku
                     td.col-sm-2
-                        input(name='date' placeholder='1/1/2015' data-provide="datepicker" data-date-format="dd/mm/yyyy").form-control
+                        input(name='date' data-provide="datepicker" data-date-format="dd/mm/yyyy" data-date-today-highlight='true' data-date-today-btn='linked').form-control
                     td.col-sm-1
                         input(type="text" data-provide="timepicker" data-template="dropdown" data-show-seconds='false' data-minute-step="1" data-show-inputs='false' name='startTime' data-show-meridian="false" placeholder='00:00').form-control
                     td.col-sm-1
