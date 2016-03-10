@@ -37,7 +37,7 @@ angular.module('Watch')
             Api.comms.get(function (commsData) {
                 $scope.updateMainComms(commsData.comms);
                 $scope.updateNetworks(commsData.comms);
-                $scope.drawOutages(commsData.outages)
+                $scope.drawOutages(commsData.comms.outages)
             });
         };
 
