@@ -37,7 +37,14 @@
 </head>
 <body ng-app="Watch">
 
-<div class="ui-page ui-page-active" id="dashboard" ng-controller="DashboardCtrl">
+<div class="ui-page ui-page-active" id="config" ng-controller="SetupServerCtrl">
+    <div class="dashboard-cont">
+        <h2>Provider server url:port</h2>
+        <input type="url" ng-model="server">
+        <button ng-click="save()">Save</button>
+    </div>
+</div>
+<div class="ui-page" id="dashboard" ng-controller="DashboardCtrl">
     <div class="dashboard-cont" ng-click="onDashboardClick()">
         <div class="dashboard-content-top">
             <object data="img/bands.svg" id="bands" type="image/svg+xml" sb-load="onBandsSvgReady()"></object>
@@ -138,7 +145,7 @@
     <div id="hsectionchanger" class="ui-content">
         <!-- section changer has only one child. -->
         <div>
-            <section ng-controller="TimelineCtrl">
+            <section ng-controller="TimelineCtrl" class="ui-section-active">
                 <!--<pre>{{ events | json }}</pre>-->
                 <div class="role-selector" id="role-selector" ng-click="selectRole()">
                     <img src="img/role-icon.png" class="display:inline"><h4 class="role">{{activeRole}}</h4>
@@ -165,7 +172,7 @@
                     <div class="events-placeholder" ng-show="!busy && (!events || events.length == 0)">No events</div>
                 </div>
             </section>
-            <section ng-controller="TimersCtrl as tmCtrl" class="ui-section-active">
+            <section ng-controller="TimersCtrl as tmCtrl" >
 
                 <div class="timers-main-cont">
                     <div class="timers-main">
@@ -292,9 +299,14 @@
                                 <!--</object>-->
                                 <!--<object type="image/svg+xml" id="pause" data="img/pause.svg" style="width: 36px; height: 36px">-->
                                 <!--</object>-->
-                                <svg width="60px" height="60px" viewBox="0 0 36 36" style="padding-left: 5px; padding-top: 4px;">
-                                        <path visibility="{{isActive($index) ? 'visible' : 'hidden'}}" fill="#ffffff" id="pause-icon" data-state="playing" d="M11,10 L17,10 17,26 11,26 M20,10 L26,10 26,26 20,26" />
-                                        <path visibility="{{isActive($index) ? 'hidden' : 'visible'}}" fill="#ffffff" id="play-icon"  data-state="paused"  d="M11,10 L18,13.74 18,22.28 11,26 M18,13.74 L26,18 26,18 18,22.28" />
+                                <svg width="60px" height="60px" viewBox="0 0 36 36"
+                                     style="padding-left: 5px; padding-top: 4px;">
+                                    <path visibility="{{isActive($index) ? 'visible' : 'hidden'}}" fill="#ffffff"
+                                          id="pause-icon" data-state="playing"
+                                          d="M11,10 L17,10 17,26 11,26 M20,10 L26,10 26,26 20,26"/>
+                                    <path visibility="{{isActive($index) ? 'hidden' : 'visible'}}" fill="#ffffff"
+                                          id="play-icon" data-state="paused"
+                                          d="M11,10 L18,13.74 18,22.28 11,26 M18,13.74 L26,18 26,18 18,22.28"/>
                                 </svg>
                             </div>
                             <div>

@@ -21,9 +21,20 @@ angular.module('Watch')
     //.constant('serverAddress', 'localhost')
     .constant('restPort', 3000)
     .constant('websocketPort', 3001)
-    .factory("Api", function ($resource, serverAddress, restPort, $cacheFactory) {
-        var apiEndpoint = 'http://' + serverAddress + ':' + restPort + '/api';
+    .factory("Api", function ($rootScope, $resource, serverAddress, restPort, $cacheFactory, AppState) {
+        var serverUrl = serverAddress + ":" + restPort;
+        var apiEndpoint = 'http://' + serverUrl + '/api';
         var apiCache = $cacheFactory('api');
+
+        $rootScope.$watch(
+            function () {
+                return AppState.getServer();
+            },
+            function (newVal) {
+                serverUrl = newVal;
+            },
+            true);
+
         return {
             events: $resource(apiEndpoint + '/events/:role/:page', {
                 role: '@_role',
@@ -68,7 +79,7 @@ angular.module('Watch')
             });
         });
 
-        ws.$on('event', function(data) {
+        ws.$on('event', function (data) {
             $cacheFactory.removeAll();
             $rootScope.$emit('push', {
                 type: 'event',

@@ -25,7 +25,7 @@ function updateNavStatus(activePage) {
 
 (function() {
 
-    if(tizen) {
+    if(typeof tizen !== 'undefined') {
         tizen.power.request("SCREEN", "SCREEN_NORMAL");
     }
 

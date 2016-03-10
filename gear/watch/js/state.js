@@ -3,6 +3,7 @@ angular.module('Watch')
         //tau.defaults.pageTransition = "slideup";
 
         var currentState = {
+            server: null,
             events: {
                 current: null,
                 next: null,
@@ -92,5 +93,21 @@ angular.module('Watch')
             currentState.isNewTimerCountdown = isCountdown;
         };
 
+        currentState.getServer = function () {
+            return currentState.server;
+        };
+
+        currentState.setServer = function (server) {
+            currentState.server = server;
+        };
+
         return currentState;
+    })
+    .controller('SetupServerCtrl', function($rootScope, $scope, AppState) {
+        $scope.server = "10.0.0.75:3000";
+
+        $scope.save = function() {
+            AppState.setServer($scope.server);
+            tau.changePage('dashboard');
+        }
     });

@@ -1,22 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets" id="http://nasa.com/watch"
-        version="1.0.0" viewmodes="maximized">
-    <tizen:application id="z27jbB7mzx.watch" package="z27jbB7mzx" required_version="2.2"/>
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets" id="http://nasa.com/watch" version="1.0.0" viewmodes="maximized">
     <access origin="*" subdomains="true"></access>
+    <tizen:application id="z27jbB7mzx.watch" package="z27jbB7mzx" required_version="2.2"/>
     <content src="index.html"/>
     <feature name="http://tizen.org/feature/screen.size.all"/>
-    <icon src="icon.png"/>
-    <name>watch</name>
-    <tizen:profile name="wearable"/>
     <feature name="http://tizen.org/feature/screen.size.normal"/>
     <feature name="http://tizen.org/feature/network.internet"/>
+    <feature name="http://tizen.org/feature/network.bluetooth"/>
+    <feature name="http://tizen.org/feature/network.wifi"/>
     <icon src="icon.png"/>
+    <icon src="icon.png"/>
+    <name>watch</name>
+    <preference name=" force-screen-on" value="true" readonly="false"/>
     <tizen:privilege name="http://tizen.org/privilege/application.launch"/>
     <tizen:privilege name="http://tizen.org/privilege/internet"/>
     <tizen:privilege name="http://tizen.org/privilege/setting"/>
     <tizen:privilege name="http://tizen.org/privilege/system"/>
     <tizen:privilege name="http://tizen.org/privilege/bluetooth.gap"/>
     <tizen:privilege name="http://tizen.org/privilege/bluetooth.admin"/>
-
+    <tizen:privilege name="http://tizen.org/privilege/display"/>
+    <tizen:privilege name="http://tizen.org/privilege/power"/>
+    <tizen:privilege name="http://tizen.org/privilege/bluetoothmanager"/>
+    <tizen:profile name="wearable"/>
     <tizen:setting background-support="enable" encryption="disable" hwkey-event="enable"/>
 </widget>
