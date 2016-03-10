@@ -42,7 +42,7 @@ angular.module('Watch')
             }
         });
 
-        $rootScope.on('push', function() {
+        $rootScope.$on('push', function() {
             $scope.refresh();
         });
 
