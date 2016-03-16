@@ -111,15 +111,25 @@ router.put('/events/:eventId', function (req, res) {
     });
 
     event.isActive = req.body.isActive;
-    events.isComplete = req.body.isComplete;
+    event.isCompleted = req.body.isCompleted;
+
+    if(event.isActive) {
+        event.startTime = moment().format("HH:mm");
+        event.startDate = moment().format("DD/MM/YYYY");
+    }
 
     var timer = _.filter(timersModel.timers, function (t) {
         return t.eventId == req.params.eventId
     });
 
     if (timer !== undefined) {
-        timer.isActive = req.body.isActive && !req.body.isComplete;
+        timer.isActive = req.body.isActive && !req.body.isCompleted;
     }
+
+    ws.broadcast(JSON.stringify({
+        event: 'event',
+        data: event
+    }));
 
     res.json(event);
 });
@@ -132,6 +142,7 @@ router.post('/events/:eventId/timer', function (req, res) {
     var event = _.find(eventsModel.events, function (e) {
         return e.id == req.params.eventId;
     });
+    event.hasTimer = true;
 
     var now = moment();
     var start = moment(e.date + " " + e.startTime, "DD/MM/YYYY HH:mm");

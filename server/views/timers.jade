@@ -11,11 +11,7 @@ block content
         tbody
             each timer in list
                 tr
-                    td.col-sm-3
-                        input(type='text' value='#{timer.name}' name='name' placeholder='Name').form-control
-                    td.col-sm-3
-                        input(type='text' name='name' placeholder='Name').form-control
-                    td.col-sm-3
-                        input(type='text' name='name' placeholder='Name').form-control
-                    td.col-sm-3
-                        input(type='text' value="#{timer.isCountdown}" name='name' placeholder='Name').form-control
+                    td.col-sm-3 #{timer.name}
+                    td.col-sm-3 #{timer.elapsed}
+                    td.col-sm-3 #{timer.total}
+                    td.col-sm-3 #{timer.isCountdown}

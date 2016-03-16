@@ -36,10 +36,14 @@ angular.module('Watch')
             true);
 
         return {
-            events: $resource(apiEndpoint + '/events/:role/:page', {
-                role: '@_role',
-                page: '@_page'
-            }, {cache: apiCache}),
+            events: $resource(apiEndpoint + '/events/:role/:page/:eventId', {
+                    role: '@_role',
+                    page: '@_page',
+                    eventId: '@_eventId'
+                }, {
+                    'update': {method: 'PUT'}
+                }, {cache: apiCache}
+            ),
             alerts: $resource(apiEndpoint + '/alerts/:alert', {
                 alert: '@_alert'
             }, {cache: apiCache}),

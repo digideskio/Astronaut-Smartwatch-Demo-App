@@ -71,6 +71,47 @@ angular.module('Watch')
             $scope.goBack();
         };
     })
-    .controller('EventDetailCtrl', function ($scope, AppState) {
+    .controller('EventDetailCtrl', function ($rootScope, $scope, AppState, Api) {
         $scope.currentData = AppState;
+
+        $scope.startEvent = function () {
+            AppState.event.isActive = true;
+            AppState.event.isCompleted = false;
+
+            Api.events.update({eventId: AppState.event.id}, {
+                isActive: true,
+                isCompleted: false
+            }, function (ev) {
+                AppState.event = ev;
+            });
+        };
+
+        $scope.stopEvent = function () {
+            AppState.event.isActive = false;
+            AppState.event.isCompleted = true;
+
+            Api.events.update({eventId: AppState.event.id}, {
+                isActive: false,
+                isCompleted: true
+            })
+        };
+
+        $scope.updateEventTime = function () {
+            if(AppState.event) {
+                var start = moment(AppState.event.date + " " + AppState.event.startTime, "DD/MM/YYYY HH:mm");
+                var end = moment(AppState.event.date + " " + AppState.event.endTime, "DD/MM/YYYY HH:mm");
+                if (AppState.event.isCompleted || end.isAfter(moment())) {
+                    $scope.eventStatus = start.fromNow();
+                } else if (AppState.event.isActive) {
+                    $scope.eventStatus = moment().diff(end);
+                } else if (start.isAfter(moment())) {
+                    $scope.eventStatus = moment().toNow();
+                }
+            }
+        };
+
+        $rootScope.$on('timerTick', function () {
+            $scope.updateEventTime();
+        });
+
     });
