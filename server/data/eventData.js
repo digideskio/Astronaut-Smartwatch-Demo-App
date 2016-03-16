@@ -11,7 +11,9 @@ exports.events = [
         location: "FE-2 T. Virst",
         color: '#337ab7',
         role: "ISS CDR",
-        attendees: ["John Smith", "Emily Eames"]
+        attendees: ["John Smith", "Emily Eames"],
+        isRunning: false,
+        isCompleted: false
     },
     {
         id: 1,
@@ -25,7 +27,9 @@ exports.events = [
         location: "FE-2 T. Virst",
         color: '#5cb85c',
         role: "ISS CDR",
-        attendees: ["John Smith", "Emily Eames"]
+        attendees: ["John Smith", "Emily Eames"],
+        isRunning: false,
+        isCompleted: false
     },
     {
         id: 2,
@@ -39,6 +43,8 @@ exports.events = [
         location: "FE-2 T. Virst",
         color: '#5bc0de',
         role: "ISS CDR",
-        attendees: ["John Smith", "Emily Eames"]
+        attendees: ["John Smith", "Emily Eames"],
+        isRunning: false,
+        isCompleted: false
     }
 ];

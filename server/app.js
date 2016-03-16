@@ -28,6 +28,7 @@ var roteRoles = require('./controllers/roles');
 var routeUsers = require('./controllers/users');
 var routeComms = require('./controllers/comms');
 var routeAlerts = require('./controllers/alerts');
+var routeTimers = require('./controllers/timers');
 var api = require('./controllers/api');
 
 app.use('/', admin);
@@ -36,6 +37,7 @@ app.use('/admin/roles', roteRoles);
 app.use('/admin/users', routeUsers);
 app.use('/admin/comms', routeComms);
 app.use('/admin/alerts', routeAlerts);
+app.use('/admin/timers', routeTimers);
 app.use('/api', api);
 
 // catch 404 and forward to error handler

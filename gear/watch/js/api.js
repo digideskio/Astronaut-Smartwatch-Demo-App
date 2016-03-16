@@ -48,7 +48,12 @@ angular.module('Watch')
             }, {cache: apiCache}),
             comms: $resource(apiEndpoint + '/comms/:commId', {
                 commId: '@_commId'
-            }, {cache: apiCache})
+            }, {cache: apiCache}),
+            timers: $resource(apiEndpoint + '/timers/:timerId', {
+                timerId: '@_timerId'
+            }, {
+                'update': {method: 'PUT'}
+            })
         }
     })
     .run(function ($rootScope, $cacheFactory, $websocket, serverAddress, websocketPort, Api) {
@@ -90,6 +95,4 @@ angular.module('Watch')
         ws.$on('$message', function (data) {
             console.info("New message received : " + data);
         });
-
-
     });

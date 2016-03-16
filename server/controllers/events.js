@@ -74,6 +74,11 @@ router.post('/:eventId/edit', function (req, res) {
     eventsModel.events[eventIndex] = req.body;
     eventsModel.events[eventIndex].id = eventId;
     sortEvents();
+    ws.broadcast(JSON.stringify({
+        event: 'event',
+        data: req.body
+    }));
+
     res.location('/admin/events');
     res.redirect('/admin/events');
 });

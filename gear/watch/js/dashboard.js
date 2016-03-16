@@ -1,11 +1,11 @@
 angular.module("Watch")
-    .controller("DashboardCtrl", function ($rootScope, $scope, Api, System, AppState, TimerCommon) {
+    .controller("DashboardCtrl", function ($rootScope, $scope, Api, System, TimerCommon, Timers) {
         $scope.colorGood = '#1EDF7A';
         $scope.colorWeak = '#FFE620';
         $scope.colorBad = '#FC3D21';
         $scope.time = new Date();
         $scope.battery = System.getBattery();
-        $scope.timerz = AppState.timersInfo;
+        $scope.timerz = Timers;
 
         $scope.onDashboardClick = function () {
             tau.changePage('hsectionchangerPage');

@@ -122,7 +122,7 @@ select {
 }
 @font-face {
   font-family: OpenSans;
-  font-weight: 500;
+  font-weight: oblique;
   font-style: normal;
   src: url("../common/fonts/OpenSans-Semibold.ttf");
 }
@@ -134,7 +134,7 @@ select {
 }
 @font-face {
   font-family: OpenSans;
-  font-weight: 600;
+  font-weight: 633;
   font-style: normal;
   src: url("../common/fonts/OpenSans-ExtraBold.ttf");
 }

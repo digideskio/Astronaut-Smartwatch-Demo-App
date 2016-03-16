@@ -1,0 +1,21 @@
+extends layout
+block content
+    h2 Active timers
+    table(id='timers-table' data-sortable).table.table-bordered.table-striped.sortable-theme-bootstrap
+        thead
+            tr
+                th Name
+                th Elapsed
+                th Total
+                th Countdown
+        tbody
+            each timer in list
+                tr
+                    td.col-sm-3
+                        input(type='text' value='#{timer.name}' name='name' placeholder='Name').form-control
+                    td.col-sm-3
+                        input(type='text' name='name' placeholder='Name').form-control
+                    td.col-sm-3
+                        input(type='text' name='name' placeholder='Name').form-control
+                    td.col-sm-3
+                        input(type='text' value="#{timer.isCountdown}" name='name' placeholder='Name').form-control
