@@ -47,7 +47,8 @@
 <div class="ui-page" id="dashboard" ng-controller="DashboardCtrl">
     <div class="dashboard-cont" ng-click="onDashboardClick()">
         <div class="dashboard-content-top">
-            <object data="img/bands.svg" id="bands" type="image/svg+xml" sb-load="onBandsSvgReady()"></object>
+            <h2 class="today-date">{{time |date:'EEE, dd/MM'}}</h2>
+
             <div class="flex-spacer"></div>
             <object class="dashboard-icon" data="img/bluetooth.svg" id="bluetooth" type="image/svg+xml"
                     sb-load="onBluetoothSvgReady()"></object>
@@ -64,11 +65,9 @@
             <span class="battery-level">{{battery.getLevel()}}%</span>
         </div>
         <div class="dashboard-clock-cont">
-            <h2 class="today-date">{{time |date:'EEE, dd/MM'}}</h2>
-
             <h1 class="dashboard-clock">{{time | date:'HH:mm:ss'}}<span class="gmt">GMT</span></h1>
         </div>
-        <div class="dashboard-timers">
+        <div class="ui-content dashboard-timers">
             <div ng-repeat="tm in timerz.timers">
                 <div class="dash-timers-list">
                     <div>
@@ -114,18 +113,19 @@
 
 
         </div>
-        <div class="dashboard-alerts">
-            <h4>A:<span class="dashboard-alert-count"><br>{{(alerts | filter:{status:'Alert'}).length}}</span></h4>
+        <footer class="ui-footer dashboard-alerts">
+            <object data="img/bands.svg" id="bands" type="image/svg+xml" sb-load="onBandsSvgReady()"></object>
+            <!--<h4>A:<span class="dashboard-alert-count"><br>{{(alerts | filter:{status:'Alert'}).length}}</span></h4>-->
 
-            <div class="flex-spacer"></div>
-            <h4>C:<span class="dashboard-alert-count"><br>{{(alerts | filter:{status:'Critical'}).length}}</span></h4>
+            <!--<div class="flex-spacer"></div>-->
+            <!--<h4>C:<span class="dashboard-alert-count"><br>{{(alerts | filter:{status:'Critical'}).length}}</span></h4>-->
 
-            <div class="flex-spacer"></div>
-            <h4>W:<span class="dashboard-alert-count"><br>{{(alerts | filter:{status:'Warning'}).length}}</span></h4>
+            <!--<div class="flex-spacer"></div>-->
+            <!--<h4>W:<span class="dashboard-alert-count"><br>{{(alerts | filter:{status:'Warning'}).length}}</span></h4>-->
 
-            <div class="flex-spacer"></div>
-            <h4>E:<span class="dashboard-alert-count"><br>{{(alerts | filter:{status:'Emergency'}).length}}</span></h4>
-        </div>
+            <!--<div class="flex-spacer"></div>-->
+            <!--<h4>E:<span class="dashboard-alert-count"><br>{{(alerts | filter:{status:'Emergency'}).length}}</span></h4>-->
+        </footer>
     </div>
 </div>
 
@@ -172,7 +172,7 @@
                     <div class="events-placeholder" ng-show="!busy && (!events || events.length == 0)">No events</div>
                 </div>
             </section>
-            <section ng-controller="TimersCtrl as tmCtrl" >
+            <section ng-controller="TimersCtrl as tmCtrl">
 
                 <div class="timers-main-cont">
                     <div class="timers-main">
@@ -577,15 +577,15 @@
         </div>
     </div>
 </div>
-<div class="footer" id="notification" ng-controller="NotificationsCtrl">
+<div class="footer" id="notification" ng-controller="NotificationsCtrl" ng-click="onBgClick($event)">
     <div ng-click="onBgClick($event)">
         <div class="notification" ng-click="mainClick($event)" ng-show="main">
             <h1 class="notification-title">{{main.title}}</h1>
 
             <h2 class="notification-subtitle">{{main.time}}</h2>
-        </div>
-        <div class="notification" id="more" ng-show="activeNotifications.length > 1" ng-click="moreClick($event)">
-            <h1 class="notification-title">{{activeNotifications.length - 1}} more notifications</h1>
+            <div id="more" ng-show="activeNotifications.length > 1" ng-click="moreClick($event)">
+                <h2 class="notification-more">{{activeNotifications.length - 1}} more notifications</h2>
+            </div>
         </div>
     </div>
 </div>
