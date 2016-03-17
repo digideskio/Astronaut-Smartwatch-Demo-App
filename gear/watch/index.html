@@ -118,11 +118,14 @@
             <table style="margin-left: 40px">
                 <tr>
                     <td align="center"><h5 style="color:white;">{{alerts.length}}</h5></td>
-                    <td align="center"><h5 style="color:red;">{{(alerts | filter:{status:'Emergency'}).length}}</h5></td>
+                    <td align="center"><h5 style="color:red;">{{(alerts | filter:{status:'Emergency'}).length}}</h5>
+                    </td>
                 </tr>
                 <tr>
-                    <td align="center"><h5 style="color:orange;">{{(alerts | filter:{status:'Warning'}).length}}</h5></td>
-                    <td align="center"><h5 style="color:yellow;">{{(alerts | filter:{status:'Caution'}).length}}</h5></td>
+                    <td align="center"><h5 style="color:orange;">{{(alerts | filter:{status:'Warning'}).length}}</h5>
+                    </td>
+                    <td align="center"><h5 style="color:yellow;">{{(alerts | filter:{status:'Caution'}).length}}</h5>
+                    </td>
                 </tr>
             </table>
             <!--<h4>A:<span class="dashboard-alert-count"><br>{{(alerts | filter:{status:'Alert'}).length}}</span></h4>-->
@@ -368,8 +371,9 @@
                 </div>
             </section>
             <section ng-controller="AlertsCtrl">
-                <div class="alerts-counters"><span class="alerts-count">{{alerts.length}} new&nbsp;|&nbsp;</span><span
-                        class="critical-alerts-count">{{(alerts | filter: {status:'Critical'}).length}} critical</span>
+                <div class="alerts-counters"><span class="alerts-count" ng-click="sort('time')"
+                                                   ng-class="{selected: sortDate}">{{alerts.length}} new&nbsp;|&nbsp;</span><span
+                        class="critical-alerts-count" ng-click="sort('type')" ng-class="{selected: sortType}">{{(alerts | filter: {status:'Critical'}).length}} critical</span>
                 </div>
                 <div>
                     <div class="alerts-list">
@@ -459,11 +463,13 @@
                 <h2 class="detail-small">{{currentData.event.notes}}</h2>
             </div>
             <div class="detail-timer" ng-show="!currentData.event.isCompleted">
-                <img src="img/start.png" style="width: 60px; height: 60px" ng-click="startEvent()" ng-show="!currentData.event.isActive">
+                <img src="img/start.png" style="width: 60px; height: 60px" ng-click="startEvent()"
+                     ng-show="!currentData.event.isActive">
                 <div class="flex-spacer"></div>
                 <h1>{{eventStatus}}</h1>
                 <div class="flex-spacer"></div>
-                <img src="img/clear.png" class="detail-timer-delete" ng-click="stopEvent()" ng-show="currentData.event.isActive">
+                <img src="img/clear.png" class="detail-timer-delete" ng-click="stopEvent()"
+                     ng-show="currentData.event.isActive">
             </div>
             <div class="detail-timer-bottom" ng-show="!currentData.event.isCompleted && !currentData.event.hasTimer">
                 <img src="img/btn_watch.png" ng-click="trackTime()">
