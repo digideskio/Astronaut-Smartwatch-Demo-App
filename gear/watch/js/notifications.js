@@ -115,5 +115,5 @@ angular.module("Watch")
             if (navigator.vibrate) {
                 navigator.vibrate(0);
             }
-        }
+        };
     });

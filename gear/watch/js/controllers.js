@@ -1,4 +1,5 @@
-angular.module("Watch", ['ngRoute', 'ngResource', 'angular.filter', 'infinite-scroll', 'angular-svg-round-progress', 'ui.bootstrap', 'ngWebsocket'])
+angular.module("Watch", ['ngRoute', 'ngResource', 'angular.filter', 'infinite-scroll',
+    'angular-svg-round-progress', 'ui.bootstrap', 'ngWebsocket', 'angular-click-outside'])
     .config(function ($locationProvider) {
         return $locationProvider.html5Mode(true).hashPrefix("!");
     })

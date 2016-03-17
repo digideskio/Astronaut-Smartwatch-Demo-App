@@ -32,7 +32,6 @@ h4.role
 span
   font-weight 300
 
-
 .contents
   display: flex
   display: -webkit-flex
@@ -207,7 +206,7 @@ quarter-circle(bg, bTop, bRight, bBottom, bLeft)
 
 .detail-main-info
   width 100%
-  padding-left  24px
+  padding-left 24px
 
 .detail-name
   margin-bottom 20px
@@ -505,9 +504,9 @@ td.form-group.uib-time > input
 .footer
   height 480px
   background transparent
-  -webkit-box-shadow: 0px 10px 55px 10px rgba(71,55,71,0.72);
-  -moz-box-shadow: 0px 10px 55px 10px rgba(71,55,71,0.72);
-  box-shadow: 0px 10px 55px 10px rgba(71,55,71,0.72);
+  -webkit-box-shadow: 0px 10px 55px 10px rgba(71, 55, 71, 0.72);
+  -moz-box-shadow: 0px 10px 55px 10px rgba(71, 55, 71, 0.72);
+  box-shadow: 0px 10px 55px 10px rgba(71, 55, 71, 0.72);
 
 .notification
   position absolute
@@ -562,12 +561,15 @@ td.form-group.uib-time > input
   -webkit-flex-direction: column;
   flex-direction: column;
 
-table {
-  border-collapse: collapse;
-}
-td + td,
-th + th { border-left: 1px solid white; }
-tr + tr { border-top: 1px solid white; }
 
-td
+.alerts td + td,
+.alerts th + th {
+  border-left: 1px solid white;
+}
+
+.alerts tr + tr {
+  border-top: 1px solid white;
+}
+
+.alerts td
   padding 10px

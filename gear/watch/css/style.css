@@ -724,16 +724,13 @@ td.form-group.uib-time > input {
   -webkit-flex-direction: column;
   flex-direction: column;
 }
-table {
-  border-collapse: collapse;
-}
-td + td,
-th + th {
+.alerts td + td,
+.alerts th + th {
   border-left: 1px solid #fff;
 }
-tr + tr {
+.alerts tr + tr {
   border-top: 1px solid #fff;
 }
-td {
+.alerts td {
   padding: 10px;
 }

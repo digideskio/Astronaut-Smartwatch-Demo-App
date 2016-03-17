@@ -22,6 +22,7 @@
     <script type="text/javascript" src="common/js/lib/moment-duration-format.js"></script>
     <script type="text/javascript" src="common/js/lib/snap.svg-min.js"></script>
     <script type="text/javascript" src="common/js/lib/ui-bootstrap-custom-tpls-1.1.2.js"></script>
+    <script type="text/javascript" src="common/js/lib/clickoutside.directive.js"></script>
     <script type="text/javascript" src="common/js/lib/ng-websocket.js"></script>
     <script type="text/javascript" src="js/controllers.js"></script>
     <script type="text/javascript" src="js/api.js"></script>
@@ -115,7 +116,7 @@
         </div>
         <footer class="ui-footer dashboard-alerts">
             <object data="img/bands.svg" id="bands" type="image/svg+xml" sb-load="onBandsSvgReady()"></object>
-            <table style="margin-left: 40px">
+            <table style="margin-left: 40px" class="alerts">
                 <tr>
                     <td align="center"><h5 style="color:white;">{{alerts.length}}</h5></td>
                     <td align="center"><h5 style="color:red;">{{(alerts | filter:{status:'Emergency'}).length}}</h5>
@@ -532,9 +533,8 @@
         </div>
     </div>
 </div>
-<div class="footer" id="notification" ng-controller="NotificationsCtrl" ng-click="onBgClick($event)">
-    <div ng-click="onBgClick($event)">
-        <div class="notification" ng-click="mainClick($event)" ng-show="main">
+<div class="footer" id="notification" ng-controller="NotificationsCtrl">
+        <div class="notification" id="notif-view" ng-click="mainClick($event)" ng-show="main" click-outside="onBgClick()">
             <h1 class="notification-title">{{main.title}}</h1>
 
             <h2 class="notification-subtitle">{{main.time}}</h2>
@@ -544,6 +544,7 @@
         </div>
     </div>
 </div>
+
 </body>
 <script type="text/javascript" src="js/main.js"></script>
 </html>
