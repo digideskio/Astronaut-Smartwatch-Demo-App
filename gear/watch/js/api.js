@@ -57,8 +57,11 @@ angular.module('Watch')
                 timerId: '@_timerId'
             }, {
                 'update': {method: 'PUT'}
+            }),
+            eventTimers: $resource(apiEndpoint + '/events/:eventId/timer', {
+                eventId: '@_eventId'
             })
-        }
+    }
     })
     .run(function ($rootScope, $cacheFactory, $websocket, serverAddress, websocketPort, Api) {
         var ws = $websocket.$new('ws://' + serverAddress + ':' + websocketPort);

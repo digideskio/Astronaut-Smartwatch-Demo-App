@@ -9,6 +9,7 @@ var timersModel = require('../data/timersData.js');
 var moment = require('moment');
 require('moment-range');
 var _ = require('underscore');
+var ws = require('../websocket');
 
 var MAX_TIMER_COUNT = 3;
 var PAGE_SIZE = 5;
@@ -115,7 +116,8 @@ router.put('/events/:eventId', function (req, res) {
 
     if(event.isActive) {
         event.startTime = moment().format("HH:mm");
-        event.startDate = moment().format("DD/MM/YYYY");
+    } else if(event.isCompleted) {
+        event.endTime = moment().format("HH:mm");
     }
 
     var timer = _.filter(timersModel.timers, function (t) {
@@ -145,8 +147,8 @@ router.post('/events/:eventId/timer', function (req, res) {
     event.hasTimer = true;
 
     var now = moment();
-    var start = moment(e.date + " " + e.startTime, "DD/MM/YYYY HH:mm");
-    var end = moment(e.date + " " + e.endTime, "DD/MM/YYYY HH:mm");
+    var start = moment(event.date + " " + event.startTime, "DD/MM/YYYY HH:mm");
+    var end = moment(event.date + " " + event.endTime, "DD/MM/YYYY HH:mm");
     var total = event.isActive ? moment.range(now, end) : moment.range(now, start);
     var timer = addTimer(!event.isActive, event.id, total.valueOf() / 1000);
     res.json(timer);

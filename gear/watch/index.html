@@ -451,11 +451,11 @@
             <div class="detail-timer" ng-show="!currentData.event.isCompleted">
                 <img src="img/start.png" style="width: 60px; height: 60px" ng-click="startEvent()" ng-show="!currentData.event.isActive">
                 <div class="flex-spacer"></div>
-                <div class="detail-timer-time">{{eventStatus}}</div>
+                <h1>{{eventStatus}}</h1>
                 <div class="flex-spacer"></div>
                 <img src="img/clear.png" class="detail-timer-delete" ng-click="stopEvent()" ng-show="currentData.event.isActive">
             </div>
-            <div class="detail-timer-bottom" ng-show="!currentData.event.isCompleted">
+            <div class="detail-timer-bottom" ng-show="!currentData.event.isCompleted && !currentData.event.hasTimer">
                 <img src="img/btn_watch.png" ng-click="trackTime()">
             </div>
         </div>

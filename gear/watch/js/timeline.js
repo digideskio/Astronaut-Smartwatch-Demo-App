@@ -71,7 +71,7 @@ angular.module('Watch')
             $scope.goBack();
         };
     })
-    .controller('EventDetailCtrl', function ($rootScope, $scope, AppState, Api) {
+    .controller('EventDetailCtrl', function ($rootScope, $scope, AppState, Api, Timers) {
         $scope.currentData = AppState;
 
         $scope.startEvent = function () {
@@ -97,21 +97,38 @@ angular.module('Watch')
         };
 
         $scope.updateEventTime = function () {
-            if(AppState.event) {
+            if (AppState.event) {
                 var start = moment(AppState.event.date + " " + AppState.event.startTime, "DD/MM/YYYY HH:mm");
                 var end = moment(AppState.event.date + " " + AppState.event.endTime, "DD/MM/YYYY HH:mm");
-                if (AppState.event.isCompleted || end.isAfter(moment())) {
-                    $scope.eventStatus = start.fromNow();
-                } else if (AppState.event.isActive) {
-                    $scope.eventStatus = moment().diff(end);
-                } else if (start.isAfter(moment())) {
-                    $scope.eventStatus = moment().toNow();
+                if (AppState.event.isActive || start.isAfter(moment())) {
+                    $scope.formatAndSaveEventDuration(moment().diff(start));
+                }
+                if (AppState.event.isCompleted) {
+                    $scope.formatAndSaveEventDuration(end.diff(start));
                 }
             }
+        };
+
+        $scope.formatAndSaveEventDuration = function (diff) {
+            var duration = moment.duration(diff);
+            $scope.eventStatus = moment.duration(duration).format("HH:mm:ss", {
+                forceLength: true,
+                trim: false
+            });
         };
 
         $rootScope.$on('timerTick', function () {
             $scope.updateEventTime();
         });
 
+        $scope.trackTime = function () {
+            if (!AppState.event.hasTimer) {
+                Api.eventTimers.save({eventId: AppState.event.id}, {}, function (timer) {
+                    AppState.event.hasTimer = true;
+                    Timers.add(timer);
+                });
+            }
+        };
+
+        $scope.updateEventTime();
     });
