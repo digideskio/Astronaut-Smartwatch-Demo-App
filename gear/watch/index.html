@@ -115,6 +115,16 @@
         </div>
         <footer class="ui-footer dashboard-alerts">
             <object data="img/bands.svg" id="bands" type="image/svg+xml" sb-load="onBandsSvgReady()"></object>
+            <table style="margin-left: 40px">
+                <tr>
+                    <td align="center"><h5 style="color:white;">{{alerts.length}}</h5></td>
+                    <td align="center"><h5 style="color:red;">{{(alerts | filter:{status:'Emergency'}).length}}</h5></td>
+                </tr>
+                <tr>
+                    <td align="center"><h5 style="color:orange;">{{(alerts | filter:{status:'Warning'}).length}}</h5></td>
+                    <td align="center"><h5 style="color:yellow;">{{(alerts | filter:{status:'Caution'}).length}}</h5></td>
+                </tr>
+            </table>
             <!--<h4>A:<span class="dashboard-alert-count"><br>{{(alerts | filter:{status:'Alert'}).length}}</span></h4>-->
 
             <!--<div class="flex-spacer"></div>-->

@@ -18,7 +18,7 @@ exports.alerts = [
         time: "10:20:14",
         system: "CDH",
         cleared: "C",
-        status: 'Advisory',
+        status: 'Caution',
         ack: 'X',
         annun: 'Sup'
     },
@@ -30,7 +30,7 @@ exports.alerts = [
         time: "06:30:43",
         system: "CDH",
         cleared: "C",
-        status: 'Advisory',
+        status: 'Warning',
         ack: 'X',
         annun: 'Sup'
     }

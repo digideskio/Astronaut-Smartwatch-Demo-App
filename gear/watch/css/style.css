@@ -168,6 +168,11 @@ h4 {
   margin: 21px 0 31px 19px;
   font-weight: 300;
 }
+h5 {
+  font-size: 22px;
+  color: #d8d8d8;
+  font-weight: 300;
+}
 h4.role {
   margin: 0 0 0 19px;
   color: #fff;
@@ -570,7 +575,7 @@ td.form-group.uib-time > input {
 .dashboard-cont {
   width: 100%;
   height: 100%;
-  padding: 10px;
+  padding: 20px;
 }
 .battery-level {
   font-size: 18px;
@@ -638,6 +643,7 @@ td.form-group.uib-time > input {
   -webkit-align-items: center;
   justify-content: center;
   -webkit-justify-content: center;
+  margin-top: 30px;
 }
 .dashboard-alert {
   color: #fff;
@@ -711,4 +717,17 @@ td.form-group.uib-time > input {
   -webkit-justify-content: center;
   -webkit-flex-direction: column;
   flex-direction: column;
+}
+table {
+  border-collapse: collapse;
+}
+td + td,
+th + th {
+  border-left: 1px solid #fff;
+}
+tr + tr {
+  border-top: 1px solid #fff;
+}
+td {
+  padding: 10px;
 }
