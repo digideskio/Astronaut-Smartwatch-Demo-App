@@ -22,6 +22,7 @@ angular.module("Watch")
                     });
                     $scope.main = message.data;
                     $scope.main.type = message.type;
+                    $scope.main.time = message.data.time;
 
                     break;
                 case 'event':
@@ -34,6 +35,7 @@ angular.module("Watch")
                     $scope.main = message.data;
                     $scope.main.title = message.data.name;
                     $scope.main.type = message.type;
+                    $scope.main.time = message.data.date + " " + message.data.startTime;
 
                     break;
                 case 'comms':
@@ -45,6 +47,7 @@ angular.module("Watch")
                     $scope.main = message.data;
                     $scope.main.title = 'Comms updated';
                     $scope.main.type = message.type;
+                    $scope.main.time = message.data.time;
                     break;
             }
 
@@ -59,11 +62,12 @@ angular.module("Watch")
             }
         });
 
-        $scope.onBgClick = function ($event) {
+        $scope.onBgClick = function (scope, e) {
             console.error("BG CLCK");
-            if ($scope.activeNotifications && $scope.activeNotifications.length > 0) {
-                $scope.dismiss_($event);
+            if ($scope.main) {
+                $scope.dismiss_();
             }
+            //e.stopPropagation();
         };
 
         $scope.repeatVibration = function (status) {
@@ -108,10 +112,10 @@ angular.module("Watch")
             sectionChanger.setActiveSection(3);
         };
 
-        $scope.dismiss_ = function ($event) {
+        $scope.dismiss_ = function () {
             $scope.main = null;
             $scope.activeNotifications.splice(0, $scope.activeNotifications.length);
-            $event.stopPropagation();
+            //$event.stopPropagation();
             if (navigator.vibrate) {
                 navigator.vibrate(0);
             }

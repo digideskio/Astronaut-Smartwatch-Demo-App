@@ -22,7 +22,6 @@
     <script type="text/javascript" src="common/js/lib/moment-duration-format.js"></script>
     <script type="text/javascript" src="common/js/lib/snap.svg-min.js"></script>
     <script type="text/javascript" src="common/js/lib/ui-bootstrap-custom-tpls-1.1.2.js"></script>
-    <script type="text/javascript" src="common/js/lib/clickoutside.directive.js"></script>
     <script type="text/javascript" src="common/js/lib/ng-websocket.js"></script>
     <script type="text/javascript" src="js/controllers.js"></script>
     <script type="text/javascript" src="js/api.js"></script>
@@ -533,9 +532,9 @@
         </div>
     </div>
 </div>
-<div class="footer" id="notification" ng-controller="NotificationsCtrl">
-        <div class="notification" id="notif-view" ng-click="mainClick($event)" ng-show="main" click-outside="onBgClick()">
-            <h1 class="notification-title">{{main.title}}</h1>
+<div class="notification-box" id="notification" ng-controller="NotificationsCtrl" ng-click="onBgClick()" ng-show="main">
+        <div class="notification" id="notif-view" ng-click="mainClick($event)">
+                <h1 class="notification-title">{{main.title}}</h1>
 
             <h2 class="notification-subtitle">{{main.time}}</h2>
             <div id="more" ng-show="activeNotifications.length > 1" ng-click="moreClick($event)">
