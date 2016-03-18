@@ -247,7 +247,7 @@ span {
 }
 .list-item-text {
   width: 100%;
-  margin-left: 50px;
+  padding-left: 50px;
 }
 .half-circle-right {
   height: 120px;
@@ -414,7 +414,7 @@ span {
 .list-title {
   white-space: nowrap;
   text-overflow: ellipsis;
-  overflow: hidden;
+  overflow: auto;
   padding-right: 10px;
   width: 300px;
   margin-top: 20px;

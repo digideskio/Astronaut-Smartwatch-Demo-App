@@ -1,5 +1,5 @@
 angular.module('Watch')
-    .controller('TimelineCtrl', function ($rootScope, $scope, $location, $anchorScroll, Api, AppState) {
+    .controller('TimelineCtrl', function ($rootScope, $scope, Api, AppState) {
         moment.locale('en-gb');
         $scope.busy = true;
         $scope.activeRole = AppState.getActiveRole() || 'ISS CDR';
@@ -17,11 +17,15 @@ angular.module('Watch')
         };
 
         $scope.activate = function () {
-            if ($scope.pendingScroll) {
-                $location.hash('event-' + $scope.firstEventIndex);
-                $anchorScroll();
-                $scope.pendingScroll = null;
-                $scope.firstEventIndex = null;
+            if ($scope.pendingScroll && $scope.firstEventIndex != -1) {
+                //$('html, body').animate({
+                //    scrollTop: jQuery('#event-' + $scope.firstEventIndex).offset().top
+                //}, 250);
+                jQuery('body').scrollTo('#event-' + $scope.firstEventIndex, 200);
+                //$location.hash('event-' + $scope.firstEventIndex);
+                //$anchorScroll();
+                //$scope.pendingScroll = null;
+                //$scope.firstEventIndex = null;
             }
         };
 
