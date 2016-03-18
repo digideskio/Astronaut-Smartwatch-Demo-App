@@ -148,7 +148,7 @@
     <div id="hsectionchanger" class="ui-content">
         <!-- section changer has only one child. -->
         <div>
-            <section ng-controller="TimelineCtrl" class="ui-section-active">
+            <section ng-controller="TimelineCtrl" class="ui-section-active" id="timeline">
                 <!--<pre>{{ events | json }}</pre>-->
                 <div class="role-selector" id="role-selector" ng-click="selectRole()">
                     <img src="img/role-icon.png" class="display:inline"><h4 class="role">{{activeRole}}</h4>
@@ -158,9 +158,9 @@
                      infinite-scroll-immediate-check='true' infinite-scroll-listen-for-event="role-selected">
                     <div class="timeline-list" ng-repeat="(key, value) in events | groupBy: 'date'">
                         <h4>{{key}}</h4>
-
-                        <div class="list-item" id="list-item" ng-repeat="event in value" ng-click="showEvent(event)">
-                            <div class="circle-blue" style="background: {{event.color}};">
+                        <div id="event-{{ ::$index }}"></div>
+                        <div class="list-item"  ng-repeat="event in value" ng-click="showEvent(event)">
+                            <div class="circle-blue" style="background: {{event.color}};" >
                             </div>
                             <div class="list-item-text">
                                 <h1 class="list-title">{{event.name}}</h1>

@@ -88,19 +88,41 @@ router.get('/events/:role/:page', function (req, res) {
         return endTime.isAfter(now) && e.role == role;
     });
 
-    var index = page * PAGE_SIZE;
-    if (index <= filteredEvents.length) {
-        filteredEvents = filteredEvents.slice(index, index + PAGE_SIZE);
-        console.error("Start = " + page * PAGE_SIZE + " pgSize = " + PAGE_SIZE + " GOT = " + filteredEvents.length);
+    //TODO: hack to send 20 previous events with first page of current events
+    if (page == 0) {
+        var firstPageIndex = _.findIndex(eventsModel.events, function (e) {
+            var endTime = moment(e.date + " " + e.endTime, "DD/MM/YYYY HH:mm");
+            return endTime.isAfter(now) && e.role == role;
+        });
+
+        var index = firstPageIndex - 20;
+        if (index < 0) {
+            index = 0;
+        }
+
+        var events = eventsModel.events.slice(index, 20 + PAGE_SIZE);
+        filteredEvents = _.uniq(events.concat(filteredEvents));
+        var response = {
+            role: role,
+            events: filteredEvents,
+            firstEventIndex: firstPageIndex
+        };
     } else {
-        filteredEvents = [];
+
+        var index = page * PAGE_SIZE;
+
+        if (index <= filteredEvents.length) {
+            filteredEvents = filteredEvents.slice(index, index + PAGE_SIZE);
+            console.error("Start = " + page * PAGE_SIZE + " pgSize = " + PAGE_SIZE + " GOT = " + filteredEvents.length);
+        } else {
+            filteredEvents = [];
+        }
+
+        var response = {
+            role: role,
+            events: filteredEvents
+        };
     }
-
-    var response = {
-        role: role,
-        events: filteredEvents
-    };
-
     console.error("Processed page " + page + ". Events count = " + filteredEvents.length + ". Total = " + eventsModel.events.length);
     res.json(response);
 });
@@ -114,9 +136,9 @@ router.put('/events/:eventId', function (req, res) {
     event.isActive = req.body.isActive;
     event.isCompleted = req.body.isCompleted;
 
-    if(event.isActive) {
+    if (event.isActive) {
         event.startTime = moment().format("HH:mm");
-    } else if(event.isCompleted) {
+    } else if (event.isCompleted) {
         event.endTime = moment().format("HH:mm");
     }
 

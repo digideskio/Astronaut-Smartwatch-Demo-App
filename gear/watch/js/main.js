@@ -1,6 +1,6 @@
 function updateNavStatus(activePage) {
     var pageTitle = $('#page-title');
-    switch(activePage) {
+    switch (activePage) {
         case 0:
             pageTitle.text("TIMELINE");
             break;
@@ -16,32 +16,39 @@ function updateNavStatus(activePage) {
     }
 
     $("#nav-circle-1").toggle(activePage != 0);
-    $("#nav-circle-2").toggle(activePage  > 1);
-    $("#nav-circle-3").toggle(activePage  > 2);
-    $("#nav-circle-4").toggle(activePage  == 0);
-    $("#nav-circle-5").toggle(activePage  <= 1);
-    $("#nav-circle-6").toggle(activePage  < 3);
+    $("#nav-circle-2").toggle(activePage > 1);
+    $("#nav-circle-3").toggle(activePage > 2);
+    $("#nav-circle-4").toggle(activePage == 0);
+    $("#nav-circle-5").toggle(activePage <= 1);
+    $("#nav-circle-6").toggle(activePage < 3);
 }
 
-(function() {
+(function () {
 
-    if(typeof tizen !== 'undefined') {
+    if (typeof tizen !== 'undefined') {
         tizen.power.request("SCREEN", "SCREEN_NORMAL");
     }
 
     //This listens for the back button press
-    document.addEventListener('tizenhwkey', function(e) {
-        if(e.keyName == "back") {
-            tau.back();
+    document.addEventListener('tizenhwkey', function (e) {
+        if (e.keyName == "back") {
+            var page = document.getElementsByClassName('ui-page-active')[0],
+                pageid = page ? page.id : "";
+            if (pageid === "dashboard") {
+                tizen.application.getCurrentApplication().exit();
+            } else {
+                tau.back();
+            }
+
         }
     });
 
 
-    var page = document.getElementById( "hsectionchangerPage" ),
-        changer = document.getElementById( "hsectionchanger" ),
+    var page = document.getElementById("hsectionchangerPage"),
+        changer = document.getElementById("hsectionchanger"),
         sectionChanger;
 
-    page.addEventListener( "pagebeforeshow", function(evt) {
+    page.addEventListener("pagebeforeshow", function (evt) {
         // make SectionChanger object
         sectionChanger = tau.widget.SectionChanger(changer, {
             circular: false,
@@ -51,13 +58,20 @@ function updateNavStatus(activePage) {
         updateNavStatus(0);
     });
 
-    page.addEventListener( "pagehide", function() {
+    page.addEventListener("pagehide", function () {
         // release object
         sectionChanger.destroy();
     });
 
-    changer.addEventListener("sectionchange", function(evt) {
+    changer.addEventListener("sectionchange", function (evt) {
         updateNavStatus(evt.detail.active);
     });
 
+    page.addEventListener('pageshow', function (evt) {
+        var page = document.getElementsByClassName('ui-section-active')[0];
+        if(page.id == 'timeline') {
+            var el = document.getElementById('timeline');
+            angular.element(el).scope().activate();
+        };
+    })
 }());
