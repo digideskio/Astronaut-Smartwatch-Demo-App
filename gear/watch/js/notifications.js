@@ -119,5 +119,9 @@ angular.module("Watch")
             if (navigator.vibrate) {
                 navigator.vibrate(0);
             }
+            if ($scope.vibrateInterval) {
+                clearInterval($scope.vibrateInterval);
+                $scope.vibrateInterval = null;
+            }
         };
     });
