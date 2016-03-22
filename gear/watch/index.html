@@ -148,7 +148,7 @@
     <div id="hsectionchanger" class="ui-content">
         <!-- section changer has only one child. -->
         <div>
-            <section ng-controller="TimelineCtrl" class="ui-section-active" id="timeline">
+            <section ng-controller="TimelineCtrl" class="ui-section ui-section-active" id="timeline">
                 <!--<pre>{{ events | json }}</pre>-->
                 <div class="role-selector" id="role-selector" ng-click="selectRole()">
                     <img src="img/role-icon.png" class="display:inline"><h4 class="role">{{activeRole}}</h4>
@@ -175,7 +175,7 @@
                     <div class="events-placeholder" ng-show="!busy && (!events || events.length == 0)">No events</div>
                 </div>
             </section>
-            <section ng-controller="TimersCtrl as tmCtrl">
+            <section class="ui-section" ng-controller="TimersCtrl as tmCtrl">
 
                 <div class="timers-main-cont">
                     <div class="timers-main">
@@ -360,7 +360,7 @@
                     <h1 class="timer-value">{{activeTimerValue()}}</h1>
                 </div>
             </section>
-            <section ng-controller="AlertsCtrl">
+            <section class="ui-section" ng-controller="AlertsCtrl">
                 <div class="alerts-counters"><span class="alerts-count" ng-click="sort('time')"
                                                    ng-class="{selected: sortDate}">{{alerts.length}} new&nbsp;|&nbsp;</span><span
                         class="critical-alerts-count" ng-click="sort('type')" ng-class="{selected: sortType}">{{(alerts | filter: {status:'Critical'}).length}} critical</span>
@@ -381,7 +381,8 @@
                     <div class="events-placeholder" ng-show="!busy && (!alerts || alerts.length == 0)">No alerts</div>
                 </div>
             </section>
-            <section ng-controller="CommsCtrl">
+            <section class="ui-section" ng-controller="CommsCtrl">
+                <div style="padding-top: 20px"><span class="comms-band-s">S</span><span class="comms-band-ku">Ku</span></div>
                 <div class="comms-circles-cont">
                     <object style="margin: auto;" type="image/svg+xml" id="comms-bands" data="img/comms-circles.svg"
                             sb-load="onInitMainSvg()"></object>

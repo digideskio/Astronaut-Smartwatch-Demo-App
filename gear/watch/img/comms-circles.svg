@@ -116,26 +116,6 @@
                                             <path d="M0,29.8741944 C15.8745074,28.5266138 28.5266138,15.8745074 29.8741944,0 L0,0 L0,29.8741944 L0,29.8741944 Z" id="path-3"></path>
                                         </g>
                                     </g>
-                                    <g id="S-Copy-2" transform="translate(302.057418, 43.525346)" font-size="18" font-family="Open Sans" fill="#FFFFFF" sketch:type="MSTextLayer" font-weight="bold">
-                                        <g id="S">
-                                            <text>
-                                                <tspan x="0" y="19">S</tspan>
-                                            </text>
-                                            <text id="2">
-                                                <tspan x="0" y="44">2</tspan>
-                                            </text>
-                                        </g>
-                                    </g>
-                                    <g id="S-Copy" transform="translate(278.304571, 43.371429)" font-size="18" font-family="Open Sans" fill="#FFFFFF" sketch:type="MSTextLayer" font-weight="bold">
-                                        <g id="S">
-                                            <text>
-                                                <tspan x="0" y="19">S</tspan>
-                                            </text>
-                                            <text id="1">
-                                                <tspan x="1" y="44">1</tspan>
-                                            </text>
-                                        </g>
-                                    </g>
                                 </g>
                                 <g id="Ku-Band" transform="translate(170.000000, 0.000000)">
                                     <path d="M294.842021,125.032258 C326.62386,125.032258 352.388132,99.4980462 352.388132,68 C352.388132,36.5019536 326.62386,10.9677419 294.842021,10.9677419 C263.060181,10.9677419 237.29591,36.5019536 237.29591,68 C237.29591,99.4980462 263.060181,125.032258 294.842021,125.032258 L294.842021,125.032258 L294.842021,125.032258 Z" id="Signal-Vert" stroke="#1EDF7A" stroke-width="8" fill-opacity="0.140000001" fill="#1EDF7A" sketch:type="MSShapeGroup"></path>
@@ -231,23 +211,31 @@
                                             <path d="M0,29.8741944 C15.8745074,28.5266138 28.5266138,15.8745074 29.8741944,0 L0,0 L0,29.8741944 L0,29.8741944 Z" id="path-3"></path>
                                         </g>
                                     </g>
-                                    <g id="S-Copy-2" transform="translate(300.057418, 43.525346)" font-family="Open Sans" fill="#FFFFFF" sketch:type="MSTextLayer" font-weight="bold">
-                                        <g id="S">
-                                            <text id="Ku" font-size="15">
-                                                <tspan x="0" y="16">Ku</tspan>
-                                            </text>
-                                            <text id="2" font-size="18">
-                                                <tspan x="2" y="44">2</tspan>
+                                    <g id="S-Copy" transform="translate(272.000000, 45.000000)" font-size="30" font-family="OpenSans-Bold, Open Sans" fill="#FFFFFF" font-weight="normal">
+                                        <g id="S" transform="translate(0.000000, 0.000000)">
+                                            <text id="1">
+                                                <tspan x="0" y="32">1</tspan>
                                             </text>
                                         </g>
                                     </g>
-                                    <g id="S-Copy" transform="translate(271.304571, 43.371429)" font-family="Open Sans" fill="#FFFFFF" sketch:type="MSTextLayer" font-weight="bold">
-                                        <g id="S">
-                                            <text id="Ku" font-size="15">
-                                                <tspan x="0" y="16">Ku</tspan>
+                                    <g id="S-Copy-Copy-2" transform="translate(102.000000, 46.000000)" font-size="30" font-family="OpenSans-Bold, Open Sans" fill="#FFFFFF" font-weight="normal">
+                                        <g id="S" transform="translate(0.000000, 0.000000)">
+                                            <text id="1">
+                                                <tspan x="0" y="32">1</tspan>
                                             </text>
-                                            <text id="1" font-size="18">
-                                                <tspan x="8" y="44">1</tspan>
+                                        </g>
+                                    </g>
+                                    <g id="S-Copy-Copy" transform="translate(303.000000, 46.000000)" font-size="30" font-family="OpenSans-Bold, Open Sans" fill="#FFFFFF" font-weight="normal">
+                                        <g id="S" transform="translate(0.000000, 0.000000)">
+                                            <text id="2">
+                                                <tspan x="0" y="32">2</tspan>
+                                            </text>
+                                        </g>
+                                    </g>
+                                    <g id="S-Copy-Copy-3" transform="translate(133.000000, 47.000000)" font-size="30" font-family="OpenSans-Bold, Open Sans" fill="#FFFFFF" font-weight="normal">
+                                        <g id="S" transform="translate(0.000000, 0.000000)">
+                                            <text id="2">
+                                                <tspan x="0" y="32">2</tspan>
                                             </text>
                                         </g>
                                     </g>
