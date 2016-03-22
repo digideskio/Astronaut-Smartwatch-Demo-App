@@ -149,18 +149,35 @@
         <!-- section changer has only one child. -->
         <div>
             <section ng-controller="TimelineCtrl" class="ui-section ui-section-active" id="timeline">
-                <!--<pre>{{ events | json }}</pre>-->
-                <div class="role-selector" id="role-selector" ng-click="selectRole()">
-                    <img src="img/role-icon.png" class="display:inline"><h4 class="role">{{activeRole}}</h4>
+                <div class="corners">
+                    <div class="top left"></div>
+                    <div class="top right"></div>
+                    <div class="bottom right"></div>
+                    <div class="bottom left"></div>
+                    <div class="role-selector" id="role-selector" ng-click="selectRole()">
+                        <img src="img/role-icon.png" class="display:inline"><h4 class="role">{{activeRole}}</h4>
+                    </div>
                 </div>
 
                 <div infinite-scroll="nextPage()" infinite-scroll-disabled='isBusy' infinite-scroll-distance='0'
                      infinite-scroll-immediate-check='true' infinite-scroll-listen-for-event="role-selected">
-                    <div class="timeline-list" ng-repeat="(key, value) in events | groupBy: 'date'">
-                        <h4>{{key}}</h4>
+                    <div ng-repeat="(key, value) in events | groupBy: 'date'">
+                        <div class="timeline-list">
+                            <div class="corner">
+                                <div class="top left"></div>
+                                <div class="top right"></div>
+                                <div class="bottom right"></div>
+                                <div class="bottom left"></div>
+                                <h4 style="margin: 0">{{key}}</h4>
+                            </div>
+                        </div>
                         <div id="event-{{ ::$index }}"></div>
-                        <div class="list-item"  ng-repeat="event in value" ng-click="showEvent(event)">
-                            <div class="circle-blue" style="background: {{event.color}};" >
+                        <div class="list-item corner" ng-repeat="event in value" ng-click="showEvent(event)">
+                            <div class="top left"></div>
+                            <div class="top right"></div>
+                            <div class="bottom right"></div>
+                            <div class="bottom left"></div>
+                            <div class="circle-blue" style="background: {{event.color}};">
                             </div>
                             <div class="list-item-text">
                                 <h1 class="list-title">{{event.name}}</h1>
@@ -382,7 +399,8 @@
                 </div>
             </section>
             <section class="ui-section" ng-controller="CommsCtrl">
-                <div style="padding-top: 20px"><span class="comms-band-s">S</span><span class="comms-band-ku">Ku</span></div>
+                <div style="padding-top: 20px"><span class="comms-band-s">S</span><span class="comms-band-ku">Ku</span>
+                </div>
                 <div class="comms-circles-cont">
                     <object style="margin: auto;" type="image/svg+xml" id="comms-bands" data="img/comms-circles.svg"
                             sb-load="onInitMainSvg()"></object>
@@ -534,15 +552,15 @@
     </div>
 </div>
 <div class="notification-box" id="notification" ng-controller="NotificationsCtrl" ng-click="onBgClick()" ng-show="main">
-        <div class="notification" id="notif-view" ng-click="mainClick($event)">
-                <h1 class="notification-title">{{main.title}}</h1>
+    <div class="notification" id="notif-view" ng-click="mainClick($event)">
+        <h1 class="notification-title">{{main.title}}</h1>
 
-            <h2 class="notification-subtitle">{{main.time}}</h2>
-            <div id="more" ng-show="activeNotifications.length > 1" ng-click="moreClick($event)">
-                <h2 class="notification-more">{{activeNotifications.length - 1}} more notifications</h2>
-            </div>
+        <h2 class="notification-subtitle">{{main.time}}</h2>
+        <div id="more" ng-show="activeNotifications.length > 1" ng-click="moreClick($event)">
+            <h2 class="notification-more">{{activeNotifications.length - 1}} more notifications</h2>
         </div>
     </div>
+</div>
 </div>
 
 </body>

@@ -194,6 +194,7 @@ span {
 }
 .ui-content section {
   overflow: auto;
+  padding: 2px;
 }
 .header {
   width: 100%;
@@ -237,13 +238,21 @@ span {
   margin: 0 5px;
   float: left;
   margin: 6px 8px 0 20px;
-  position: absolute;
+  position: relative;
   top: 0;
 }
 .list-item {
   width: 100%;
   margin: auto;
   position: relative;
+  padding: 10px;
+}
+.timeline-list {
+  width: 100%;
+  position: relative;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 30px;
 }
 .list-item-text {
   width: 100%;
@@ -305,7 +314,6 @@ span {
   -webkit-align-items: center;
   justify-content: flex-start;
   -webkit-justify-content: flex-start;
-  margin: 12px 0 12px 0;
 }
 .back-btn {
   margin-right: 10px;
@@ -417,8 +425,6 @@ span {
   overflow: auto;
   padding-right: 10px;
   width: 300px;
-  margin-top: 20px;
-  margin-bottom: 8px;
 }
 .alert-sub-title {
   color: #999;
@@ -752,4 +758,32 @@ td.form-group.uib-time > input {
   font-weight: 600;
   color: #fff;
   padding-left: 147px;
+}
+.corners {
+  position: relative;
+  width: 100%; /* for demo purposes */
+  padding: 10px;
+}
+.top,
+.bottom {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+}
+.top {
+  top: 0;
+  padding: 2px;
+  border-top: 3px solid #353535;
+}
+.bottom {
+  bottom: 0;
+  border-bottom: 3px solid #353535;
+}
+.left {
+  left: 0;
+  border-left: 3px solid #353535;
+}
+.right {
+  right: 0;
+  border-right: 3px solid #353535;
 }
