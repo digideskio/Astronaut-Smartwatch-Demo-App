@@ -113,6 +113,14 @@ angular.module('Watch')
             Timers.replace(timers);
         });
 
+        $rootScope.$on('push', function (event, message) {
+            if (message.type == 'timers') {
+                Api.timers.query(function (timers) {
+                    Timers.replace(timers);
+                });
+            }
+        });
+
         $scope.onInitButtonsSvg = function () {
             var buttonsSnap = Snap("#timer-buttons");
             buttonsSnap.select("#Chrono").click(function () {

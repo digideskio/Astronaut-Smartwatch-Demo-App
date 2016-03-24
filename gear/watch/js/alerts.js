@@ -42,7 +42,7 @@ angular.module('Watch')
 
         $rootScope.$on('push', function (event, message) {
             if (message.type == 'alert') {
-                $scope.alerts = Api.events.query();
+                $scope.alerts = Api.alerts.query();
             }
         });
     })

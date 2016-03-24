@@ -1,5 +1,5 @@
 angular.module('Watch')
-    .controller('CommsCtrl', function ($scope, Api) {
+    .controller('CommsCtrl', function ($rootScope, $scope, Api) {
         $scope.colorGood = '#1EDF7A';
         $scope.colorWeak = '#FFE620';
         $scope.colorBad = '#FC3D21';
@@ -25,6 +25,15 @@ angular.module('Watch')
             $scope.ku2DownBad = $scope.commsSnap.select("#ku-two-bottom-red");
 
         };
+
+        $rootScope.$on('push', function (event, message) {
+            if (message.type == 'comms') {
+                $scope.alerts = Api.events.query();
+                $scope.updateMainComms(message.data.comms);
+                $scope.updateNetworks(message.data.comms);
+                $scope.drawOutages(message.data.comms.outages)
+            }
+        });
 
         $scope.onInitNetworksSvg = function () {
             var networksSnap = Snap("#networks");

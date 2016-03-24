@@ -155,6 +155,11 @@ router.put('/events/:eventId', function (req, res) {
         data: event
     }));
 
+    ws.broadcast(JSON.stringify({
+        event: 'timers',
+        data: timer
+    }));
+
     res.json(event);
 });
 
@@ -173,6 +178,12 @@ router.post('/events/:eventId/timer', function (req, res) {
     var end = moment(event.date + " " + event.endTime, "DD/MM/YYYY HH:mm");
     var total = event.isActive ? moment.range(now, end) : moment.range(now, start);
     var timer = addTimer(!event.isActive, event.id, total.valueOf() / 1000);
+
+    ws.broadcast(JSON.stringify({
+        event: 'timers',
+        data: timer
+    }));
+
     res.json(timer);
 });
 
@@ -199,6 +210,11 @@ router.post('/timers', function (req, res) {
     }
 
     var newTimer = addTimer(req.body.isCountdown, null, req.body.totalTime);
+    ws.broadcast(JSON.stringify({
+        event: 'timers',
+        data: newTimer
+    }));
+
     res.json(newTimer);
 });
 
@@ -208,7 +224,10 @@ router.delete('/timers/:timerId', function (req, res) {
         return t.id == timerId
     });
     timersModel.timers.splice(timerIndex, 1);
-
+    ws.broadcast(JSON.stringify({
+        event: 'timers',
+        data: timersModel.timers
+    }));
     res.sendStatus(200);
 });
 
@@ -220,6 +239,11 @@ router.put('/timers/:timerId', function (req, res) {
     if (timer && !timer.eventId) {
         timer.isActive = req.body.isActive;
     }
+
+    ws.broadcast(JSON.stringify({
+        event: 'timers',
+        data: timer
+    }));
 
     res.json(timer);
 });

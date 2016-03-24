@@ -38,17 +38,6 @@ angular.module("Watch")
                     $scope.main.time = message.data.date + " " + message.data.startTime;
 
                     break;
-                case 'comms':
-                    $scope.activeNotifications.push({
-                        type: 'comms',
-                        title: 'Comms updated',
-                        time: message.data.date + " " + message.data.time
-                    });
-                    $scope.main = message.data;
-                    $scope.main.title = 'Comms updated';
-                    $scope.main.type = message.type;
-                    $scope.main.time = message.data.time;
-                    break;
             }
 
             if (message.type == 'alert' && message.data.status == 'Critical' || message.data.status == 'Caution') {

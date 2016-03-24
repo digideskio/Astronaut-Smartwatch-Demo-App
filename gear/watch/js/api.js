@@ -99,7 +99,11 @@ angular.module('Watch')
             });
         });
 
-        ws.$on('$message', function (data) {
-            console.info("New message received : " + data);
-        });
+        ws.$on('timers', function(data) {
+            $cacheFactory.removeAll();
+            $rootScope.$emit('push', {
+                type: 'timers',
+                data: data
+            });
+        })
     });

@@ -20,7 +20,7 @@
     <tizen:privilege name="http://tizen.org/privilege/bluetooth.admin"/>
     <tizen:privilege name="http://tizen.org/privilege/display"/>
     <tizen:privilege name="http://tizen.org/privilege/power"/>
-    <tizen:privilege name="http://tizen.org/privilege/bluetoothmanager"/>
+    
     <tizen:profile name="wearable"/>
     <tizen:setting background-support="enable" encryption="disable" hwkey-event="enable"/>
 </widget>
