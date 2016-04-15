@@ -11,10 +11,8 @@
       "notes": "Important Note...",
       "location": "FE-2 T. Virst",
       "color": "#337ab7",
-      "role": "ISS CDR",
-      "attendees": [
-        "John Smith",
-        "Emily Eames"
+      "roles": [
+        "ISS CDR"
       ]
     }
   ]

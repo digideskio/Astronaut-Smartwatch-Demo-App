@@ -1,56 +1,6 @@
 $(document).ready(function () {
 
     /**
-     * USERS
-     */
-
-    var usersTable = $('#users-table').editableTable();
-
-    $('#users-save').click(function () {
-        usersTable.editableTable('get', function (records) {
-            var data = JSON.stringify(records);
-            console.log(data);
-            $.ajax({
-                url: '/admin/users', // php script to retern json encoded string
-                data: data,  // serialized data to send on server
-                dataType: 'json', // set recieving type - JSON in case of a question
-                contentType: 'application/json',
-                type: 'POST', // set sending HTTP Request type
-                success: function (data) { // callback method for further manipulations
-                    console.log("YESS");
-                },
-                error: function (data) { // if error occured
-                    console.error("????");
-                }
-            });
-        });
-    });
-
-    $('#user-add').click(function () {
-        event.preventDefault();
-        var addUserTable = $("#add-user-table").editableTable();
-        addUserTable.editableTable('get', function (records) {
-            var newUser = JSON.stringify(records[0]);
-            $.ajax({
-                url: '/admin/users/add', // php script to retern json encoded string
-                data: newUser,  // serialized data to send on server
-                dataType: 'json', // set recieving type - JSON in case of a question
-                contentType: 'application/json',
-                type: 'POST', // set sending HTTP Request type
-                success: function (data) { // callback method for further manipulations
-                    console.log("YESS");
-                    window.location = '/admin/users';
-                },
-                error: function (data) { // if error occured
-                    console.error("????");
-                    window.location = '/admin/users';
-                }
-            });
-            return false;
-        });
-    });
-
-    /**
      * ROLES
      */
 
@@ -117,10 +67,10 @@ $(document).ready(function () {
         }
     });
 
-    var attendees = [];
-    $("#attendees").multiselect({
+    var roles = [];
+    $("#roles").multiselect({
         onChange: function () {
-            console.log("YYY = " + $('#attendees').val().name);
+            console.log("YYY = " + $('#roles').val().name);
             //$("#attendees option:selected").each(function(index, user) {
             //    attendees.push($(this).val());
             //});
@@ -135,7 +85,7 @@ $(document).ready(function () {
         $.each(array, function() {
             json[this.name] = this.value || '';
         });
-        json['attendees'] = $('#attendees').val().toString().split(',');
+        json['roles'] = $('#roles').val().toString().split(',');
 
         json = JSON.stringify(json);
 

@@ -85,14 +85,18 @@ router.get('/events/:role/:page', function (req, res) {
     var now = moment();
     var filteredEvents = eventsModel.events.filter(function (e) {
         var endTime = moment(e.date + " " + e.endTime, "DD/MM/YYYY HH:mm");
-        return endTime.isAfter(now) && e.role == role;
+        return endTime.isAfter(now) && e.roles && e.roles.indexOf(role) > -1;
+    });
+
+    var roleEvents = eventsModel.events.filter(function(e) {
+        return e.roles && e.roles.indexOf(role) > - 1;
     });
 
     //TODO: hack to send 20 previous events with first page of current events
     if (page == 0) {
-        var firstPageIndex = _.findIndex(eventsModel.events, function (e) {
+        var firstPageIndex = _.findIndex(roleEvents, function (e) {
             var endTime = moment(e.date + " " + e.endTime, "DD/MM/YYYY HH:mm");
-            return endTime.isAfter(now) && e.role == role;
+            return endTime.isAfter(now) && e.roles && e.roles.indexOf(role) > -1;
         });
 
         var index = firstPageIndex - 20;
@@ -100,7 +104,7 @@ router.get('/events/:role/:page', function (req, res) {
             index = 0;
         }
 
-        var events = eventsModel.events.slice(index, 20 + PAGE_SIZE);
+        var events = roleEvents.slice(index, 20 + PAGE_SIZE);
         filteredEvents = _.uniq(events.concat(filteredEvents));
         var response = {
             role: role,

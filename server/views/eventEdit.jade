@@ -8,11 +8,6 @@ block content
             label(for='name') Name
             input(type='text' value='#{event.name}' id='name' name='name' placeholder='Event Name').form-control
         .form-group
-            label(for='role') Role
-            select(name='role' id='role').form-control.input-sm
-                each val in roles
-                    option(selected=val.name == event.role) #{val.name}
-        .form-group
             label(for='date') Date
             input(name='date' id='date' data-provide="datepicker" data-date-format="dd/mm/yyyy" value='#{event.date}' data-date-today-highlight='true' data-date-today-btn='linked').form-control
         .form-group.input-group.bootstrap-timepicker.timepicker
@@ -38,10 +33,10 @@ block content
             label(for='location') Location
             input(type='text' value='#{event.location}' id='location' name='location' placeholder='Location').form-control
         .form-group
-            label(for='attendees') Attendees
-            select(id='attendees' multiple="multiple" name='attendees[]').form-control.input-sm
-                each val in users
-                    option(selected=event.attendees.indexOf(val.name) != -1 id=index value=val.name) #{val.name}
+            label(for='roles') Roles
+            select(id='roles' multiple="multiple" name='roles[]').form-control.input-sm
+                each val in roles
+                    option(selected=event.roles.indexOf(val.name) != -1 id=index value=val.name) #{val.name}
         .form-group
                 label(for='color') Color
                 .input-group.event-color.col-sm-2

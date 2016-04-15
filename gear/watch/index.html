@@ -462,9 +462,7 @@
             <div class="detail-main-info">
                 <h1 class="detail-title">Participants</h1>
 
-                <h2 class="detail-small">{{currentData.event.role}}</h2>
-
-                <h2 class="detail-small" ng-repeat="user in currentData.event.attendees">{{user}}</h2>
+                <h2 class="detail-small" ng-repeat="role in currentData.event.roles">{{role}}</h2>
             </div>
 
             <div class="detail-main-info">

@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var _ = require('underscore');
 var eventsModel = require('../data/eventData');
-var userModel = require('../data/userData');
 var roleModel = require('../data/roleData');
 var moment = require('moment');
 var ws = require('../websocket');
@@ -23,7 +22,6 @@ router.get('/', function (req, res, next) {
     res.render('events', {
         title: 'Events',
         list: eventsModel,
-        users: userModel.users,
         roles: roleModel.roles
     });
 });
@@ -31,7 +29,6 @@ router.get('/', function (req, res, next) {
 router.get('/add', function (req, res) {
     res.render('eventAdd', {
         title: 'Add Event',
-        users: userModel.users,
         roles: roleModel,
         criticalityOptions: criticalityOptions,
         statusOptions: statusOptions
@@ -46,7 +43,6 @@ router.get('/:eventId/edit', function (req, res) {
     res.render('eventEdit', {
         title: 'Event Edit',
         event: filteredEvent,
-        users: userModel.users,
         roles: roleModel.roles,
         criticalityOptions: criticalityOptions,
         statusOptions: statusOptions
