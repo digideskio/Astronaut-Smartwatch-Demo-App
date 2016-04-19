@@ -78,6 +78,10 @@ router.post('/upload', upload.single('comms'), function (req, res) {
         var data = req.file.buffer.toString();
         commsModel = JSON.parse(data);
     }
+    ws.broadcast(JSON.stringify({
+        event: 'upload'
+    }));
+
     res.location('/admin/comms');
     res.redirect('/admin/comms');
 });

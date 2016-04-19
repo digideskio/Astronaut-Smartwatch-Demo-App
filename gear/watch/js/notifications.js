@@ -11,7 +11,6 @@ angular.module("Watch")
         $scope.activeNotifications = [];
 
         $rootScope.$on('push', function (event, message) {
-            console.error("PROCESS NEW ALERT");
             switch (message.type) {
                 case 'alert':
                     $scope.activeNotifications.push({
@@ -23,7 +22,6 @@ angular.module("Watch")
                     $scope.main = message.data;
                     $scope.main.type = message.type;
                     $scope.main.time = message.data.time;
-
                     break;
                 case 'event':
                     $scope.activeNotifications.push({
@@ -36,8 +34,9 @@ angular.module("Watch")
                     $scope.main.title = message.data.name;
                     $scope.main.type = message.type;
                     $scope.main.time = message.data.date + " " + message.data.startTime;
-
                     break;
+                default:
+                    return;
             }
 
             if (message.type == 'alert' && message.data.status == 'Critical' || message.data.status == 'Caution') {

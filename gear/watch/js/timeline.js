@@ -73,13 +73,21 @@ angular.module('Watch')
             },
             true);
     })
-    .controller('RolesCtrl', function ($scope, $interval, AppState, Api) {
+    .controller('RolesCtrl', function ($rootScope, $scope, $interval, AppState, Api) {
         $scope.activeRole = AppState.activeRole;
         $scope.roles = Api.roles.query();
 
         $scope.goBack = function () {
             tau.back();
         };
+
+        $rootScope.$on('push', function () {
+            $scope.roles = Api.roles.query();
+        });
+
+        $rootScope.$on('roles', function () {
+            $scope.roles = Api.roles.query();
+        });
 
         $scope.selectRole = function (name) {
             AppState.activeRole = name;

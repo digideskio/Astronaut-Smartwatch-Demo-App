@@ -25,6 +25,11 @@ router.post('/', function (req, res) {
     console.log("%O", req.body);
     alertsModel.alerts = req.body;
     sortAlerts();
+
+    ws.broadcast(JSON.stringify({
+        event: 'upload'
+    }));
+
     res.location('/admin/alerts');
     res.redirect('/admin/alerts');
 });
@@ -44,6 +49,11 @@ router.get('/:alertId/delete', function (req, res) {
     });
     alertsModel.alerts.splice(alertIndex, 1);
     sortAlerts();
+
+    ws.broadcast(JSON.stringify({
+        event: 'delete'
+    }));
+
     res.location('/admin/alerts');
     res.redirect('/admin/alerts');
 });
@@ -63,6 +73,7 @@ router.post('/add', function (req, res) {
         event: 'alert',
         data: newAlert
     }));
+
     res.location('/admin/alerts');
     res.redirect('/admin/alerts');
 });
@@ -73,6 +84,10 @@ router.post('/upload', upload.single('alerts'), function (req, res) {
         var data = req.file.buffer.toString();
         alertsModel.alerts = alertsModel.alerts.concat(JSON.parse(data).alerts);
     }
+    ws.broadcast(JSON.stringify({
+        event: 'upload'
+    }));
+
     res.location('/admin/alerts');
     res.redirect('/admin/alerts');
 });

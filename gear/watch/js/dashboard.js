@@ -7,6 +7,10 @@ angular.module("Watch")
         $scope.battery = System.getBattery();
         $scope.timerz = Timers;
 
+        $rootScope.$on('push', function (event, message) {
+            $scope.refreshData();
+        });
+
         $scope.onDashboardClick = function () {
             tau.changePage('hsectionchangerPage');
         };
@@ -41,16 +45,15 @@ angular.module("Watch")
             $scope.oca = bandsSnap.select("#OCA");
             $scope.iac = bandsSnap.select("#IAC");
 
-            $scope.refreshComms();
+            $scope.refreshData();
         };
 
-        $scope.refreshComms = function () {
+        $scope.refreshData = function () {
             Api.comms.get(function (commsData) {
                 $scope.updateCommsDisplay(commsData.comms);
             });
 
             Api.alerts.query(function(data) {
-
                 $scope.alerts = data;
             });
         };

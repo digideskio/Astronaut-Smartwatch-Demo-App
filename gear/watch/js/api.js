@@ -61,7 +61,7 @@ angular.module('Watch')
             eventTimers: $resource(apiEndpoint + '/events/:eventId/timer', {
                 eventId: '@_eventId'
             })
-    }
+        }
     })
     .run(function ($rootScope, $cacheFactory, $websocket, serverAddress, websocketPort, Api) {
         var ws = $websocket.$new('ws://' + serverAddress + ':' + websocketPort);
@@ -84,7 +84,6 @@ angular.module('Watch')
 
         ws.$on('comms', function (data) {
             $cacheFactory.removeAll();
-            Api.comms.query();
             $rootScope.$emit('push', {
                 type: 'comms',
                 data: data
@@ -99,11 +98,34 @@ angular.module('Watch')
             });
         });
 
-        ws.$on('timers', function(data) {
+        ws.$on('timers', function (data) {
             $cacheFactory.removeAll();
             $rootScope.$emit('push', {
                 type: 'timers',
                 data: data
             });
-        })
+        });
+
+        ws.$on('upload', function (data) {
+            $cacheFactory.removeAll();
+            $rootScope.$emit('push', {
+                type: 'upload',
+                data: data
+            });
+        });
+
+        ws.$on('roles', function (data) {
+            $rootScope.$emit('push', {
+                type: 'roles',
+                data: data
+            });
+        });
+
+        ws.$on('delete', function(data) {
+            $rootScope.$emit('push', {
+                type: 'delete',
+                data: data
+            });
+        });
+
     });

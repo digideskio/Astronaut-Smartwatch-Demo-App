@@ -3,6 +3,7 @@ var router = express.Router();
 var _ = require('underscore');
 var multer = require('multer');
 var roleModel = require('../data/roleData');
+var ws = require('../websocket');
 
 router.get('/', function (req, res, next) {
     res.render('roles', {
@@ -14,6 +15,11 @@ router.get('/', function (req, res, next) {
 router.post('/', function (req, res) {
     console.log("%O", req.body);
     roleModel.roles = req.body;
+
+    ws.broadcast(JSON.stringify({
+        event: 'roles'
+    }));
+
     res.sendStatus(200);
 });
 
@@ -22,12 +28,21 @@ router.get('/:roleName/delete', function (req, res) {
     var roleIndex = _.findIndex(roleModel.roles, function(e) { return e.name == roleName});
     roleModel.roles.splice(roleIndex, 1);
 
+    ws.broadcast(JSON.stringify({
+        event: 'roles'
+    }));
+
     res.location('/admin/roles');
     res.redirect('/admin/roles');
 });
 
 router.post('/add', function (req, res) {
     roleModel.roles.push(req.body);
+
+    ws.broadcast(JSON.stringify({
+        event: 'roles'
+    }));
+
     res.location('/admin/roles');
     res.redirect('/admin/roles');
 });
@@ -38,6 +53,10 @@ router.post('/upload', upload.single('roles'), function (req, res) {
         var data = req.file.buffer.toString();
         roleModel.roles = roleModel.roles.concat(JSON.parse(data).roles);
     }
+    ws.broadcast(JSON.stringify({
+        event: 'upload'
+    }));
+
     res.location('/admin/roles');
     res.redirect('/admin/roles');
 });

@@ -27,12 +27,7 @@ angular.module('Watch')
         };
 
         $rootScope.$on('push', function (event, message) {
-            if (message.type == 'comms') {
-                $scope.alerts = Api.events.query();
-                $scope.updateMainComms(message.data.comms);
-                $scope.updateNetworks(message.data.comms);
-                $scope.drawOutages(message.data.comms.outages)
-            }
+            $scope.refreshComms();
         });
 
         $scope.onInitNetworksSvg = function () {
@@ -44,9 +39,11 @@ angular.module('Watch')
 
         $scope.refreshComms = function () {
             Api.comms.get(function (commsData) {
-                $scope.updateMainComms(commsData.comms);
-                $scope.updateNetworks(commsData.comms);
-                $scope.drawOutages(commsData.comms.outages)
+                if($scope.commsSnap) {
+                    $scope.updateMainComms(commsData.comms);
+                    $scope.updateNetworks(commsData.comms);
+                    $scope.drawOutages(commsData.comms.outages)
+                }
             });
         };
 

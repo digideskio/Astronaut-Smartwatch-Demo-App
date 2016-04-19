@@ -58,6 +58,12 @@ router.get('/:eventId/delete', function (req, res) {
         }
     }
     sortEvents();
+
+    ws.broadcast(JSON.stringify({
+        event: 'delete',
+        data: req.body
+    }));
+
     res.location('/admin/events');
     res.redirect('/admin/events');
 });
@@ -70,6 +76,7 @@ router.post('/:eventId/edit', function (req, res) {
     eventsModel.events[eventIndex] = req.body;
     eventsModel.events[eventIndex].id = eventId;
     sortEvents();
+
     ws.broadcast(JSON.stringify({
         event: 'event',
         data: req.body
@@ -103,6 +110,9 @@ router.post('/upload', upload.single('events'), function (req, res) {
         var data = JSON.parse(req.file.buffer.toString());
         eventsModel.events = eventsModel.events.concat(data.events);
     }
+    ws.broadcast(JSON.stringify({
+        event: 'upload'
+    }));
     res.location('/admin/events');
     res.redirect('/admin/events');
 });
