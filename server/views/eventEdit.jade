@@ -6,7 +6,7 @@ block content
     form(id='event-edit' data-event-id="#{event.id}" )
         .form-group
             label(for='name') Name
-            input(type='text' value='#{event.name}' id='name' name='name' placeholder='Event Name').form-control
+            input(type='text' value='#{event.name}' id='name' name='name' placeholder='Event Name' maxlength=15).form-control
         .form-group
             label(for='date') Date
             input(name='date' id='date' data-provide="datepicker" data-date-format="dd/mm/yyyy" value='#{event.date}' data-date-today-highlight='true' data-date-today-btn='linked').form-control
@@ -31,7 +31,7 @@ block content
             textarea(rows='3' id='notes' name='notes' placeholder='Event notes...').form-control #{event.notes}
         .form-group
             label(for='location') Location
-            input(type='text' value='#{event.location}' id='location' name='location' placeholder='Location').form-control
+            input(type='text' value='#{event.location}' id='location' name='location' placeholder='Location' maxlength=19).form-control
         .form-group
             label(for='roles') Roles
             select(id='roles' multiple="multiple" name='roles[]').form-control.input-sm

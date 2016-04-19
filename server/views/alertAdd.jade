@@ -8,7 +8,7 @@ block content
     form(id="add-alert-form")
         .form-group
             label(for='title') Title
-            input(type='text' name='title' id='title' placeholder='Alert title').form-control
+            input(type='text' name='title' id='title' placeholder='Alert title' maxlength=15).form-control
         .form-group
             label(for='date') Date
             input(name='date' id='date' data-provide="datepicker" data-date-format="dd/mm/yyyy" data-date-today-highlight='true' data-date-today-btn='linked').form-control
@@ -17,7 +17,7 @@ block content
             input(type="text" id='time' data-provide="timepicker" data-template="dropdown" data-minute-step="1" data-show-inputs='false' data-show-seconds='true'  name='time' data-show-meridian="false" placeholder='00:00:00').form-control
         .form-group
             label(for='system') System
-            input(type='text' name='system' id='system' placeholder='CDH').form-control
+            input(type='text' name='system' id='system' placeholder='CDH' maxlength=8).form-control
         .form-group
             label(for='status') Status
             select(name='status' id='status').form-control.input-sm
@@ -25,11 +25,11 @@ block content
                     option(selected=index == 0) #{val}
         .form-group
             label(for='cleared') Cleared
-            input(type='text' name='cleared' id='cleared' placeholder='C').form-control
+            input(type='text' name='cleared' id='cleared' placeholder='C' maxlength=8).form-control
         .form-group
             label(for='ack') Ack
-            textarea(rows='3' name='ack' id='ack' placeholder='...').form-control
+            input(type='text' name='ack' id='ack' placeholder='X' maxlength=8).form-control
         .form-group
             label(for='annun') Annun
-            input(type='text' name='annun' id='annun' placeholder='').form-control
+            input(type='text' name='annun' id='annun' placeholder='SUP' maxlength=8).form-control
         button(type='submit' id='alert-add').btn.btn-primary Add

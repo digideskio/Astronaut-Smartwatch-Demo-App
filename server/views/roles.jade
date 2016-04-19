@@ -8,9 +8,9 @@ block content
                 th
         tbody
             each role in list.roles
-                tr
+                tr.role
                     td.col-sm-3
-                        input(type='text' value='#{role.name}' name='name' placeholder='Name').form-control
+                        input(type='text' value='#{role.name}' name='name' placeholder='Name' maxlength=17 ).form-control
                     td
                         a(href='/admin/roles/#{role.name}/delete').btn.btn-danger Delete
     button(type='submit' id='roles-save').btn.btn-primary Save
@@ -21,7 +21,7 @@ block content
         tbody(id='role-add-body')
             tr
                 td.col-sm-3
-                    input(type='text' name='name' placeholder='Name').form-control
+                    input(type='text' name='name' placeholder='Name' id='name' maxlength=17).form-control
                 td
                     button(id='role-add').btn.btn-success Add
     br

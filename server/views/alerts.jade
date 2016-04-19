@@ -25,7 +25,7 @@ block content
             each alert in list.alerts
                 tr
                     td
-                        input(type='text' value='#{alert.title}' name='title' placeholder='Alert title').form-control
+                        input(type='text' value='#{alert.title}' name='title' placeholder='Alert title' id='title' maxlength=18).form-control
                     td.col-sm-2
                         input(value='#{alert.date}' name='date' placeholder='1/1/2015' data-provide="datepicker" data-date-format="dd/mm/yyyy").form-control
                     td.col-sm-1

@@ -6,7 +6,7 @@ block content
     form(id="add-event-form")
         .form-group
             label(for='name') Name
-            input(type='text' name='name' id='name' placeholder='Event Name').form-control
+            input(type='text' name='name' id='name' placeholder='Event Name' maxlength=15).form-control
         .form-group
             label(for='date') Date
             input(name='date' id='date' data-provide="datepicker" data-date-format="dd/mm/yyyy" data-date-today-highlight='true' data-date-today-btn='linked').form-control
@@ -31,7 +31,7 @@ block content
             textarea(rows='3' name='notes' id='notes' placeholder='Event notes...').form-control
         .form-group
             label(for='location') Location
-            input(type='text' name='location' id='location' placeholder='Location').form-control
+            input(type='text' name='location' id='location' placeholder='Location' maxlength=19).form-control
         .form-group
             label(for='roles') Roles
             select(id='roles' multiple="multiple" name='roles[]').form-control.input-sm
