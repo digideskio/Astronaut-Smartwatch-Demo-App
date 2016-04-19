@@ -100,8 +100,8 @@ router.post('/', function (req, res) {
 var upload = multer({storage: multer.memoryStorage()});
 router.post('/upload', upload.single('events'), function (req, res) {
     if (req.file) {
-        var data = req.file.buffer.toString();
-        eventsModel = JSON.parse(data);
+        var data = JSON.parse(req.file.buffer.toString());
+        eventsModel.events = eventsModel.events.concat(data.events);
     }
     res.location('/admin/events');
     res.redirect('/admin/events');

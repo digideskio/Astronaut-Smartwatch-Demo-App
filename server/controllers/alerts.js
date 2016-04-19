@@ -71,7 +71,7 @@ var upload = multer({storage: multer.memoryStorage()});
 router.post('/upload', upload.single('alerts'), function (req, res) {
     if (req.file) {
         var data = req.file.buffer.toString();
-        alertsModel = JSON.parse(data);
+        alertsModel.alerts = alertsModel.alerts.concat(JSON.parse(data).alerts);
     }
     res.location('/admin/alerts');
     res.redirect('/admin/alerts');

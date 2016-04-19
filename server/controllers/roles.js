@@ -36,7 +36,7 @@ var upload = multer({storage: multer.memoryStorage()});
 router.post('/upload', upload.single('roles'), function (req, res) {
     if (req.file) {
         var data = req.file.buffer.toString();
-        roleModel = JSON.parse(data);
+        roleModel.roles = roleModel.roles.concat(JSON.parse(data).roles);
     }
     res.location('/admin/roles');
     res.redirect('/admin/roles');
