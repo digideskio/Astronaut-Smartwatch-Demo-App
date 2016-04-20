@@ -8,6 +8,7 @@ var ws = require('../websocket');
 router.get('/', function (req, res, next) {
     res.render('roles', {
         title: 'Roles',
+        id: 'roles',
         list: roleModel
     });
 });
@@ -20,7 +21,7 @@ router.post('/', function (req, res) {
         event: 'roles'
     }));
 
-    res.sendStatus(200);
+    res.send({ status: 'ok'});
 });
 
 router.get('/:roleName/delete', function (req, res) {

@@ -1,6 +1,10 @@
 extends layout
 block content
     h2 Roles
+
+    .alert.alert-success(role='alert' id='data-saved') Data Updated!
+    .alert.alert-danger(role='alert' id='data-save-fail') Failed to update data!
+
     table(id='roles-table' data-sortable).table.table-bordered.table-striped.sortable-theme-bootstrap
         thead
             tr

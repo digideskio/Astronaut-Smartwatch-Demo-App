@@ -3,6 +3,8 @@ block content
     - var options = ['Good', 'Weak', 'Bad']
     h2 Comms
 
+    .alert.alert-success(role='alert' id='data-saved') Data Updated!
+
     table(id='comms-table').table.table-bordered.table-striped.table-hover
         thead
             tr
@@ -94,6 +96,8 @@ block content
                     td.col-sm1
                         a(href='/admin/comms/outages/#{out.id}/delete').btn.btn-danger Delete
 
+    button(type='submit' id='outages-save').btn.btn-primary Save
+    br
     br
     h4 Add new outage
     table(id='add-outage-table').table.table-bordered.table-striped.table-hover

@@ -20,6 +20,7 @@ var statusOptions = ['Scheduled', 'Canceled'];
 
 router.get('/', function (req, res, next) {
     res.render('events', {
+        id: 'events',
         title: 'Events',
         list: eventsModel,
         roles: roleModel.roles
@@ -28,6 +29,7 @@ router.get('/', function (req, res, next) {
 
 router.get('/add', function (req, res) {
     res.render('eventAdd', {
+        id: 'events',
         title: 'Add Event',
         roles: roleModel,
         criticalityOptions: criticalityOptions,
@@ -41,6 +43,7 @@ router.get('/:eventId/edit', function (req, res) {
         return e.id == eventId;
     });
     res.render('eventEdit', {
+        id: 'events',
         title: 'Event Edit',
         event: filteredEvent,
         roles: roleModel.roles,

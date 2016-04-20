@@ -7,7 +7,7 @@ var multer = require('multer');
 var commsModel = require('../data/commsData');
 
 function sortOutages() {
-    commsModel.comms.outages.sort(function(l, r) {
+    commsModel.comms.outages.sort(function (l, r) {
         var a = moment(l.date + " " + l.startTime, "DD/MM/YYYY HH:mm");
         var b = moment(r.date + " " + r.startTime, "DD/MM/YYYY HH:mm");
         return b.isBefore(a);
@@ -17,6 +17,7 @@ function sortOutages() {
 router.get('/', function (req, res, next) {
     res.render('comms', {
         title: 'Comms',
+        id: 'comms',
         model: commsModel
     });
 });
@@ -38,13 +39,23 @@ router.post('/', function (req, res) {
         data: commsModel
     }));
 
-    res.sendStatus(200);
+    res.send({status: 'ok'});
+});
+
+router.post('/outages', function (req, res) {
+    commsModel.comms.outages = req.body;
+    ws.broadcast(JSON.stringify({
+        event: 'comms',
+        data: commsModel
+    }));
+
+    res.send({status: 'ok'});
 });
 
 router.post('/outages/add', function (req, res) {
     var newOutage = req.body;
     console.log("New outage: " + newOutage);
-    if(commsModel.comms.outages && commsModel.comms.outages.length > 0) {
+    if (commsModel.comms.outages && commsModel.comms.outages.length > 0) {
         newOutage.id = commsModel.comms.outages[commsModel.comms.outages.length - 1].id + 1;
     } else {
         newOutage.id = 0;

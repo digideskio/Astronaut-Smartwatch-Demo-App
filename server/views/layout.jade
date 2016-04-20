@@ -15,14 +15,14 @@ html
         script(type="text/javascript" src='/lib/bootstrap-datepicker/js/bootstrap-datepicker.js')
         script(type="text/javascript" src='/lib/bootstrap-timepicker/js/bootstrap-timepicker.js')
         script(type="text/javascript" src='/lib/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js')
-        script(type="text/javascript" src='/lib/bootstrap//js/bootstrap.min.js')
+        script(type="text/javascript" src='/lib/bootstrap/js/bootstrap.min.js')
         script(type="text/javascript" src='/lib/bootstrap-multiselect/bootstrap-multiselect.js')
         script(type="text/javascript" src='/lib/sortable/sortable.min.js')
         script(type="text/javascript" src='/lib/bootstrap-maxlength.js')
         script(type="text/javascript" src='/js/admin.js')
     body
         block nav
-            nav.navbar.navbar-default( role="navigation" )
+            nav.navbar.navbar-default.navbar-fixed-top(role='navigation')
                 .navbar-header
                     button.navbar-toggle.collapsed( type="button", data-toggle="collapse", data-target="#navbar-inverse", aria-expanded="false", aria-controls="navbar")
                         span.sr-only Toggle navigation
@@ -31,11 +31,15 @@ html
                         span.icon-bar
                     a.navbar-brand(href="#") Nasa SmartWatch Admin
 
-                #navbar-inverse.collapse.navbar-collapse
-                    ul.nav.navbar-nav
-                        li.active: a( href="/") Home
-                        li: a( href="/admin/events" ) Events
-                        li: a( href="/admin/roles" ) Roles
-                        li: a( href="/admin/alerts" ) Alerts
-                        li: a( href="/admin/comms" ) Comms
+                .navbar-collapse.collapse
+                    ul.navbar-nav.nav
+                        - var obj = { 'events':'Events', 'roles':'Roles', 'alerts':'Alerts', 'comms': 'Comms' }
+
+                        each val, key in obj
+                            if id == key
+                                li.active
+                                    a(href="#{key}") #{val}
+                            else
+                                li
+                                    a(href='#{key}') #{val}
         block content

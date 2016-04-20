@@ -1,5 +1,8 @@
 $(document).ready(function () {
 
+    $("#data-saved").hide();
+    $("#data-save-fail").hide();
+
     /**
      * ROLES
      */
@@ -17,10 +20,16 @@ $(document).ready(function () {
                 contentType: 'application/json',
                 type: 'POST', // set sending HTTP Request type
                 success: function (data) { // callback method for further manipulations
-                    console.log("YESS");
+                    $("#data-saved").show();
+                    $("#data-saved").fadeOut(2000, function () {
+                        $("#data-saved").hide();
+                    });
                 },
                 error: function (data) { // if error occured
-                    console.error("????");
+                    $("#data-save-fail").show();
+                    $("#data-save-fail").fadeOut(2000, function () {
+                        $("#data-save-fail").hide();
+                    });
                 }
             });
         });
@@ -82,7 +91,7 @@ $(document).ready(function () {
         var array = jQuery(form).serializeArray();
         var json = {};
 
-        $.each(array, function() {
+        $.each(array, function () {
             json[this.name] = this.value || '';
         });
         json['roles'] = $('#roles').val().toString().split(',');
@@ -106,7 +115,7 @@ $(document).ready(function () {
         return false;
     }
 
-    $('form#event-edit').bind('submit', function(e) {
+    $('form#event-edit').bind('submit', function (e) {
         var form = this;
         var url = '/admin/events/' + $(this).data('event-id') + '/edit';
         saveEvent(form, url, "POST");
@@ -114,7 +123,7 @@ $(document).ready(function () {
         return false;
     });
 
-    $('form#add-event-form').bind('submit', function(e) {
+    $('form#add-event-form').bind('submit', function (e) {
         var form = this;
         var url = '/admin/events/';
         saveEvent(form, url, "POST");
@@ -136,7 +145,7 @@ $(document).ready(function () {
      */
     var alertsTable = $('#alerts-table').editableTable();
 
-    $('form#add-alert-form').bind('submit', function(e) {
+    $('form#add-alert-form').bind('submit', function (e) {
         var form = this;
         var url = '/admin/alerts/add';
 
@@ -144,7 +153,7 @@ $(document).ready(function () {
         var array = jQuery(form).serializeArray();
         var json = {};
 
-        $.each(array, function() {
+        $.each(array, function () {
             json[this.name] = this.value || '';
         });
 
@@ -178,10 +187,16 @@ $(document).ready(function () {
                 contentType: 'application/json',
                 type: 'POST', // set sending HTTP Request type
                 success: function (data) { // callback method for further manipulations
-                    console.log("YESS");
+                    $("#data-saved").show();
+                    $("#data-saved").fadeOut(2000, function () {
+                        $("#data-saved").hide();
+                    });
                 },
                 error: function (data) { // if error occured
-                    console.error("????");
+                    $("#data-save-fail").show();
+                    $("#data-save-fail").fadeOut(2000, function () {
+                        $("#data-save-fail").hide();
+                    });
                 }
             });
         });
@@ -197,7 +212,6 @@ $(document).ready(function () {
     $('#comms-save').click(function (event) {
         commsTable.editableTable('get', function (records) {
             var data = JSON.stringify(records);
-            console.log(data);
             $.ajax({
                 url: '/admin/comms', // php script to retern json encoded string
                 data: data,  // serialized data to send on server
@@ -205,11 +219,16 @@ $(document).ready(function () {
                 contentType: 'application/json',
                 type: 'POST', // set sending HTTP Request type
                 success: function (data) { // callback method for further manipulations
-                    console.log("YESS");
-                    window.location = '/admin/comms';
+                    $("#data-saved").show();
+                    $("#data-saved").fadeOut(2000, function () {
+                        $("#data-saved").hide();
+                    });
                 },
                 error: function (data) { // if error occured
-                    console.error("????");
+                    $("#data-save-fail").show();
+                    $("#data-save-fail").fadeOut(2000, function () {
+                        $("#data-save-fail").hide();
+                    });
                 }
             });
         })
@@ -236,6 +255,34 @@ $(document).ready(function () {
                 }
             });
             return false;
+        });
+    });
+
+    var outagesTable = $("#comms-outages-table").editableTable();
+
+    $('#outages-save').click(function () {
+        outagesTable.editableTable('get', function (records) {
+            var data = JSON.stringify(records);
+            console.log(data);
+            $.ajax({
+                url: '/admin/comms/outages',
+                data: data,
+                dataType: 'json',
+                contentType: 'application/json',
+                type: 'POST',
+                success: function (data) {
+                    $("#data-saved").show();
+                    $("#data-saved").fadeOut(2000, function () {
+                        $("#data-saved").hide();
+                    });
+                },
+                error: function (data) {
+                    $("#data-save-fail").show();
+                    $("#data-save-fail").fadeOut(2000, function () {
+                        $("#data-save-fail").hide();
+                    });
+                }
+            });
         });
     });
 

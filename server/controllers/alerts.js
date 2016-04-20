@@ -17,6 +17,7 @@ function sortAlerts() {
 router.get('/', function (req, res, next) {
     res.render('alerts', {
         title: 'Alerts',
+        id: 'alerts',
         list: alertsModel
     });
 });
@@ -30,14 +31,14 @@ router.post('/', function (req, res) {
         event: 'upload'
     }));
 
-    res.location('/admin/alerts');
-    res.redirect('/admin/alerts');
+    res.send({ status: 'ok'});
 });
 
 
 router.get('/add', function (req, res) {
     res.render('alertAdd', {
-        title: 'Add Alert'
+        title: 'Add Alert',
+        id: 'alerts'
     });
 });
 
