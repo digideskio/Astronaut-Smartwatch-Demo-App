@@ -31,7 +31,7 @@ block content
                     td.col-sm-1
                         input(type="text" data-provide="timepicker" data-template="dropdown" data-show-seconds='true' data-minute-step="1" value='#{alert.time}' data-show-inputs='false' name='time' data-show-meridian="false" placeholder='00:00:00').form-control
                     td.col-sm-2
-                        input(type='text' value='#{alert.system}' name='system' placeholder='CDH').form-control
+                        input(type='text' value='#{alert.system}' name='system' placeholder='CDH' maxlength=18 id='system').form-control
                     td
                         select(value='#{alert.status}' name='status' placeholder='Low').form-control.input-sm
                             each val in statusOptions

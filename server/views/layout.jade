@@ -38,8 +38,8 @@ html
                         each val, key in obj
                             if id == key
                                 li.active
-                                    a(href="#{key}") #{val}
+                                    a(href="/admin/#{key}") #{val}
                             else
                                 li
-                                    a(href='#{key}') #{val}
+                                    a(href='/admin/#{key}') #{val}
         block content

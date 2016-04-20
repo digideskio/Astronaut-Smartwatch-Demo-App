@@ -286,31 +286,7 @@ $(document).ready(function () {
         });
     });
 
-    $('#title').maxlength({
-        threshold: 10,
-        allowOverMax: true,
-        placement: 'left'
-    });
-
-    $('#name').maxlength({
-        threshold: 10,
-        allowOverMax: true,
-        placement: 'left'
-    });
-
-    $('#location').maxlength({
-        threshold: 10,
-        allowOverMax: true,
-        placement: 'left'
-    });
-
-    $('tr.role input').maxlength({
-        threshold: 10,
-        allowOverMax: true,
-        placement: 'left'
-    });
-
-    $('#add-alert-form input').maxlength({
+    $('#title, #name, #location, tr.role input, #add-alert-form input, #system').maxlength({
         threshold: 10,
         allowOverMax: true,
         placement: 'left'
