@@ -87,7 +87,7 @@ var upload = multer({storage: multer.memoryStorage()});
 router.post('/upload', upload.single('comms'), function (req, res) {
     if (req.file) {
         var data = req.file.buffer.toString();
-        commsModel = JSON.parse(data);
+        commsModel.comms = JSON.parse(data).comms;
     }
     ws.broadcast(JSON.stringify({
         event: 'upload'

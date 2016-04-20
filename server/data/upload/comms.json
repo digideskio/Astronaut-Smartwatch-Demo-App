@@ -1,10 +1,10 @@
 {
   "comms": {
     "sband": {
-      "up1": "Good",
-      "up2": "Weak",
-      "down1": "Weak",
-      "down2": "Weak"
+      "up1": "Bad",
+      "up2": "Bad",
+      "down1": "Bad",
+      "down2": "Bad"
     },
     "kuband": {
       "up1": "Good",
