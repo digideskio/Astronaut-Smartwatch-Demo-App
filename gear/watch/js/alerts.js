@@ -43,6 +43,10 @@ angular.module('Watch')
         $rootScope.$on('push', function (event, message) {
             $scope.alerts = Api.alerts.query();
         });
+
+        $rootScope.$on('refresh', function () {
+            $scope.alerts = Api.alerts.query();
+        });
     })
     .controller('AlertDetailCtrl', function ($scope, AppState) {
         $scope.currentData = AppState;

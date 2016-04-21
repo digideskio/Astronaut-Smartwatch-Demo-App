@@ -40,6 +40,10 @@ angular.module('Watch')
             $scope.refresh();
         });
 
+        $rootScope.$on('refresh', function () {
+            $scope.refresh();
+        });
+
         $scope.fetchNew = function () {
             $scope.currentPage++;
             Api.events.get({role: $scope.activeRole, page: $scope.currentPage}, function (data) {
@@ -85,7 +89,7 @@ angular.module('Watch')
             $scope.roles = Api.roles.query();
         });
 
-        $rootScope.$on('roles', function () {
+        $rootScope.$on('refresh', function () {
             $scope.roles = Api.roles.query();
         });
 
@@ -122,7 +126,7 @@ angular.module('Watch')
         $scope.updateEventTime = function () {
             if (AppState.event) {
                 var start = moment(AppState.event.date + " " + AppState.event.startTime, "MM/DD/YYYY HH:mm");
-                var end = moment(AppState.event.date + " " + AppState.event.endTime, "MM/DD/YYYY HH:mm");
+                var end = moment(AppState.event.date + " " + AppState.event.endTime, "DD/MM/YYYY HH:mm");
                 if (AppState.event.isActive || start.isAfter(moment())) {
                     $scope.formatAndSaveEventDuration(moment().diff(start));
                 }

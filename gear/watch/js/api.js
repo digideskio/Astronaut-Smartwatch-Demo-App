@@ -17,12 +17,12 @@ angular.module('Watch')
             });
         }
     ])
-    .constant('serverAddress', '10.0.0.75')
-    //.constant('serverAddress', 'localhost')
-    .constant('restPort', 3000)
-    .constant('websocketPort', 3001)
-    .factory("Api", function ($rootScope, $resource, serverAddress, restPort, $cacheFactory, AppState) {
-        var serverUrl = serverAddress + ":" + restPort;
+    .constant('ServerAddress', '10.0.0.75')
+    .constant('RefreshInterval', '60000')  // once a minute
+    .constant('RestPort', 3000)
+    .constant('WebsocketPort', 3001)
+    .factory("Api", function ($rootScope, $resource, $interval, $cacheFactory, ServerAddress, RestPort, AppState, RefreshInterval) {
+        var serverUrl = ServerAddress + ":" + RestPort;
         var apiEndpoint = 'http://' + serverUrl + '/api';
         var apiCache = $cacheFactory('api');
 
@@ -34,6 +34,11 @@ angular.module('Watch')
                 serverUrl = newVal;
             },
             true);
+
+        $interval(function () {
+            $cacheFactory.removeAll();
+            $rootScope.$emit('refresh');
+        }, RefreshInterval);
 
         return {
             events: $resource(apiEndpoint + '/events/:role/:page/:eventId', {
@@ -63,8 +68,8 @@ angular.module('Watch')
             })
         }
     })
-    .run(function ($rootScope, $cacheFactory, $websocket, serverAddress, websocketPort, Api) {
-        var ws = $websocket.$new('ws://' + serverAddress + ':' + websocketPort);
+    .run(function ($rootScope, $cacheFactory, $websocket, ServerAddress, WebsocketPort, Api) {
+        var ws = $websocket.$new('ws://' + ServerAddress + ':' + WebsocketPort);
         ws.$on('$open', function () {
             console.info("Websocket connection open");
         });
@@ -75,7 +80,6 @@ angular.module('Watch')
 
         ws.$on('alert', function (data) {
             $cacheFactory.removeAll();
-            Api.alerts.query();
             $rootScope.$emit('push', {
                 type: 'alert',
                 data: data
@@ -121,11 +125,10 @@ angular.module('Watch')
             });
         });
 
-        ws.$on('delete', function(data) {
+        ws.$on('delete', function (data) {
             $rootScope.$emit('push', {
                 type: 'delete',
                 data: data
             });
         });
-
     });

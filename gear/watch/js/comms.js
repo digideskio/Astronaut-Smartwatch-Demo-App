@@ -30,6 +30,10 @@ angular.module('Watch')
             $scope.refreshComms();
         });
 
+        $rootScope.$on('refresh', function () {
+            $scope.refreshComms();
+        });
+
         $scope.onInitNetworksSvg = function () {
             var networksSnap = Snap("#networks");
             $scope.oca = networksSnap.select("#OCA");

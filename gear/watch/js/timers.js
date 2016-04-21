@@ -121,6 +121,12 @@ angular.module('Watch')
             }
         });
 
+        $rootScope.$on('refresh', function () {
+            Api.timers.query(function (timers) {
+                Timers.replace(timers);
+            });
+        });
+
         //$scope.onInitButtonsSvg = function () {
         //    var buttonsSnap = Snap("#timer-buttons");
         //    buttonsSnap.select("#Chrono").click(function () {

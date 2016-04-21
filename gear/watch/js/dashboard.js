@@ -1,5 +1,5 @@
 angular.module("Watch")
-    .controller("DashboardCtrl", function ($rootScope, $scope, Api, System, TimerCommon, Timers) {
+    .controller("DashboardCtrl", function ($rootScope, $scope, $interval, Api, System, TimerCommon, Timers) {
         $scope.colorGood = '#1EDF7A';
         $scope.colorWeak = '#FFE620';
         $scope.colorBad = '#FC3D21';
@@ -124,5 +124,7 @@ angular.module("Watch")
             $scope.time = new Date();
         });
 
-    })
-;
+        $rootScope.$on('refresh', function () {
+            $scope.refreshData();
+        });
+    });
