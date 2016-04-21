@@ -291,4 +291,9 @@ $(document).ready(function () {
         allowOverMax: true,
         placement: 'left'
     });
+
+    setInterval(function() {
+        var time = moment().tz('ETC/GMT').format('HH:mm:ss MM/DD/YY');
+        $("#clock").html(time + " GMT");
+    }, 1000);
 });
