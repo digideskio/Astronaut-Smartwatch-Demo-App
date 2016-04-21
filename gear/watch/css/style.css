@@ -801,3 +801,24 @@ td.form-group.uib-time > input {
   right: 0;
   border-right: 3px solid #353535;
 }
+button {
+  display: inline-block;
+  margin: 0 10px 0 0;
+  font-size: 32px;
+  line-height: 1.8;
+  appearance: none;
+  box-shadow: none;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+  color: #eee;
+  background: rgba(0,0,0,0);
+  border: solid 2px #6496c8;
+  font-weight: 300;
+}
+button:focus {
+  outline: none;
+}
+button:active {
+  border-color: #27496d;
+  color: #27496d;
+}

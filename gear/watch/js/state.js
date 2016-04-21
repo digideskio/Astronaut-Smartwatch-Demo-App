@@ -18,7 +18,8 @@ angular.module('Watch')
             currentScreen: '',
             activeRole: 'ISS CDR',
             event: {},
-            alert: {}
+            alert: {},
+            uuid: {}
         };
 
         currentState.getActiveRole = function () {
@@ -61,6 +62,7 @@ angular.module('Watch')
             currentState.server = server;
         };
 
+        currentState.uuid = Uuid.create();
         return currentState;
     })
     .controller('SetupServerCtrl', function($rootScope, $scope, AppState) {

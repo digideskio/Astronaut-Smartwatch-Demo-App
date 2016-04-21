@@ -121,15 +121,15 @@ angular.module('Watch')
             }
         });
 
-        $scope.onInitButtonsSvg = function () {
-            var buttonsSnap = Snap("#timer-buttons");
-            buttonsSnap.select("#Chrono").click(function () {
-                $scope.setTimer();
-            });
-            buttonsSnap.select("#Timer").click(function () {
-                $scope.setCountDown();
-            });
-        };
+        //$scope.onInitButtonsSvg = function () {
+        //    var buttonsSnap = Snap("#timer-buttons");
+        //    buttonsSnap.select("#Chrono").click(function () {
+        //        $scope.setTimer();
+        //    });
+        //    buttonsSnap.select("#Timer").click(function () {
+        //        $scope.setCountDown();
+        //    });
+        //};
 
         $scope.getTimer = function (ind) {
             return Timers.get(ind);
@@ -273,22 +273,23 @@ angular.module('Watch')
     .controller('SetTimerCtrl', function ($scope, $rootScope, AppState, Api, Timers) {
         $scope.timer = new Date("1/1/16 0:00");
 
-        $rootScope.$on('close', function (event, data) {
-            if (data == 'set-timer') {
-                var totalTime = $scope.timer.getSeconds() + $scope.timer.getMinutes() * 60 + $scope.timer.getHours() * 3600;
-                if (totalTime == 0) {
-                    return;
-                }
-
-                var timer = {
-                    totalTime: totalTime,
-                    isCountdown: AppState.isNewCountdown()
-                };
-                Api.timers.save(timer, function (newTimer) {
-                    Timers.add(newTimer);
-                });
-
-                $scope.timer = new Date("1/1/16 0:00");
+        $scope.saveTimer = function () {
+            var totalTime = $scope.timer.getSeconds() + $scope.timer.getMinutes() * 60 + $scope.timer.getHours() * 3600;
+            if (totalTime == 0) {
+                return;
             }
-        });
+
+            var timer = {
+                totalTime: totalTime,
+                isCountdown: AppState.isNewCountdown()
+            };
+            Api.timers.save(timer, function (newTimer) {
+                Timers.add(newTimer);
+            }, function() {
+                alert('Could not save timer!');
+            });
+
+            $scope.timer = new Date("1/1/16 0:00");
+            tau.back();
+        };
     });

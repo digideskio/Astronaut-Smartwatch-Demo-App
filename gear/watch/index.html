@@ -23,6 +23,7 @@
     <script type="text/javascript" src="common/js/lib/snap.svg-min.js"></script>
     <script type="text/javascript" src="common/js/lib/ui-bootstrap-custom-tpls-1.1.2.js"></script>
     <script type="text/javascript" src="common/js/lib/ng-websocket.js"></script>
+    <script type="text/javascript" src="common/js/lib/uuid.js"></script>
     <script type="text/javascript" src="js/controllers.js"></script>
     <script type="text/javascript" src="js/api.js"></script>
     <script type="text/javascript" src="js/comms.js"></script>
@@ -148,7 +149,7 @@
     <div id="hsectionchanger" class="ui-content">
         <!-- section changer has only one child. -->
         <div>
-            <section ng-controller="TimelineCtrl" class="ui-section ui-section-active" id="timeline">
+            <section ng-controller="TimelineCtrl" class="ui-section" id="timeline">
                 <div class="corners">
                     <div class="top left"></div>
                     <div class="top right"></div>
@@ -192,7 +193,7 @@
                     <div class="events-placeholder" ng-show="!busy && (!events || events.length == 0)">No events</div>
                 </div>
             </section>
-            <section class="ui-section" ng-controller="TimersCtrl as tmCtrl">
+            <section class="ui-section ui-section-active" ng-controller="TimersCtrl as tmCtrl">
 
                 <div class="timers-main-cont">
                     <div class="timers-main">
@@ -369,10 +370,17 @@
                         <img src="img/clear.png" class="detail-timer-delete" ng-click="removeTimer($index)">
                     </div>
                 </div>
-                <div class="timers-buttons">
-                    <object type="image/svg+xml" id="timer-buttons" data="img/timers-buttons.svg"
-                            sb-load="onInitButtonsSvg()"></object>
+                <!--<div class="timers-buttons">-->
+                    <!--<object type="image/svg+xml" id="timer-buttons" data="img/timers-buttons.svg"-->
+                            <!--sb-load="onInitButtonsSvg()"></object>-->
+                <!--</div>-->
+
+                <div style="text-align: center; margin: 20px auto;">
+                <!--<div class="flex-cont">-->
+                    <button style="font-size: 22px; min-width: 150px;" ng-click="setTimer()">Set Timer</button>
+                    <button style="font-size: 22px; min-width: 150px;" ng-click="setCountDown()">Set Countdown</button>
                 </div>
+
                 <div class="flex-cont" ng-click="cycle()">
                     <h2 class="timer-name">{{activeTimerName()}}</h2>
                     <h1 class="timer-value">{{activeTimerValue()}}</h1>
@@ -528,10 +536,15 @@
             <span class="screen-title">Set Timer</span>
             <span class="clock">{{time |date:'HH:mm'}}</span>
         </div>
-        <div ng-controller="SetTimerCtrl" class="contents">
-            <uib-timepicker ng-model="timer" readonly-input="true" show-spinners="true"
-                            show-seconds="true"
-                            show-meridian="false"></uib-timepicker>
+        <div ng-controller="SetTimerCtrl">
+            <div class="contents">
+                <uib-timepicker ng-model="timer" readonly-input="true" show-spinners="true"
+                                show-seconds="true"
+                                show-meridian="false"></uib-timepicker>
+            </div>
+            <div style="margin: auto; text-align: center;">
+                <button ng-click="saveTimer()">Set</button>
+            </div>
         </div>
     </div>
 </div>

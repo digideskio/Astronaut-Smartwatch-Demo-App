@@ -554,10 +554,10 @@ td.form-group.uib-time > input
   padding-top 10px
 
 .flex-cont
-  position: absolute;
+  position absolute
   z-index 100
-  top: 0px;
-  left: 0px
+  top 0px
+  left 0px
   width 100%
   display: flex;
   display: -webkit-flex;
@@ -567,7 +567,6 @@ td.form-group.uib-time > input
   -webkit-justify-content: center;
   -webkit-flex-direction: column;
   flex-direction: column;
-
 
 .alerts td + td,
 .alerts th + th {
@@ -646,4 +645,27 @@ td.form-group.uib-time > input
 .right {
   right: 0;
   border-right: 3px solid #353535;
+}
+
+button {
+  display: inline-block;
+  margin: 0 10px 0 0;
+  font-size: 32px;
+  line-height: 1.8;
+  appearance: none;
+  box-shadow: none;
+  border-radius: 0;
+  color: #eee;
+  background: rgba(0, 0, 0, 0);
+  border: solid 2px #6496c8;
+  font-weight 300;
+}
+
+button:focus {
+  outline: none
+}
+
+button:active {
+  border-color: #27496d;
+  color: #27496d;
 }
