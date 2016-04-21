@@ -8,8 +8,8 @@ var alertsModel = require('../data/alertData');
 
 function sortAlerts() {
     alertsModel.alerts.sort(function (l, r) {
-        var a = moment(l.date + " " + l.time, "DD/MM/YYYY HH:mm:ss");
-        var b = moment(r.date + " " + r.time, "DD/MM/YYYY HH:mm:ss");
+        var a = moment(l.date + " " + l.time, "MM/DD/YYYY HH:mm:ss");
+        var b = moment(r.date + " " + r.time, "MM/DD/YYYY HH:mm:ss");
         return b.isBefore(a);
     })
 }

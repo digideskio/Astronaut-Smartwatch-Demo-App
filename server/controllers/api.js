@@ -84,7 +84,7 @@ router.get('/events/:role/:page', function (req, res) {
     console.log("role = " + role);
     var now = moment();
     var filteredEvents = eventsModel.events.filter(function (e) {
-        var endTime = moment(e.date + " " + e.endTime, "DD/MM/YYYY HH:mm");
+        var endTime = moment(e.date + " " + e.endTime, "MM/DD/YYYY HH:mm");
         return endTime.isAfter(now) && e.roles && e.roles.indexOf(role) > -1;
     });
 
@@ -95,7 +95,7 @@ router.get('/events/:role/:page', function (req, res) {
     //TODO: hack to send 20 previous events with first page of current events
     if (page == 0) {
         var firstPageIndex = _.findIndex(roleEvents, function (e) {
-            var endTime = moment(e.date + " " + e.endTime, "DD/MM/YYYY HH:mm");
+            var endTime = moment(e.date + " " + e.endTime, "MM/DD/YYYY HH:mm");
             return endTime.isAfter(now) && e.roles && e.roles.indexOf(role) > -1;
         });
 
@@ -178,8 +178,8 @@ router.post('/events/:eventId/timer', function (req, res) {
     event.hasTimer = true;
 
     var now = moment();
-    var start = moment(event.date + " " + event.startTime, "DD/MM/YYYY HH:mm");
-    var end = moment(event.date + " " + event.endTime, "DD/MM/YYYY HH:mm");
+    var start = moment(event.date + " " + event.startTime, "MM/DD/YYYY HH:mm");
+    var end = moment(event.date + " " + event.endTime, "MM/DD/YYYY HH:mm");
     var total = event.isActive ? moment.range(now, end) : moment.range(now, start);
     var timer = addTimer(!event.isActive, event.id, total.valueOf() / 1000);
 

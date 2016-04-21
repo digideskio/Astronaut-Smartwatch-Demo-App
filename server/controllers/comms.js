@@ -8,8 +8,8 @@ var commsModel = require('../data/commsData');
 
 function sortOutages() {
     commsModel.comms.outages.sort(function (l, r) {
-        var a = moment(l.date + " " + l.startTime, "DD/MM/YYYY HH:mm");
-        var b = moment(r.date + " " + r.startTime, "DD/MM/YYYY HH:mm");
+        var a = moment(l.date + " " + l.startTime, "MM/DD/YYYY HH:mm");
+        var b = moment(r.date + " " + r.startTime, "MM/DD/YYYY HH:mm");
         return b.isBefore(a);
     })
 }

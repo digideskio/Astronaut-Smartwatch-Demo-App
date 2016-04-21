@@ -143,8 +143,8 @@ angular.module('Watch')
             }
 
             for (var i = 0; i < info.length; i++) {
-                var outStart = moment(info[i].date + " " + info[i].startTime, "DD/MM/YYYY HH:mm");
-                var outEnd = moment(info[i].date + " " + info[i].endTime, "DD/MM/YYYY HH:mm");
+                var outStart = moment(info[i].date + " " + info[i].startTime, "MM/DD/YYYY HH:mm");
+                var outEnd = moment(info[i].date + " " + info[i].endTime, "MM/DD/YYYY HH:mm");
                 if (outStart.isBetween(leftOut, rightOut) || outEnd.isBetween(leftOut, rightOut) ||
                     (outStart.isBefore(leftOut) && outEnd.isAfter(rightOut))) {
                     var x1 = moment.range(leftOut, outStart).diff('minutes') * dx;

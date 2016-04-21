@@ -121,8 +121,8 @@ angular.module('Watch')
 
         $scope.updateEventTime = function () {
             if (AppState.event) {
-                var start = moment(AppState.event.date + " " + AppState.event.startTime, "DD/MM/YYYY HH:mm");
-                var end = moment(AppState.event.date + " " + AppState.event.endTime, "DD/MM/YYYY HH:mm");
+                var start = moment(AppState.event.date + " " + AppState.event.startTime, "MM/DD/YYYY HH:mm");
+                var end = moment(AppState.event.date + " " + AppState.event.endTime, "MM/DD/YYYY HH:mm");
                 if (AppState.event.isActive || start.isAfter(moment())) {
                     $scope.formatAndSaveEventDuration(moment().diff(start));
                 }

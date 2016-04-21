@@ -2,7 +2,7 @@ exports.events = [
     {
         id: 0,
         name: "OCT Detected",
-        date: "15/02/2016",
+        date: "02/15/2016",
         startTime: "10:00",
         endTime: "11:45",
         criticality: 'Low',
@@ -16,7 +16,7 @@ exports.events = [
     {
         id: 1,
         name: "Exercise-Ared",
-        date: "16/02/2016",
+        date: "02/16/2016",
         startTime: "02:00",
         endTime: "14:40",
         criticality: 'Low',
@@ -30,7 +30,7 @@ exports.events = [
     {
         id: 2,
         name: "Lunch",
-        date: "08/03/2016",
+        date: "03/08/2016",
         startTime: "15:00",
         endTime: "16:00",
         criticality: 'High',

@@ -27,7 +27,7 @@ block content
                     td
                         input(type='text' value='#{alert.title}' name='title' placeholder='Alert title' id='title' maxlength=18).form-control
                     td.col-sm-2
-                        input(value='#{alert.date}' name='date' placeholder='1/1/2015' data-provide="datepicker" data-date-format="dd/mm/yyyy").form-control
+                        input(value='#{alert.date}' name='date' placeholder='1/1/2015' data-provide="datepicker" data-date-format="mm/dd/yyyy").form-control
                     td.col-sm-1
                         input(type="text" data-provide="timepicker" data-template="dropdown" data-show-seconds='true' data-minute-step="1" value='#{alert.time}' data-show-inputs='false' name='time' data-show-meridian="false" placeholder='00:00:00').form-control
                     td.col-sm-2

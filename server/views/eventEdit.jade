@@ -9,7 +9,7 @@ block content
             input(type='text' value='#{event.name}' id='name' name='name' placeholder='Event Name' maxlength=15).form-control
         .form-group
             label(for='date') Date
-            input(name='date' id='date' data-provide="datepicker" data-date-format="dd/mm/yyyy" value='#{event.date}' data-date-today-highlight='true' data-date-today-btn='linked').form-control
+            input(name='date' id='date' data-provide="datepicker" data-date-format="mm/dd/yyyy" value='#{event.date}' data-date-today-highlight='true' data-date-today-btn='linked').form-control
         .form-group.input-group.bootstrap-timepicker.timepicker
             label(for='startTime') Start Time
             input(type="text" data-provide="timepicker" data-template="dropdown" data-show-inputs='false' data-minute-step="1" id='startTime' name='startTime' data-show-meridian="false" placeholder='00:00' value='#{event.startTime}').form-control
