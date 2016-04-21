@@ -814,6 +814,7 @@ button {
   background: rgba(0,0,0,0);
   border: solid 2px #6496c8;
   font-weight: 300;
+  min-width: 150px;
 }
 button:focus {
   outline: none;

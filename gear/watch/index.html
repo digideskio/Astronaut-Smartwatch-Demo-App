@@ -149,7 +149,7 @@
     <div id="hsectionchanger" class="ui-content">
         <!-- section changer has only one child. -->
         <div>
-            <section ng-controller="TimelineCtrl" class="ui-section" id="timeline">
+            <section ng-controller="TimelineCtrl" class="ui-section ui-section-active" id="timeline">
                 <div class="corners">
                     <div class="top left"></div>
                     <div class="top right"></div>
@@ -193,7 +193,7 @@
                     <div class="events-placeholder" ng-show="!busy && (!events || events.length == 0)">No events</div>
                 </div>
             </section>
-            <section class="ui-section ui-section-active" ng-controller="TimersCtrl as tmCtrl">
+            <section class="ui-section" ng-controller="TimersCtrl as tmCtrl">
 
                 <div class="timers-main-cont">
                     <div class="timers-main">
@@ -377,8 +377,8 @@
 
                 <div style="text-align: center; margin: 20px auto;">
                 <!--<div class="flex-cont">-->
-                    <button style="font-size: 22px; min-width: 150px;" ng-click="setTimer()">Set Timer</button>
-                    <button style="font-size: 22px; min-width: 150px;" ng-click="setCountDown()">Set Countdown</button>
+                    <button style="font-size: 22px;" ng-click="setTimer()">Set Timer</button>
+                    <button style="font-size: 22px;" ng-click="setCountDown()">Set Countdown</button>
                 </div>
 
                 <div class="flex-cont" ng-click="cycle()">
@@ -481,8 +481,6 @@
             <div class="detail-timer" ng-show="!currentData.event.isCompleted">
                 <img src="img/start.png" style="width: 60px; height: 60px" ng-click="startEvent()"
                      ng-show="!currentData.event.isActive">
-                <div class="flex-spacer"></div>
-                <h1>{{eventStatus}}</h1>
                 <div class="flex-spacer"></div>
                 <img src="img/clear.png" class="detail-timer-delete" ng-click="stopEvent()"
                      ng-show="currentData.event.isActive">
