@@ -70,10 +70,12 @@ router.post('/add', function (req, res) {
     alertsModel.alerts.push(newAlert);
     sortAlerts();
 
-    ws.broadcast(JSON.stringify({
-        event: 'alert',
-        data: newAlert
-    }));
+    if(newAlert.notify) {
+        ws.broadcast(JSON.stringify({
+            event: 'alert',
+            data: newAlert
+        }));
+    }
 
     res.location('/admin/alerts');
     res.redirect('/admin/alerts');

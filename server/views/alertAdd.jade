@@ -24,12 +24,8 @@ block content
                 each val in statusOptions
                     option(selected=index == 0) #{val}
         .form-group
-            label(for='cleared') Cleared
-            input(type='text' name='cleared' id='cleared' placeholder='C' maxlength=8).form-control
-        .form-group
-            label(for='ack') Ack
-            input(type='text' name='ack' id='ack' placeholder='X' maxlength=8).form-control
-        .form-group
-            label(for='annun') Annun
-            input(type='text' name='annun' id='annun' placeholder='SUP' maxlength=8).form-control
+            .checkbox
+                label
+                    input(type='checkbox', name='notify' id='notify')
+                    | Show notification on watch
         button(type='submit' id='alert-add').btn.btn-primary Add
