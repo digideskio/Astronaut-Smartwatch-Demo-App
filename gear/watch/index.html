@@ -394,7 +394,7 @@
                 <div>
                     <div class="alerts-list">
                         <div class="list-item" ng-repeat="alert in alerts" ng-click="showAlert(alert)">
-                            <div class="circle-blue" ng-class="{'alert-critical': alert.status == 'Critical'}">
+                            <div class="circle-blue" ng-class="getAlertColorClass(alert)">
                             </div>
                             <div class="list-item-text">
                                 <h1 class="list-title">{{alert.title}}</h1>

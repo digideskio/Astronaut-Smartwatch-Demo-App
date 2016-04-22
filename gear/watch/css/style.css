@@ -328,8 +328,17 @@ span {
 .alerts-list {
   margin-top: 30px;
 }
-.alert-critical {
+.alert-emergency {
   background-color: #f00;
+}
+.alert-warning {
+  background-color: #ffa500;
+}
+.alert-caution {
+  background-color: #ff0;
+}
+.alert-advisory {
+  background-color: #fff;
 }
 .alerts-count {
   font-size: 24px;

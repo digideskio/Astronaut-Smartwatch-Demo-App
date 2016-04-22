@@ -47,6 +47,18 @@ angular.module('Watch')
         $rootScope.$on('refresh', function () {
             $scope.alerts = Api.alerts.query();
         });
+
+        $scope.getAlertColorClass = function (alert) {
+            if (alert.status == 'Advisory') {
+                return 'alert-advisory';
+            } else if (alert.status == 'Warning') {
+                return 'alert-warning';
+            } else if (alert.status == 'Caution') {
+                return 'alert-caution';
+            } else if (alert.status == 'Emergency') {
+                return 'alert-emergency';
+            }
+        }
     })
     .controller('AlertDetailCtrl', function ($scope, AppState) {
         $scope.currentData = AppState;

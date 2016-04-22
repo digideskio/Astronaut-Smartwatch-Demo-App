@@ -32,28 +32,30 @@ angular.module("Watch")
         };
 
         $scope.onBandsSvgReady = function () {
-            var bandsSnap = Snap("#bands");
-            $scope.sBandUp1 = bandsSnap.select("#s-band-1");
-            $scope.sBandUp2 = bandsSnap.select("#s-band-2");
-            $scope.sBandDown2 = bandsSnap.select("#s-band-3");
-            $scope.sBandDown1 = bandsSnap.select("#s-band-4");
-            $scope.kuBandUp1 = bandsSnap.select("#k-band-1");
-            $scope.kuBandUp2 = bandsSnap.select("#k-band-2");
-            $scope.kuBandDown2 = bandsSnap.select("#k-band-3");
-            $scope.kuBandDown1 = bandsSnap.select("#k-band-4");
+            $scope.bandsSnap = Snap("#bands");
+            $scope.sBandUp1 = $scope.bandsSnap.select("#s-band-1");
+            $scope.sBandUp2 = $scope.bandsSnap.select("#s-band-2");
+            $scope.sBandDown2 = $scope.bandsSnap.select("#s-band-3");
+            $scope.sBandDown1 = $scope.bandsSnap.select("#s-band-4");
+            $scope.kuBandUp1 = $scope.bandsSnap.select("#k-band-1");
+            $scope.kuBandUp2 = $scope.bandsSnap.select("#k-band-2");
+            $scope.kuBandDown2 = $scope.bandsSnap.select("#k-band-3");
+            $scope.kuBandDown1 = $scope.bandsSnap.select("#k-band-4");
 
-            $scope.oca = bandsSnap.select("#OCA");
-            $scope.iac = bandsSnap.select("#IAC");
+            $scope.oca = $scope.bandsSnap.select("#OCA");
+            $scope.iac = $scope.bandsSnap.select("#IAC");
 
             $scope.refreshData();
         };
 
         $scope.refreshData = function () {
             Api.comms.get(function (commsData) {
-                $scope.updateCommsDisplay(commsData.comms);
+                if ($scope.bandsSnap) {
+                    $scope.updateCommsDisplay(commsData.comms);
+                }
             });
 
-            Api.alerts.query(function(data) {
+            Api.alerts.query(function (data) {
                 $scope.alerts = data;
             });
         };
