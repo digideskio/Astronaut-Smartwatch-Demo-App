@@ -21,26 +21,12 @@ angular.module('Watch')
     .constant('RefreshInterval', '60000')  // once a minute
     .constant('RestPort', 3000)
     .constant('WebsocketPort', 3001)
-    .factory("Api", function ($rootScope, $resource, $interval, $cacheFactory, ServerAddress, RestPort, AppState, RefreshInterval) {
+    .factory("Api", function ($rootScope, $resource, $interval, $cacheFactory, $http, ServerAddress, RestPort, AppState, RefreshInterval) {
         var serverUrl = ServerAddress + ":" + RestPort;
         var apiEndpoint = 'http://' + serverUrl + '/api';
         var apiCache = $cacheFactory('api');
 
-        $rootScope.$watch(
-            function () {
-                return AppState.getServer();
-            },
-            function (newVal) {
-                serverUrl = newVal;
-            },
-            true);
-
-        $interval(function () {
-            $cacheFactory.removeAll();
-            $rootScope.$emit('refresh');
-        }, RefreshInterval);
-
-        return {
+        var api = {
             events: $resource(apiEndpoint + '/events/:role/:page/:eventId', {
                     role: '@_role',
                     page: '@_page',
@@ -65,10 +51,44 @@ angular.module('Watch')
             }),
             eventTimers: $resource(apiEndpoint + '/events/:eventId/timer', {
                 eventId: '@_eventId'
+            }),
+            time: $resource(apiEndpoint + '/time', null, {
+                query: {
+                    method: 'GET',
+                    isArray: false
+                }
             })
-        }
+        };
+
+        $rootScope.$watch(
+            function () {
+                return AppState.getServer();
+            },
+            function (newVal) {
+                serverUrl = newVal;
+            },
+            true);
+
+        $interval(function () {
+            $cacheFactory.removeAll();
+            $rootScope.$emit('refresh');
+
+            updateTime();
+        }, RefreshInterval);
+
+
+        var updateTime = function () {
+            api.time.query(function(data) {
+                var timestamp = parseInt(data.time);
+                var time = moment.unix(timestamp);
+                AppState.setTime(time);
+            });
+        };
+
+        updateTime();
+        return api;
     })
-    .run(function ($rootScope, $cacheFactory, $websocket, ServerAddress, WebsocketPort, Api) {
+    .run(function ($rootScope, $cacheFactory, $websocket, ServerAddress, WebsocketPort) {
         var ws = $websocket.$new('ws://' + ServerAddress + ':' + WebsocketPort);
         ws.$on('$open', function () {
             console.info("Websocket connection open");

@@ -1,5 +1,5 @@
 angular.module('Watch')
-    .factory('AppState', function () {
+    .factory('AppState', function ($interval) {
         var currentState = {
             isNewTimerCountdown: false,
             server: null,
@@ -19,7 +19,8 @@ angular.module('Watch')
             activeRole: 'ISS CDR',
             event: {},
             alert: {},
-            uuid: {}
+            uuid: Uuid.create(),
+            time: moment()
         };
 
         currentState.getActiveRole = function () {
@@ -62,13 +63,24 @@ angular.module('Watch')
             currentState.server = server;
         };
 
-        currentState.uuid = Uuid.create();
+        currentState.setTime = function (time) {
+            currentState.time = time;
+        };
+
+        currentState.getTime = function () {
+            return currentState.time;
+        };
+
+        $interval(function () {
+            currentState.setTime(currentState.getTime().add(1, 's'));
+        }, 1000);
+
         return currentState;
     })
-    .controller('SetupServerCtrl', function($rootScope, $scope, AppState) {
+    .controller('SetupServerCtrl', function ($rootScope, $scope, AppState) {
         $scope.server = "10.0.0.75:3000";
 
-        $scope.save = function() {
+        $scope.save = function () {
             AppState.setServer($scope.server);
             tau.changePage('dashboard');
         }

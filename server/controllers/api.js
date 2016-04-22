@@ -88,8 +88,8 @@ router.get('/events/:role/:page', function (req, res) {
         return endTime.isAfter(now) && e.roles && e.roles.indexOf(role) > -1;
     });
 
-    var roleEvents = eventsModel.events.filter(function(e) {
-        return e.roles && e.roles.indexOf(role) > - 1;
+    var roleEvents = eventsModel.events.filter(function (e) {
+        return e.roles && e.roles.indexOf(role) > -1;
     });
 
     //TODO: hack to send 20 previous events with first page of current events
@@ -250,6 +250,12 @@ router.put('/timers/:timerId', function (req, res) {
     }));
 
     res.json(timer);
+});
+
+router.get('/time', function (req, res) {
+    res.json({
+        time: moment().unix()
+    });
 });
 
 module.exports = router;

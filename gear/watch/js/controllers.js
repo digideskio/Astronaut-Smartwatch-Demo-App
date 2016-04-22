@@ -4,11 +4,7 @@ angular.module("Watch", ['ngRoute', 'ngResource', 'angular.filter', 'infinite-sc
         return $locationProvider.html5Mode(false).hashPrefix("!");
     })
     .controller('HeaderCtrl', function ($scope, $interval, $rootScope, AppState) {
-        $scope.time = new Date();
-
-        $rootScope.$on('timerTick', function () {
-            $scope.time = new Date();
-        });
+        $scope.state = AppState;
 
         $scope.goBack = function () {
             $rootScope.$emit("close", AppState.currentScreen);

@@ -1,11 +1,11 @@
 angular.module("Watch")
-    .controller("DashboardCtrl", function ($rootScope, $scope, $interval, Api, System, TimerCommon, Timers) {
+    .controller("DashboardCtrl", function ($rootScope, $scope, $interval, Api, System, TimerCommon, Timers, AppState) {
         $scope.colorGood = '#1EDF7A';
         $scope.colorWeak = '#FFE620';
         $scope.colorBad = '#FC3D21';
-        $scope.time = new Date();
         $scope.battery = System.getBattery();
         $scope.timerz = Timers;
+        $scope.state = AppState;
 
         $rootScope.$on('push', function (event, message) {
             $scope.refreshData();
@@ -119,10 +119,6 @@ angular.module("Watch")
         $scope.timeLeft = function (index) {
             return TimerCommon.timeLeft(index);
         };
-
-        $rootScope.$on('timerTick', function (event, data) {
-            $scope.time = new Date();
-        });
 
         $rootScope.$on('refresh', function () {
             $scope.refreshData();

@@ -42,13 +42,13 @@
     <div class="dashboard-cont">
         <h2>Provide server url:port</h2>
         <input type="url" ng-model="server" style="height: 50px">
-        <button ng-click="save()" style="background: #002a80; color: white; width: 90px; height: 50px">Save</button>
+        <button ng-click="save()" style="margin-top: 20px;">Save</button>
     </div>
 </div>
 <div class="ui-page" id="dashboard" ng-controller="DashboardCtrl">
     <div class="dashboard-cont" ng-click="onDashboardClick()">
         <div class="dashboard-content-top">
-            <h2 class="today-date">{{time |date:'EEE, MM/dd'}}</h2>
+            <h2 class="today-date">{{state.getTime().format('ddd, MM/DD')}}</h2>
 
             <div class="flex-spacer"></div>
             <object class="dashboard-icon" data="img/bluetooth.svg" id="bluetooth" type="image/svg+xml"
@@ -66,7 +66,7 @@
             <span class="battery-level">{{battery.getLevel()}}%</span>
         </div>
         <div class="dashboard-clock-cont">
-            <h1 class="dashboard-clock">{{time | date:'HH:mm:ss'}}<span class="gmt">GMT</span></h1>
+            <h1 class="dashboard-clock">{{state.getTime().format("HH:mm:ss")}}<span class="gmt">GMT</span></h1>
         </div>
         <div class="ui-content dashboard-timers">
             <div ng-repeat="tm in timerz.timers">
@@ -144,7 +144,7 @@
         <div class="circle-white" id="nav-circle-4"></div>
         <div class="circle-white" id="nav-circle-5"></div>
         <div class="circle-white" id="nav-circle-6"></div>
-        <span class="clock">{{time |date:'HH:mm'}}</span>
+        <span class="clock">{{state.getTime().format("HH:mm")}}</span>
     </div>
     <div id="hsectionchanger" class="ui-content">
         <!-- section changer has only one child. -->
