@@ -127,24 +127,20 @@ angular.module('Watch')
             });
         });
 
-        //$scope.onInitButtonsSvg = function () {
-        //    var buttonsSnap = Snap("#timer-buttons");
-        //    buttonsSnap.select("#Chrono").click(function () {
-        //        $scope.setTimer();
-        //    });
-        //    buttonsSnap.select("#Timer").click(function () {
-        //        $scope.setCountDown();
-        //    });
-        //};
-
         $scope.getTimer = function (ind) {
             return Timers.get(ind);
         };
 
         $scope.setTimer = function () {
-            AppState.setNewCountdown(false);
-            AppState.currentScreen = 'set-timer';
-            tau.changePage('set-timer');
+            var timer = {
+                totalTime: 36000,
+                isCountdown: false
+            };
+            Api.timers.save(timer, function (newTimer) {
+                Timers.add(newTimer);
+            }, function () {
+                alert('Could not save timer!');
+            });
         };
 
         $scope.setCountDown = function () {
