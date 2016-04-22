@@ -142,25 +142,30 @@
                                             </g>
                                         </g>
                                         <g id="Ku-Band" transform="translate(170.000000, 1.000000)">
-                                            <path d="M299.842021,126.032258 C331.62386,126.032258 357.388132,100.498046 357.388132,69 C357.388132,37.5019536 331.62386,11.9677419 299.842021,11.9677419 C268.060181,11.9677419 242.29591,37.5019536 242.29591,69 C242.29591,100.498046 268.060181,126.032258 299.842021,126.032258 L299.842021,126.032258 L299.842021,126.032258 L299.842021,126.032258 Z" id="Signal-Vert" stroke="#1EDF7A" stroke-width="8" fill-opacity="0.140000001" fill="#1EDF7A"></path>
-                                            <g id="ku-two-up-yellow" transform="translate(299.842021, 1.000000)">
+                                            <path d="M299.842021,127.032258 C331.62386,127.032258 357.388132,101.498046 357.388132,70 C357.388132,38.5019536 331.62386,12.9677419 299.842021,12.9677419 C268.060181,12.9677419 242.29591,38.5019536 242.29591,70 C242.29591,101.498046 268.060181,127.032258 299.842021,127.032258 L299.842021,127.032258 L299.842021,127.032258 L299.842021,127.032258 Z" id="Signal-Vert" stroke="#1EDF7A" stroke-width="8" fill-opacity="0.140000001" fill="#1EDF7A"></path>
+                                            <g id="ku-two-up-yellow" transform="translate(299.842021, 2.000000)">
                                                 <g id="mask-5"></g>
                                                 <g id="Jaune-Clipped">
                                                     <g id="mask-10" fill="#080808">
                                                         <path d="M0,0 L57.5461107,8.77419355 L66.3993585,65.8064516 L0,65.8064516 L0,0 L0,0 L0,0 L0,0 Z" id="path-9"></path>
                                                     </g>
+                                                    <g id="path-4"></g>
                                                     <g id="Group">
-                                                        <g id="mask-10" fill="#000000">
-                                                            <path d="M0,0 L57.5461107,8.77419355 L66.3993585,65.8064516 L0,65.8064516 L0,0 L0,0 L0,0 L0,0 Z" id="path-9"></path>
+                                                        <g id="mask-2" fill="#000000">
+                                                            <path d="M0,0 L57.5461107,8.77419355 L66.3993585,65.8064516 L0,65.8064516 L0,0 L0,0 L0,0 L0,0 Z" id="path-1"></path>
                                                         </g>
                                                         <g id="path-9"></g>
-                                                        <g id="Jaune-Clipped" stroke="#FFE620" stroke-width="8" fill-opacity="0.14" fill="#FFE620">
-                                                            <path d="M-7.10542736e-15,120.645161 C29.3370825,120.645161 53.1194868,97.0751197 53.1194868,68 C53.1194868,38.9248803 29.3370825,15.3548387 -7.10542736e-15,15.3548387 C-29.3370825,15.3548387 -53.1194868,38.9248803 -53.1194868,68 C-53.1194868,97.0751197 -29.3370825,120.645161 -7.10542736e-15,120.645161 L-7.10542736e-15,120.645161 L-7.10542736e-15,120.645161 L-7.10542736e-15,120.645161 Z" id="Jaune"></path>
+                                                        <g id="Jaune-Clipped">
+                                                            <mask id="mask-2" fill="white">
+                                                                <use xlink:href="#path-1"></use>
+                                                            </mask>
+                                                            <g id="path-1"></g>
+                                                            <path d="M0,120.645161 C29.3370825,120.645161 53.1194868,97.0751197 53.1194868,68 C53.1194868,38.9248803 29.3370825,15.3548387 0,15.3548387 C-29.3370825,15.3548387 -53.1194868,38.9248803 -53.1194868,68 C-53.1194868,97.0751197 -29.3370825,120.645161 0,120.645161 L0,120.645161 L0,120.645161 L0,120.645161 Z" id="Jaune" stroke="#FFE620" stroke-width="8" fill-opacity="0.14" fill="#FFE620" mask="url(#mask-2)"></path>
                                                         </g>
                                                     </g>
                                                 </g>
                                             </g>
-                                            <g id="ku-two-bottom-yellow" transform="translate(450.842021, 69.000000) scale(1, -1) translate(-450.842021, -69.000000) translate(299.842021, 1.000000)">
+                                            <g id="ku-two-bottom-yellow" transform="translate(450.842021, 70.000000) scale(1, -1) translate(-450.842021, -70.000000) translate(299.842021, 2.000000)">
                                                 <g id="mask-5"></g>
                                                 <g id="Jaune-Clipped">
                                                     <g id="mask-12" fill="#080808">
@@ -168,21 +173,21 @@
                                                     </g>
                                                     <g id="path-4"></g>
                                                     <g id="Group">
-                                                        <g id="mask-12" fill="#000000">
-                                                            <path d="M0,0 L57.5461107,8.77419355 L66.3993585,65.8064516 L0,65.8064516 L0,0 L0,0 L0,0 L0,0 Z" id="path-11"></path>
+                                                        <g id="mask-4" fill="#000000">
+                                                            <path d="M0,0 L57.5461107,8.77419355 L66.3993585,65.8064516 L0,65.8064516 L0,0 L0,0 L0,0 L0,0 Z" id="path-3"></path>
                                                         </g>
                                                         <g id="path-11"></g>
                                                         <g id="Jaune-Clipped">
-                                                            <mask id="mask-10" fill="white">
-                                                                <use xlink:href="#path-9"></use>
+                                                            <mask id="mask-4" fill="white">
+                                                                <use xlink:href="#path-3"></use>
                                                             </mask>
-                                                            <g id="path-11"></g>
-                                                            <path d="M0,120.645161 C29.3370825,120.645161 53.1194868,97.0751197 53.1194868,68 C53.1194868,38.9248803 29.3370825,15.3548387 0,15.3548387 C-29.3370825,15.3548387 -53.1194868,38.9248803 -53.1194868,68 C-53.1194868,97.0751197 -29.3370825,120.645161 0,120.645161 L0,120.645161 L0,120.645161 L0,120.645161 Z" id="Jaune" stroke="#FFE620" stroke-width="8" fill-opacity="0.14" fill="#FFE620" mask="url(#mask-10)"></path>
+                                                            <g id="path-3"></g>
+                                                            <path d="M0,120.645161 C29.3370825,120.645161 53.1194868,97.0751197 53.1194868,68 C53.1194868,38.9248803 29.3370825,15.3548387 0,15.3548387 C-29.3370825,15.3548387 -53.1194868,38.9248803 -53.1194868,68 C-53.1194868,97.0751197 -29.3370825,120.645161 0,120.645161 L0,120.645161 L0,120.645161 L0,120.645161 Z" id="Jaune" stroke="#FFE620" stroke-width="8" fill-opacity="0.14" fill="#FFE620" mask="url(#mask-4)"></path>
                                                         </g>
                                                     </g>
                                                 </g>
                                             </g>
-                                            <g id="ku-one-bottom-yellow" transform="translate(151.055334, 69.000000) scale(-1, -1) translate(-151.055334, -69.000000) translate(0.055334, 1.000000)">
+                                            <g id="ku-one-bottom-yellow" transform="translate(151.055334, 70.000000) scale(-1, -1) translate(-151.055334, -70.000000) translate(0.055334, 2.000000)">
                                                 <g id="mask-5"></g>
                                                 <g id="Jaune-Clipped">
                                                     <g id="mask-14" fill="#080808">
@@ -190,60 +195,68 @@
                                                     </g>
                                                     <g id="path-4"></g>
                                                     <g id="Group">
-                                                        <g id="mask-14" fill="#000000">
-                                                            <path d="M0,0 L57.5461107,8.77419355 L66.3993585,65.8064516 L0,65.8064516 L0,0 L0,0 L0,0 L0,0 Z" id="path-13"></path>
+                                                        <g id="mask-6" fill="#000000">
+                                                            <path d="M0,0 L57.5461107,8.77419355 L66.3993585,65.8064516 L0,65.8064516 L0,0 L0,0 L0,0 L0,0 Z" id="path-5"></path>
                                                         </g>
                                                         <g id="path-13"></g>
                                                         <g id="Jaune-Clipped">
-                                                            <mask id="mask-12" fill="white">
-                                                                <use xlink:href="#path-11"></use>
+                                                            <mask id="mask-6" fill="white">
+                                                                <use xlink:href="#path-5"></use>
                                                             </mask>
-                                                            <g id="path-13"></g>
-                                                            <path d="M-7.10542736e-15,120.645161 C29.3370825,120.645161 53.1194868,97.0751197 53.1194868,68 C53.1194868,38.9248803 29.3370825,15.3548387 -7.10542736e-15,15.3548387 C-29.3370825,15.3548387 -53.1194868,38.9248803 -53.1194868,68 C-53.1194868,97.0751197 -29.3370825,120.645161 -7.10542736e-15,120.645161 L-7.10542736e-15,120.645161 L-7.10542736e-15,120.645161 L-7.10542736e-15,120.645161 Z" id="Jaune" stroke="#FFE620" stroke-width="8" fill-opacity="0.14" fill="#FFE620" mask="url(#mask-12)"></path>
+                                                            <g id="path-5"></g>
+                                                            <path d="M-7.10542736e-15,120.645161 C29.3370825,120.645161 53.1194868,97.0751197 53.1194868,68 C53.1194868,38.9248803 29.3370825,15.3548387 -7.10542736e-15,15.3548387 C-29.3370825,15.3548387 -53.1194868,38.9248803 -53.1194868,68 C-53.1194868,97.0751197 -29.3370825,120.645161 -7.10542736e-15,120.645161 L-7.10542736e-15,120.645161 L-7.10542736e-15,120.645161 L-7.10542736e-15,120.645161 Z" id="Jaune" stroke="#FFE620" stroke-width="8" fill-opacity="0.14" fill="#FFE620" mask="url(#mask-6)"></path>
                                                         </g>
                                                     </g>
                                                 </g>
                                             </g>
-                                            <g id="ku-one-up-yellow" transform="translate(178.055334, 69.000000) scale(-1, 1) translate(-178.055334, -69.000000) translate(0.055334, 1.000000)">
-                                                <g id="mask-5" transform="translate(54.000000, 0.000000)"></g>
+                                            <g id="ku-one-up-yellow" transform="translate(151.055334, 70.000000) scale(-1, 1) translate(-151.055334, -70.000000) translate(0.055334, 2.000000)">
+                                                <g id="mask-5"></g>
                                                 <g id="Jaune-Clipped">
-                                                    <g id="mask-16" transform="translate(54.000000, 0.000000)"></g>
-                                                    <g id="path-4" transform="translate(54.000000, 0.000000)"></g>
+                                                    <g id="mask-16" fill="#080808">
+                                                        <path d="M0,0 L57.5461107,8.77419355 L66.3993585,65.8064516 L0,65.8064516 L0,0 L0,0 L0,0 L0,0 Z" id="path-15"></path>
+                                                    </g>
+                                                    <g id="path-4"></g>
                                                     <g id="Group">
-                                                        <g id="mask-16" transform="translate(54.000000, 0.000000)" fill="#000000">
-                                                            <path d="M0,0 L57.5461107,8.77419355 L66.3993585,65.8064516 L0,65.8064516 L0,0 L0,0 L0,0 L0,0 Z" id="path-15"></path>
+                                                        <g id="mask-8" fill="#000000">
+                                                            <path d="M0,0 L57.5461107,8.77419355 L66.3993585,65.8064516 L0,65.8064516 L0,0 L0,0 L0,0 L0,0 Z" id="path-7"></path>
                                                         </g>
-                                                        <g id="path-15" transform="translate(54.000000, 0.000000)"></g>
-                                                        <g id="Jaune-Clipped" stroke="#FFE620" stroke-width="8" fill-opacity="0.14" fill="#FFE620">
-                                                            <path d="M54,120.645161 C83.3370825,120.645161 107.119487,97.0751197 107.119487,68 C107.119487,38.9248803 83.3370825,15.3548387 54,15.3548387 C24.6629175,15.3548387 0.8805132,38.9248803 0.8805132,68 C0.8805132,97.0751197 24.6629175,120.645161 54,120.645161 L54,120.645161 L54,120.645161 L54,120.645161 Z" id="Jaune"></path>
+                                                        <g id="path-15"></g>
+                                                        <g id="Jaune-Clipped">
+                                                            <mask id="mask-8" fill="white">
+                                                                <use xlink:href="#path-7"></use>
+                                                            </mask>
+                                                            <g id="path-7"></g>
+                                                            <path d="M0,120.645161 C29.3370825,120.645161 53.1194868,97.0751197 53.1194868,68 C53.1194868,38.9248803 29.3370825,15.3548387 0,15.3548387 C-29.3370825,15.3548387 -53.1194868,38.9248803 -53.1194868,68 C-53.1194868,97.0751197 -29.3370825,120.645161 0,120.645161 L0,120.645161 L0,120.645161 L0,120.645161 Z" id="Jaune" stroke="#FFE620" stroke-width="8" fill-opacity="0.14" fill="#FFE620" mask="url(#mask-8)"></path>
                                                         </g>
                                                     </g>
                                                 </g>
                                             </g>
-                                            <circle id="Découpe" fill="#000000" cx="299" cy="66" r="35"></circle>
-                                            <rect id="Découpe" fill="#000000" x="230.869995" y="66.8064516" width="138.949997" height="4.38999987"></rect>
-                                            <ellipse id="Gris" fill="#080808" opacity="0.1" cx="299.842021" cy="69" rx="26.5597434" ry="26.3225806"></ellipse>
-                                            <rect id="Découpe" fill="#000000" x="297.628709" y="0.580000013" width="4.4266239" height="137.839996"></rect>
-                                            <g id="ku-two-bottom-red" transform="translate(302.000000, 70.000000)">
-                                                <rect id="Rectangle-3" fill="#080808" x="0" y="0" width="65" height="65"></rect>
+                                            <circle id="Découpe" fill="#000000" cx="299" cy="67" r="35"></circle>
+                                            <rect id="Découpe" fill="#000000" x="235" y="67.8064516" width="130.949997" height="4.38709677"></rect>
+                                            <ellipse id="Gris" fill="#080808" opacity="0.1" cx="299.842021" cy="70" rx="26.5597434" ry="26.3225806"></ellipse>
+                                            <rect id="Découpe" fill="#000000" x="297.628709" y="0.580000043" width="4.4266239" height="137.839996"></rect>
+                                            <path d="M387.808049,119.643842 L381.082103,112.917897 L383,111 L392.041051,120.041051 L393,121 L392.041051,121.958949 L383,131 L381.082103,129.082103 L387.808049,122.356158 L373,122.356158 L373,119.643842 L387.808049,119.643842 L387.808049,119.643842 L387.808049,119.643842 L387.808049,119.643842 Z" id="Downlink" fill="#9B9B9B" transform="translate(383.000000, 121.000000) rotate(90.000000) translate(-383.000000, -121.000000) "></path>
+                                            <path d="M387.808049,21.6438423 L381.082103,14.9178967 L383,13 L392.041051,22.0410517 L393,23 L392.041051,23.9589483 L383,33 L381.082103,31.0821033 L387.808049,24.3561577 L373,24.3561577 L373,21.6438423 L387.808049,21.6438423 L387.808049,21.6438423 L387.808049,21.6438423 L387.808049,21.6438423 Z" id="Uplink" fill="#9B9B9B" transform="translate(383.000000, 23.000000) rotate(-90.000000) translate(-383.000000, -23.000000) "></path>
+                                            <g id="ku-two-bottom-red" transform="translate(302.000000, 71.000000)">
+                                                <rect id="Rectangle-3" fill="#080808" x="0" y="0" width="60" height="60"></rect>
                                                 <g id="path-3-link" transform="translate(1.000000, 0.000000)" fill="#FC3D21">
                                                     <path d="M0,29.8741944 C15.8745074,28.5266138 28.5266138,15.8745074 29.8741944,0 L0,0 L0,29.8741944 L0,29.8741944 L0,29.8741944 Z" id="path-3"></path>
                                                 </g>
                                             </g>
-                                            <g id="ku-one-bottom-red" transform="translate(266.128709, 102.500000) scale(-1, 1) translate(-266.128709, -102.500000) translate(233.628709, 70.000000)">
-                                                <rect id="Rectangle-3" fill="#080808" x="0" y="0" width="65" height="65"></rect>
+                                            <g id="ku-one-bottom-red" transform="translate(268.128709, 101.000000) scale(-1, 1) translate(-268.128709, -101.000000) translate(237.628709, 71.000000)">
+                                                <rect id="Rectangle-3" fill="#080808" x="0.998708886" y="0" width="60" height="60"></rect>
                                                 <g id="path-3-link" transform="translate(1.000000, 0.000000)" fill="#FC3D21">
                                                     <path d="M0,29.8741944 C15.8745074,28.5266138 28.5266138,15.8745074 29.8741944,0 L0,0 L0,29.8741944 L0,29.8741944 L0,29.8741944 Z" id="path-3"></path>
                                                 </g>
                                             </g>
-                                            <g id="ku-one-up-red" transform="translate(266.500000, 34.500000) scale(-1, -1) translate(-266.500000, -34.500000) translate(234.000000, 2.000000)">
-                                                <rect id="Rectangle-3" fill="#080808" x="0" y="0" width="65" height="65"></rect>
-                                                <g id="path-3-link" transform="translate(1.000000, 0.000000)" fill="#FC3D21">
+                                            <g id="ku-one-up-red" transform="translate(268.000000, 38.000000) scale(-1, -1) translate(-268.000000, -38.000000) translate(238.000000, 8.000000)">
+                                                <rect id="Rectangle-3" fill="#080808" x="0" y="0" width="60" height="60"></rect>
+                                                <g id="path-3-link" fill="#FC3D21">
                                                     <path d="M0,29.8741944 C15.8745074,28.5266138 28.5266138,15.8745074 29.8741944,0 L0,0 L0,29.8741944 L0,29.8741944 L0,29.8741944 Z" id="path-3"></path>
                                                 </g>
                                             </g>
-                                            <g id="ku-two-up-red" transform="translate(334.500000, 34.500000) scale(1, -1) translate(-334.500000, -34.500000) translate(302.000000, 2.000000)">
-                                                <rect id="Rectangle-3" fill="#080808" x="0" y="0" width="65" height="65"></rect>
+                                            <g id="ku-two-up-red" transform="translate(332.000000, 38.000000) scale(1, -1) translate(-332.000000, -38.000000) translate(302.000000, 8.000000)">
+                                                <rect id="Rectangle-3" fill="#080808" x="0" y="0" width="60" height="60"></rect>
                                                 <g id="path-3-link" transform="translate(1.000000, 0.000000)" fill="#FC3D21">
                                                     <path d="M0,29.8741944 C15.8745074,28.5266138 28.5266138,15.8745074 29.8741944,0 L0,0 L0,29.8741944 L0,29.8741944 L0,29.8741944 Z" id="path-3"></path>
                                                 </g>
@@ -254,7 +267,7 @@
                                         <g id="S">
                                             <g id="1">
                                                 <text>
-                                                    <tspan x="0" y="29" fill="#000000">1</tspan>
+                                                    <tspan x="0" y="29" fill="#fff">1</tspan>
                                                 </text>
                                             </g>
                                         </g>
@@ -263,7 +276,7 @@
                                         <g id="S">
                                             <g id="1">
                                                 <text>
-                                                    <tspan x="0" y="29" fill="#000000">1</tspan>
+                                                    <tspan x="0" y="29" fill="#fff">1</tspan>
                                                 </text>
                                             </g>
                                         </g>
@@ -272,7 +285,7 @@
                                         <g id="S">
                                             <g id="2">
                                                 <text>
-                                                    <tspan x="0" y="29" fill="#000000">2</tspan>
+                                                    <tspan x="0" y="29" fill="#fff">2</tspan>
                                                 </text>
                                             </g>
                                         </g>
@@ -281,7 +294,7 @@
                                         <g id="S">
                                             <g id="2">
                                                 <text>
-                                                    <tspan x="0" y="29" fill="#000000">2</tspan>
+                                                    <tspan x="0" y="29" fill="#fff">2</tspan>
                                                 </text>
                                             </g>
                                         </g>

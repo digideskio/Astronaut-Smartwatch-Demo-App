@@ -196,7 +196,7 @@ angular.module('Watch')
                 'font-family': 'Open Sans',
                 'font-size': '18px',
                 'font-weight': '900',
-                fill: '#000'
+                fill: '#fff'
             });
 
         };
@@ -213,7 +213,7 @@ angular.module('Watch')
                 'font-family': 'Open Sans',
                 'font-size': '18px',
                 'font-weight': '900',
-                fill: '#000'
+                fill: '#333'
             });
         }
     });
