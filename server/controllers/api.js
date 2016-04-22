@@ -52,17 +52,21 @@ function addTimer(isCountdown, eventId, total) {
         newTimer.id = 0;
     }
     newTimer.isCountdown = isCountdown;
+    newTimer.isCustom = (eventId === null);
     newTimer.isActive = true;
     newTimer.start = moment();
     newTimer.total = total;
     newTimer.elapsed = newTimer.isCountdown ? newTimer.total : 0;
-    if (eventId != null) {
+    if (!newTimer.isCustom) {
         var event = _.find(eventsModel.events, function (e) {
             return e.id == eventId
         });
         newTimer.name = event.name;
     } else {
-        newTimer.name = "Custom Timer " + timersModel.timers.length + 1;
+        var ind = _.filter(timersModel.timers, function(timer) {
+            return timer.isCustom;
+        }).length +1;
+        newTimer.name = "Custom Timer " + ind;
     }
 
     timersModel.timers.push(newTimer);
