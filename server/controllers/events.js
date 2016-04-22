@@ -31,7 +31,7 @@ router.get('/add', function (req, res) {
     res.render('eventAdd', {
         id: 'events',
         title: 'Add Event',
-        roles: roleModel,
+        roles: roleModel.roles,
         criticalityOptions: criticalityOptions,
         statusOptions: statusOptions
     });
