@@ -22,11 +22,6 @@ block content
                 each val in criticalityOptions
                     option(selected=event.criticality == val) #{val}
         .form-group
-            label(for='status') Status
-            select(id='status' name='status' ).form-control.input-sm
-                each val in statusOptions
-                    option(selected=event.status == val) #{val}
-        .form-group
             label(for='notes') Notes
             textarea(rows='3' id='notes' name='notes' placeholder='Event notes...').form-control #{event.notes}
         .form-group

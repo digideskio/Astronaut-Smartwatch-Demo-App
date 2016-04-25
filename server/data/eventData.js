@@ -6,12 +6,11 @@ exports.events = [
         startTime: "10:00",
         endTime: "11:45",
         criticality: 'Low',
+        status: 'scheduled',
         notes: "Important Note...",
         location: "FE-2 T. Virst",
         color: '#337ab7',
-        roles: ["ISS CDR"],
-        isRunning: false,
-        isCompleted: false
+        roles: ["ISS CDR"]
     },
     {
         id: 1,
@@ -20,12 +19,11 @@ exports.events = [
         startTime: "02:00",
         endTime: "14:40",
         criticality: 'Low',
+        status: 'scheduled',
         notes: "Important Note...",
         location: "FE-2 T. Virst",
         color: '#5cb85c',
-        roles: ["ISS CDR"],
-        isRunning: false,
-        isCompleted: false
+        roles: ["ISS CDR"]
     },
     {
         id: 2,
@@ -34,11 +32,10 @@ exports.events = [
         startTime: "15:00",
         endTime: "16:00",
         criticality: 'High',
+        status: 'scheduled',
         notes: "Important Note...",
         location: "FE-2 T. Virst",
         color: '#5bc0de',
-        roles: ["ISS CDR"],
-        isRunning: false,
-        isCompleted: false
+        roles: ["ISS CDR"]
     }
 ];
