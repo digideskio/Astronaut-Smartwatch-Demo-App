@@ -11,6 +11,10 @@ angular.module("Watch")
         $scope.activeNotifications = [];
 
         $rootScope.$on('push', function (event, message) {
+            if (message.data && !message.data.show) {
+                return;
+            }
+
             switch (message.type) {
                 case 'alert':
                     if (!message.data.notify) {
@@ -54,11 +58,9 @@ angular.module("Watch")
         });
 
         $scope.onBgClick = function (scope, e) {
-            console.error("BG CLCK");
             if ($scope.main) {
                 $scope.dismiss_();
             }
-            //e.stopPropagation();
         };
 
         $scope.repeatVibration = function (status) {

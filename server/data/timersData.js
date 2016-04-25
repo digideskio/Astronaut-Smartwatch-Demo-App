@@ -1,2 +1,3 @@
-exports.timers = [
-];
+exports.timers = {
+
+};

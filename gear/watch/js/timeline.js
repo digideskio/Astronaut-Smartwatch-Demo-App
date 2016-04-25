@@ -18,14 +18,12 @@ angular.module('Watch')
 
         $scope.activate = function () {
             if ($scope.pendingScroll && $scope.firstEventIndex != -1) {
-                //$('html, body').animate({
-                //    scrollTop: jQuery('#event-' + $scope.firstEventIndex).offset().top
-                //}, 250);
-                jQuery('body').scrollTo('#event-' + $scope.firstEventIndex, 200);
-                //$location.hash('event-' + $scope.firstEventIndex);
-                //$anchorScroll();
-                //$scope.pendingScroll = null;
-                //$scope.firstEventIndex = null;
+                setTimeout(function () {
+                    var top = $('#event-' + $scope.firstEventIndex).offset().top;
+                    $('#tm-sc').animate({
+                        scrollTop: top
+                    }, 200);
+                }, 500);
             }
         };
 
@@ -102,35 +100,31 @@ angular.module('Watch')
         $scope.currentData = AppState;
 
         $scope.startEvent = function () {
-            AppState.event.isActive = true;
-            AppState.event.isCompleted = false;
+            AppState.event.status = 'active';
 
             Api.events().update({eventId: AppState.event.id}, {
-                isActive: true,
-                isCompleted: false
+                status: 'active'
             }, function (ev) {
                 AppState.event = ev;
             });
         };
 
         $scope.stopEvent = function () {
-            AppState.event.isActive = false;
-            AppState.event.isCompleted = true;
+            AppState.event.status = 'completed';
 
             Api.events().update({eventId: AppState.event.id}, {
-                isActive: false,
-                isCompleted: true
-            })
+                status: 'completed'
+            });
         };
 
         $scope.updateEventTime = function () {
             if (AppState.event) {
                 var start = moment(AppState.event.date + " " + AppState.event.startTime, "MM/DD/YYYY HH:mm");
-                var end = moment(AppState.event.date + " " + AppState.event.endTime, "DD/MM/YYYY HH:mm");
-                if (AppState.event.isActive || start.isAfter(moment())) {
+                var end = moment(AppState.event.date + " " + AppState.event.endTime, "MM/DD/YYYY HH:mm");
+                if (AppState.event.status == 'active' || start.isAfter(moment())) {
                     $scope.formatAndSaveEventDuration(moment().diff(start));
                 }
-                if (AppState.event.isCompleted) {
+                if (AppState.event.status == 'completed') {
                     $scope.formatAndSaveEventDuration(end.diff(start));
                 }
             }
@@ -148,13 +142,45 @@ angular.module('Watch')
             $scope.updateEventTime();
         });
 
+        $rootScope.$on('push', function (message) {
+            if (message.type == 'event' && message.data.id == AppState.event.id) {
+                AppState.event = message.data;
+            }
+        });
+
         $scope.trackTime = function () {
             if (!AppState.event.hasTimer) {
                 Api.eventTimers().save({eventId: AppState.event.id}, {}, function (timer) {
                     AppState.event.hasTimer = true;
                     Timers.add(timer);
+                }, function () {
+                    alert("Reached max number of events!");
                 });
             }
+        };
+
+
+        $scope.shouldShowAddTimer = function () {
+            if (AppState.event.status == 'completed' || AppState.event.hasTimer) {
+                return false;
+            }
+
+            var start = moment(AppState.event.date + " " + AppState.event.startTime, "MM/DD/YYYY HH:mm");
+            if (AppState.event.status == 'scheduled' && start.isAfter(moment())) {
+                return true;
+            }
+
+            if (AppState.event.status == 'active' && !AppState.event.hasTimer) {
+                return true;
+            }
+        };
+
+        $scope.shouldShowStartEvent = function () {
+            return AppState.event.status == 'scheduled';
+        };
+
+        $scope.shouldShowStopEvent = function () {
+            return AppState.event.status == 'active';
         };
 
         $scope.updateEventTime();

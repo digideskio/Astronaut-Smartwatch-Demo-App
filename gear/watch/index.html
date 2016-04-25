@@ -41,7 +41,7 @@
 <div class="ui-page ui-page-active" id="config" ng-controller="SetupServerCtrl">
     <div class="dashboard-cont">
         <h2>Provide server url:port</h2>
-        <input type="url" ng-model="server" style="height: 50px">
+        <input ng-model="server.url" style="height: 50px">
         <button ng-click="save()" style="margin-top: 20px;">Save</button>
     </div>
 </div>
@@ -478,15 +478,10 @@
 
                 <h2 class="detail-small">{{currentData.event.notes}}</h2>
             </div>
-            <div class="detail-timer" ng-show="!currentData.event.isCompleted">
-                <img src="img/start.png" style="width: 60px; height: 60px" ng-click="startEvent()"
-                     ng-show="!currentData.event.isActive">
-                <div class="flex-spacer"></div>
-                <img src="img/clear.png" class="detail-timer-delete" ng-click="stopEvent()"
-                     ng-show="currentData.event.isActive">
-            </div>
-            <div class="detail-timer-bottom" ng-show="!currentData.event.isCompleted && !currentData.event.hasTimer">
-                <img src="img/btn_watch.png" ng-click="trackTime()">
+            <div style="text-align: center; margin: 20px auto;">
+                <button ng-click="startEvent()" style="font-size: 22px;" ng-disabled="!shouldShowStartEvent()">Start Event</button>
+                <button style="margin-top: 20px; margin-bottom: 20px; font-size: 22px;" ng-click="stopEvent()" ng-disabled="!shouldShowStopEvent()">Stop Event</button>
+                <button style="font-size: 22px;" ng-click="trackTime()" ng-disabled="!shouldShowAddTimer()">Add to Timers</button>
             </div>
         </div>
     </div>

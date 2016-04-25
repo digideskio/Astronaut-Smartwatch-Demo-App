@@ -5,15 +5,7 @@ angular.module('Watch')
             server: null,
             events: {
                 current: null,
-                next: null,
-
-                getCurrent: function () {
-                    return this.current;
-                },
-
-                getNext: function () {
-                    return this.next;
-                }
+                next: null
             },
             currentScreen: '',
             activeRole: 'ISS CDR',
@@ -78,10 +70,12 @@ angular.module('Watch')
         return currentState;
     })
     .controller('SetupServerCtrl', function ($rootScope, $scope, AppState) {
-        $scope.server = "10.0.0.75:3000";
+        $scope.server = {
+            url: "10.0.0.75:3000"
+        };
 
         $scope.save = function () {
-            AppState.setServer($scope.server);
+            AppState.setServer($scope.server.url);
             tau.changePage('dashboard');
         }
     });

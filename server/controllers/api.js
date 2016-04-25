@@ -44,16 +44,17 @@ setInterval(function () {
     });
 }, 1000);
 
-function addTimer(isCountdown, eventId, total) {
+function addTimer(role, isCountdown, eventId, total) {
     var newTimer = {};
-    if (timersModel.timers.length > 0) {
-        newTimer.id = timersModel.timers[timersModel.timers.length - 1].id + 1;
+    if (timersModel.timers[role] && timersModel.timers[role].length > 0) {
+        newTimer.id = timersModel.timers[role][timersModel.timers[role].length - 1].id + 1;
     } else {
         newTimer.id = 0;
     }
     newTimer.isCountdown = isCountdown;
     newTimer.isCustom = (eventId === null);
     newTimer.isActive = true;
+    newTimer.eventId = eventId;
     newTimer.start = moment();
     newTimer.total = total;
     newTimer.elapsed = newTimer.isCountdown ? newTimer.total : 0;
@@ -63,13 +64,16 @@ function addTimer(isCountdown, eventId, total) {
         });
         newTimer.name = event.name;
     } else {
-        var ind = _.filter(timersModel.timers, function(timer) {
-            return timer.isCustom;
-        }).length +1;
+        var ind = _.filter(timersModel.timers[role], function (timer) {
+                return timer.isCustom;
+            }).length + 1;
         newTimer.name = "Custom Timer " + ind;
     }
 
-    timersModel.timers.push(newTimer);
+    if (!timersModel.timers[role]) {
+        timersModel.timers[role] = [];
+    }
+    timersModel.timers[role].push(newTimer);
     return newTimer;
 }
 
@@ -141,51 +145,59 @@ router.put('/events/:eventId', function (req, res) {
         return e.id == req.params.eventId;
     });
 
-    event.isActive = req.body.isActive;
-    event.isCompleted = req.body.isCompleted;
+    event.status = req.body.status;
 
-    if (event.isActive) {
+    if (event.status == 'active') {
+        event.date = moment().format("MM/DD/YYYY");
         event.startTime = moment().format("HH:mm");
-    } else if (event.isCompleted) {
+    } else if (event.status == 'completed') {
         event.endTime = moment().format("HH:mm");
     }
 
-    var timer = _.filter(timersModel.timers, function (t) {
-        return t.eventId == req.params.eventId
-    });
-
-    if (timer !== undefined) {
-        timer.isActive = req.body.isActive && !req.body.isCompleted;
+    for (var i = 0; i < event.roles.length; i++) {
+        if (timersModel.timers[event.roles[i]]) {
+            timersModel.timers[event.roles[i]] = _.reject(timersModel.timers[event.roles[i]], function (t) {
+                return t.eventId == req.params.eventId;
+            });
+        }
     }
 
     ws.broadcast(JSON.stringify({
         event: 'event',
-        data: event
+        data: event,
+        show: false
     }));
 
     ws.broadcast(JSON.stringify({
         event: 'timers',
-        data: timer
+        data: null
     }));
 
     res.json(event);
 });
 
 router.post('/events/:eventId/timer', function (req, res) {
-    if (timersModel.timers.length >= MAX_TIMER_COUNT) {
-        res.sendStatus(403);
-        return;
-    }
     var event = _.find(eventsModel.events, function (e) {
         return e.id == req.params.eventId;
     });
+
+    if (timersModel.timers[event.role] && timersModel.timers[event.role].length >= MAX_TIMER_COUNT) {
+        res.sendStatus(403);
+        return;
+    }
+
     event.hasTimer = true;
 
     var now = moment();
     var start = moment(event.date + " " + event.startTime, "MM/DD/YYYY HH:mm");
     var end = moment(event.date + " " + event.endTime, "MM/DD/YYYY HH:mm");
-    var total = event.isActive ? moment.range(now, end) : moment.range(now, start);
-    var timer = addTimer(!event.isActive, event.id, total.valueOf() / 1000);
+    var total = event.status == 'active' ? moment.range(now, end) : moment.range(now, start);
+    var countdown = event.status != 'active';
+
+    var timer;
+    for (var i = 0; i < event.roles.length; i++) {
+        timer = addTimer(event.roles[i], countdown, event.id, total.valueOf() / 1000);
+    }
 
     ws.broadcast(JSON.stringify({
         event: 'timers',
@@ -207,17 +219,19 @@ router.get('/comms', function (req, res) {
     res.json(commsModel);
 });
 
-router.get('/timers', function (req, res) {
-    res.json(timersModel.timers);
+router.get('/timers/:role/', function (req, res) {
+    var role = req.params.role;
+    res.json(timersModel.timers[role]);
 });
 
-router.post('/timers', function (req, res) {
-    if (timersModel.timers.length >= MAX_TIMER_COUNT) {
+router.post('/timers/:role/', function (req, res) {
+    var role = req.params.role;
+    if (timersModel.timers[role] && timersModel.timers[role].length >= MAX_TIMER_COUNT) {
         res.sendStatus(403);
         return;
     }
 
-    var newTimer = addTimer(req.body.isCountdown, null, req.body.totalTime);
+    var newTimer = addTimer(role, req.body.isCountdown, null, req.body.totalTime);
     ws.broadcast(JSON.stringify({
         event: 'timers',
         data: newTimer
@@ -226,12 +240,13 @@ router.post('/timers', function (req, res) {
     res.json(newTimer);
 });
 
-router.delete('/timers/:timerId', function (req, res) {
+router.delete('/timers/:role/:timerId', function (req, res) {
     var timerId = Number(req.params.timerId);
-    var timerIndex = _.findIndex(timersModel.timers, function (t) {
+    var role = req.params.role;
+    var timerIndex = _.findIndex(timersModel.timers[role], function (t) {
         return t.id == timerId
     });
-    timersModel.timers.splice(timerIndex, 1);
+    timersModel.timers[role].splice(timerIndex, 1);
     ws.broadcast(JSON.stringify({
         event: 'timers',
         data: timersModel.timers
@@ -239,8 +254,9 @@ router.delete('/timers/:timerId', function (req, res) {
     res.sendStatus(200);
 });
 
-router.put('/timers/:timerId', function (req, res) {
-    var timer = _.find(timersModel.timers, function (t) {
+router.put('/timers/:role/:timerId', function (req, res) {
+    var role = req.params.role;
+    var timer = _.find(timersModel.timers[role], function (t) {
         return t.id == req.params.timerId;
     });
 
