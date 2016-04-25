@@ -7,7 +7,6 @@ var alertsModel = require('../data/alertData');
 var commsModel = require('../data/commsData');
 var timersModel = require('../data/timersData.js');
 var moment = require('moment-timezone');
-require('moment-range');
 var _ = require('underscore');
 var ws = require('../websocket');
 
@@ -33,14 +32,16 @@ function updateCountdown(timer) {
 }
 
 setInterval(function () {
-    _.each(timersModel.timers, function (t) {
-        if (t.isActive) {
-            if (t.isCountdown) {
-                updateCountdown(t);
-            } else {
-                updateTimer(t);
+    _.each(timersModel.timers, function (role) {
+        _.each(role, function(t) {
+            if (t.isActive) {
+                if (t.isCountdown) {
+                    updateCountdown(t);
+                } else {
+                    updateTimer(t);
+                }
             }
-        }
+        })
     });
 }, 1000);
 
