@@ -13,6 +13,9 @@ angular.module("Watch")
         $rootScope.$on('push', function (event, message) {
             switch (message.type) {
                 case 'alert':
+                    if (!message.data.notify) {
+                        return;
+                    }
                     $scope.activeNotifications.push({
                         type: alert,
                         title: message.data.title,

@@ -49,13 +49,13 @@ angular.module("Watch")
         };
 
         $scope.refreshData = function () {
-            Api.comms.get(function (commsData) {
+            Api.comms().get(function (commsData) {
                 if ($scope.bandsSnap) {
                     $scope.updateCommsDisplay(commsData.comms);
                 }
             });
 
-            Api.alerts.query(function (data) {
+            Api.alerts().query(function (data) {
                 $scope.alerts = data;
             });
         };

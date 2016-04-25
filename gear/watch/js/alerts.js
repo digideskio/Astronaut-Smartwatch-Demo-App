@@ -12,7 +12,7 @@ angular.module('Watch')
             'Advisory': 3
         };
 
-        Api.alerts.query(function (data) {
+        Api.alerts().query(function (data) {
             $scope.busy = false;
             $scope.alerts = data;
         });
@@ -41,11 +41,11 @@ angular.module('Watch')
         };
 
         $rootScope.$on('push', function (event, message) {
-            $scope.alerts = Api.alerts.query();
+            $scope.alerts = Api.alerts().query();
         });
 
         $rootScope.$on('refresh', function () {
-            $scope.alerts = Api.alerts.query();
+            $scope.alerts = Api.alerts().query();
         });
 
         $scope.getAlertColorClass = function (alert) {

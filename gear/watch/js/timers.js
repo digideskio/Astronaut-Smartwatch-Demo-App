@@ -109,20 +109,20 @@ angular.module('Watch')
     .controller('TimersCtrl', function ($scope, $rootScope, AppState, Timers, timerConfig, TimerCommon, Api) {
         $scope.selectedTimerIndex = 0;
 
-        Api.timers.query(function (timers) {
+        Api.timers().query(function (timers) {
             Timers.replace(timers);
         });
 
         $rootScope.$on('push', function (event, message) {
             if (message.type == 'timers') {
-                Api.timers.query(function (timers) {
+                Api.timers().query(function (timers) {
                     Timers.replace(timers);
                 });
             }
         });
 
         $rootScope.$on('refresh', function () {
-            Api.timers.query(function (timers) {
+            Api.timers().query(function (timers) {
                 Timers.replace(timers);
             });
         });
@@ -136,7 +136,7 @@ angular.module('Watch')
                 totalTime: 36000,
                 isCountdown: false
             };
-            Api.timers.save(timer, function (newTimer) {
+            Api.timers().save(timer, function (newTimer) {
                 Timers.add(newTimer);
             }, function () {
                 alert('Could not save timer!');
@@ -240,7 +240,7 @@ angular.module('Watch')
             if (!timer.eventId) {
                 Timers.setActive(index, false);
                 Timers.remove(index);
-                Api.timers.delete({timerId: timer.id});
+                Api.timers().delete({timerId: timer.id});
 
                 if (Timers.count() == 0) {
                     $scope.selectedTimer = null;
@@ -258,7 +258,7 @@ angular.module('Watch')
             var active = !Timers.isActive(index);
             Timers.setActive(index, active);
             var timer = Timers.get(index);
-            Api.timers.update({timerId: timer.id}, {isActive: active});
+            Api.timers().update({timerId: timer.id}, {isActive: active});
         };
 
         $scope.$watch(
@@ -285,7 +285,7 @@ angular.module('Watch')
                 totalTime: totalTime,
                 isCountdown: AppState.isNewCountdown()
             };
-            Api.timers.save(timer, function (newTimer) {
+            Api.timers().save(timer, function (newTimer) {
                 Timers.add(newTimer);
             }, function() {
                 alert('Could not save timer!');

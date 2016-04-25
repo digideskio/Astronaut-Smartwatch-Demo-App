@@ -27,37 +27,52 @@ angular.module('Watch')
         var apiCache = $cacheFactory('api');
 
         var api = {
-            events: $resource(apiEndpoint + '/events/:role/:page/:eventId', {
-                    role: '@_role',
-                    page: '@_page',
-                    eventId: '@_eventId'
+            events: function () {
+                return $resource(apiEndpoint + '/events/:role/:page/:eventId', {
+                        role: '@_role',
+                        page: '@_page',
+                        eventId: '@_eventId'
+                    }, {
+                        'update': {method: 'PUT'}
+                    }, {cache: apiCache}
+                )
+            },
+            alerts: function () {
+                return $resource(apiEndpoint + '/alerts/:alert', {
+                    alert: '@_alert'
+                }, {cache: apiCache})
+            },
+            roles: function () {
+                $resource(apiEndpoint + '/roles/:role', {
+                    role: '@_role'
+                }, {cache: apiCache})
+            },
+            comms: function () {
+                return $resource(apiEndpoint + '/comms/:commId', {
+                        commId: '@_commId'
+                    },
+                    {cache: apiCache})
+            },
+            timers: function () {
+                return $resource(apiEndpoint + '/timers/:timerId', {
+                    timerId: '@_timerId'
                 }, {
                     'update': {method: 'PUT'}
-                }, {cache: apiCache}
-            ),
-            alerts: $resource(apiEndpoint + '/alerts/:alert', {
-                alert: '@_alert'
-            }, {cache: apiCache}),
-            roles: $resource(apiEndpoint + '/roles/:role', {
-                role: '@_role'
-            }, {cache: apiCache}),
-            comms: $resource(apiEndpoint + '/comms/:commId', {
-                commId: '@_commId'
-            }, {cache: apiCache}),
-            timers: $resource(apiEndpoint + '/timers/:timerId', {
-                timerId: '@_timerId'
-            }, {
-                'update': {method: 'PUT'}
-            }),
-            eventTimers: $resource(apiEndpoint + '/events/:eventId/timer', {
-                eventId: '@_eventId'
-            }),
-            time: $resource(apiEndpoint + '/time', null, {
-                query: {
-                    method: 'GET',
-                    isArray: false
-                }
-            })
+                })
+            },
+            eventTimers: function () {
+                return $resource(apiEndpoint + '/events/:eventId/timer', {
+                    eventId: '@_eventId'
+                })
+            },
+            time: function () {
+                return $resource(apiEndpoint + '/time', null, {
+                    query: {
+                        method: 'GET',
+                        isArray: false
+                    }
+                })
+            }
         };
 
         $rootScope.$watch(
@@ -78,7 +93,7 @@ angular.module('Watch')
 
 
         var updateTime = function () {
-            api.time.query(function(data) {
+            api.time().query(function (data) {
                 var timestamp = parseInt(data.time);
                 var time = moment.unix(timestamp);
                 AppState.setTime(time);

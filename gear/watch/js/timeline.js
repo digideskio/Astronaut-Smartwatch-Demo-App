@@ -7,7 +7,7 @@ angular.module('Watch')
 
         $scope.refresh = function () {
             $scope.currentPage = 0;
-            Api.events.get({role: $scope.activeRole, page: $scope.currentPage}, function (data) {
+            Api.events().get({role: $scope.activeRole, page: $scope.currentPage}, function (data) {
                 $scope.activeRole = data.role;
                 $scope.busy = false;
                 $scope.events = data.events;
@@ -46,7 +46,7 @@ angular.module('Watch')
 
         $scope.fetchNew = function () {
             $scope.currentPage++;
-            Api.events.get({role: $scope.activeRole, page: $scope.currentPage}, function (data) {
+            Api.events().get({role: $scope.activeRole, page: $scope.currentPage}, function (data) {
                 $scope.busy = false;
                 $scope.activeRole = data.role;
                 $scope.events = $scope.events.concat(data.events);
@@ -79,18 +79,18 @@ angular.module('Watch')
     })
     .controller('RolesCtrl', function ($rootScope, $scope, $interval, AppState, Api) {
         $scope.activeRole = AppState.activeRole;
-        $scope.roles = Api.roles.query();
+        $scope.roles = Api.roles().query();
 
         $scope.goBack = function () {
             tau.back();
         };
 
         $rootScope.$on('push', function () {
-            $scope.roles = Api.roles.query();
+            $scope.roles = Api.roles().query();
         });
 
         $rootScope.$on('refresh', function () {
-            $scope.roles = Api.roles.query();
+            $scope.roles = Api.roles().query();
         });
 
         $scope.selectRole = function (name) {
@@ -105,7 +105,7 @@ angular.module('Watch')
             AppState.event.isActive = true;
             AppState.event.isCompleted = false;
 
-            Api.events.update({eventId: AppState.event.id}, {
+            Api.events().update({eventId: AppState.event.id}, {
                 isActive: true,
                 isCompleted: false
             }, function (ev) {
@@ -117,7 +117,7 @@ angular.module('Watch')
             AppState.event.isActive = false;
             AppState.event.isCompleted = true;
 
-            Api.events.update({eventId: AppState.event.id}, {
+            Api.events().update({eventId: AppState.event.id}, {
                 isActive: false,
                 isCompleted: true
             })
@@ -150,7 +150,7 @@ angular.module('Watch')
 
         $scope.trackTime = function () {
             if (!AppState.event.hasTimer) {
-                Api.eventTimers.save({eventId: AppState.event.id}, {}, function (timer) {
+                Api.eventTimers().save({eventId: AppState.event.id}, {}, function (timer) {
                     AppState.event.hasTimer = true;
                     Timers.add(timer);
                 });

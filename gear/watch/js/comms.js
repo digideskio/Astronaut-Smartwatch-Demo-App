@@ -42,7 +42,7 @@ angular.module('Watch')
         };
 
         $scope.refreshComms = function () {
-            Api.comms.get(function (commsData) {
+            Api.comms().get(function (commsData) {
                 if($scope.commsSnap) {
                     $scope.updateMainComms(commsData.comms);
                     $scope.updateNetworks(commsData.comms);
