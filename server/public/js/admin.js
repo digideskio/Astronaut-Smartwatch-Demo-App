@@ -286,7 +286,7 @@ $(document).ready(function () {
         });
     });
 
-    $('#title, #name, #location, tr.role input, #add-alert-form input, #system').maxlength({
+    $('#title, #name, #location, tr.role input, #system').maxlength({
         threshold: 10,
         allowOverMax: true,
         placement: 'left'
