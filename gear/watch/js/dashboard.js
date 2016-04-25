@@ -125,4 +125,19 @@ angular.module("Watch")
         $rootScope.$on('refresh', function () {
             $scope.refreshData();
         });
+
+        $scope.getAlertCount = function (alertStatus) {
+            if ($scope.alerts) {
+                return _.filter($scope.alerts, function (alert) {
+                    var isAck = alert.ack && alert.ack.includes(AppState.activeRole);
+                    if (alertStatus) {
+                        return alert.status == alertStatus;
+                    } else {
+                        return !isAck;
+                    }
+                }).length;
+            } else {
+                return 0;
+            }
+        }
     });

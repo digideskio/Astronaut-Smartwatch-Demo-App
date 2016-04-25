@@ -278,4 +278,21 @@ router.get('/time', function (req, res) {
     });
 });
 
+router.put('/alerts/:alertId/ack/:role', function (req, res) {
+    var alertId = req.params.alertId;
+    var role = req.params.role;
+    var alert = _.find(alertsModel.alerts, function (a) {
+        return a.id == alertId;
+    });
+    if (alert) {
+        if (!alert.ack) {
+            alert.ack = [];
+        }
+
+        alert.ack.push(role);
+    }
+
+    res.json(alertsModel.alerts);
+});
+
 module.exports = router;

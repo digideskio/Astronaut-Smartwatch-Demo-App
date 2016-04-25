@@ -5,7 +5,8 @@ exports.alerts = [
         date: "02/11/2015",
         time: "11:30:13",
         system: "CDH",
-        status: 'Emergency'
+        status: 'Emergency',
+        ack: []
     },
 
     {
@@ -14,7 +15,8 @@ exports.alerts = [
         date: "02/11/2015",
         time: "10:20:14",
         system: "CDH",
-        status: 'Caution'
+        status: 'Caution',
+        ack: []
     },
 
     {
@@ -23,6 +25,7 @@ exports.alerts = [
         date: "02/11/2015",
         time: "06:30:43",
         system: "CDH",
-        status: 'Warning'
+        status: 'Warning',
+        ack: []
     }
 ];

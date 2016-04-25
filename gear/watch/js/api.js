@@ -45,6 +45,15 @@ angular.module('Watch')
                     alert: '@_alert'
                 }, {cache: apiCache})
             },
+            alertAck: function () {
+                return $resource(getEndpoint() + '/alerts/:alertId/ack/:roleId', {
+                        alertId: '@_alertId',
+                        roleId: '@_roleId'
+                    }, {
+                        'update': {method: 'PUT'}
+                    }, {cache: apiCache}
+                )
+            },
             roles: function () {
                 return $resource(getEndpoint() + '/roles/:role', {
                     role: '@_role'
@@ -84,7 +93,7 @@ angular.module('Watch')
                 return AppState.getServer();
             },
             function (newVal) {
-                if(newVal) {
+                if (newVal) {
                     serverUrl = newVal;
                     $rootScope.$emit('push', {
                         type: 'server',
@@ -114,7 +123,7 @@ angular.module('Watch')
         return api;
     })
     .run(function ($rootScope, $cacheFactory, $websocket, DefaultServerAddress, WebsocketPort, AppState) {
-        var createWebSocket = function(serverAddress) {
+        var createWebSocket = function (serverAddress) {
             var ws = $websocket.$new('ws://' + serverAddress + ':' + WebsocketPort);
             ws.$on('$open', function () {
                 console.info("Websocket connection open");
@@ -186,8 +195,8 @@ angular.module('Watch')
                 return AppState.getServer();
             },
             function (newVal) {
-                if(newVal) {
-                    if(socket && socket.$ready()) {
+                if (newVal) {
+                    if (socket && socket.$ready()) {
                         socket.$close();
                         var url = newVal.splice(0, newVal.lastIndexOf(':'));
                         socket = createWebSocket(url);

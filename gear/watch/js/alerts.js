@@ -19,8 +19,16 @@ angular.module('Watch')
 
         $scope.showAlert = function (alert) {
             AppState.alert = alert;
+            if (!alert.ack) {
+                alert.ack = [];
+            }
+            alert.ack.push(AppState.activeRole);
             AppState.currentScreen = 'alert-details';
             tau.changePage('alert-details');
+
+            Api.alertAck().update({alertId: AppState.alert.id, roleId: AppState.activeRole}, {}, function (result) {
+                $scope.alerts = result;
+            });
         };
 
         $scope.sort = function (predicate) {
@@ -58,8 +66,24 @@ angular.module('Watch')
             } else if (alert.status == 'Emergency') {
                 return 'alert-emergency';
             }
-        }
+        };
+
+        $scope.getAlertCount = function (alertStatus) {
+            if ($scope.alerts) {
+                return _.filter($scope.alerts, function (alert) {
+                    var isAck = alert.ack && alert.ack.includes(AppState.activeRole);
+                    if (alertStatus) {
+                        return alert.status == alertStatus;
+                    } else {
+                        return !isAck;
+                    }
+                }).length;
+            } else {
+                return 0;
+            }
+        };
     })
-    .controller('AlertDetailCtrl', function ($scope, AppState) {
+    .controller('AlertDetailCtrl', function ($scope, AppState, Api) {
         $scope.currentData = AppState;
+
     });

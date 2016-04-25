@@ -24,6 +24,7 @@
     <script type="text/javascript" src="common/js/lib/ui-bootstrap-custom-tpls-1.1.2.js"></script>
     <script type="text/javascript" src="common/js/lib/ng-websocket.js"></script>
     <script type="text/javascript" src="common/js/lib/uuid.js"></script>
+    <script type="text/javascript" src="common/js/lib/underscore/underscore-min.js"></script>
     <script type="text/javascript" src="js/controllers.js"></script>
     <script type="text/javascript" src="js/api.js"></script>
     <script type="text/javascript" src="js/comms.js"></script>
@@ -118,14 +119,14 @@
             <object data="img/bands.svg" id="bands" type="image/svg+xml" sb-load="onBandsSvgReady()"></object>
             <table style="margin-left: 40px" class="alerts">
                 <tr>
-                    <td align="center"><h5 style="color:white;">{{alerts.length}}</h5></td>
-                    <td align="center"><h5 style="color:red;">{{(alerts | filter:{status:'Emergency'}).length}}</h5>
+                    <td align="center"><h5 style="color:white;">{{getAlertCount()}}</h5></td>
+                    <td align="center"><h5 style="color:red;">{{getAlertCount('Emergency')}}</h5>
                     </td>
                 </tr>
                 <tr>
-                    <td align="center"><h5 style="color:orange;">{{(alerts | filter:{status:'Warning'}).length}}</h5>
+                    <td align="center"><h5 style="color:orange;">{{getAlertCount('Warning')}}</h5>
                     </td>
-                    <td align="center"><h5 style="color:yellow;">{{(alerts | filter:{status:'Caution'}).length}}</h5>
+                    <td align="center"><h5 style="color:yellow;">{{getAlertCount('Caution')}}</h5>
                     </td>
                 </tr>
             </table>
@@ -370,13 +371,7 @@
                         <img src="img/clear.png" class="detail-timer-delete" ng-click="removeTimer($index)">
                     </div>
                 </div>
-                <!--<div class="timers-buttons">-->
-                    <!--<object type="image/svg+xml" id="timer-buttons" data="img/timers-buttons.svg"-->
-                            <!--sb-load="onInitButtonsSvg()"></object>-->
-                <!--</div>-->
-
                 <div style="text-align: center; margin: 20px auto;">
-                <!--<div class="flex-cont">-->
                     <button style="font-size: 22px;" ng-click="setTimer()">Set Timer</button>
                     <button style="font-size: 22px;" ng-click="setCountDown()">Set Countdown</button>
                 </div>
@@ -388,8 +383,8 @@
             </section>
             <section class="ui-section" ng-controller="AlertsCtrl">
                 <div class="alerts-counters"><span class="alerts-count" ng-click="sort('time')"
-                                                   ng-class="{selected: sortDate}">{{alerts.length}} new&nbsp;|&nbsp;</span><span
-                        class="critical-alerts-count" ng-click="sort('type')" ng-class="{selected: sortType}">{{(alerts | filter: {status:'Critical'}).length}} critical</span>
+                                                   ng-class="{selected: sortDate}">{{getAlertCount()}} new&nbsp;|&nbsp;</span><span
+                        class="critical-alerts-count" ng-click="sort('type')" ng-class="{selected: sortType}">{{getAlertCount('Emergency')}} critical</span>
                 </div>
                 <div>
                     <div class="alerts-list">
