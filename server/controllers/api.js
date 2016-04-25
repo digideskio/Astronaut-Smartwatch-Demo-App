@@ -6,7 +6,7 @@ var rolesModel = require('../data/roleData');
 var alertsModel = require('../data/alertData');
 var commsModel = require('../data/commsData');
 var timersModel = require('../data/timersData.js');
-var moment = require('moment');
+var moment = require('moment-timezone');
 require('moment-range');
 var _ = require('underscore');
 var ws = require('../websocket');
@@ -274,7 +274,7 @@ router.put('/timers/:role/:timerId', function (req, res) {
 
 router.get('/time', function (req, res) {
     res.json({
-        time: moment().unix()
+        time: moment().tz('ETC/GMT').unix()
     });
 });
 
