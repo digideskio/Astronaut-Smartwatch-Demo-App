@@ -330,15 +330,19 @@ span {
 }
 .alert-emergency {
   background-color: #f00;
+  border: solid #f00 !important;
 }
 .alert-warning {
   background-color: #ffa500;
+  border: solid #ffa500 !important;
 }
 .alert-caution {
   background-color: #ff0;
+  border: solid #ff0 !important;
 }
 .alert-advisory {
   background-color: #fff;
+  border: solid #fff !important;
 }
 .alerts-count {
   font-size: 24px;
@@ -449,7 +453,7 @@ span {
 .alert-info-box {
   width: 100%;
   margin-top: 40px;
-  padding-left: 80px;
+  padding-left: 30px;
 }
 .alert-row {
   margin-bottom: 10px;

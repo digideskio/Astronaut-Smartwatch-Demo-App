@@ -492,7 +492,7 @@
         <div ng-controller="AlertDetailCtrl">
             <div class="detail-header-parent">
                 <div class="detail-color"
-                     ng-class="{'alert-detail-critical' : currentData.alert.status == 'Critical'}"></div>
+                     ng-class="getAlertColorClass()"></div>
                 <div class="detail-main-info">
                     <h1 class="detail-name">{{currentData.alert.title}}</h1>
 
