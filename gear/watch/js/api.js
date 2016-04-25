@@ -17,18 +17,21 @@ angular.module('Watch')
             });
         }
     ])
-    .constant('ServerAddress', '10.0.0.75')
+    .constant('DefaultServerAddress', '10.0.0.75')
     .constant('RefreshInterval', '60000')  // once a minute
-    .constant('RestPort', 3000)
+    .constant('DefaultRestPort', 3000)
     .constant('WebsocketPort', 3001)
-    .factory("Api", function ($rootScope, $resource, $interval, $cacheFactory, $http, ServerAddress, RestPort, AppState, RefreshInterval) {
-        var serverUrl = ServerAddress + ":" + RestPort;
-        var apiEndpoint = 'http://' + serverUrl + '/api';
+    .factory("Api", function ($rootScope, $resource, $interval, $cacheFactory, $http, DefaultServerAddress, DefaultRestPort, AppState, RefreshInterval) {
         var apiCache = $cacheFactory('api');
+        var serverUrl = DefaultServerAddress + ":" + DefaultRestPort;
+
+        var getEndpoint = function () {
+            return 'http://' + serverUrl + '/api';
+        };
 
         var api = {
             events: function () {
-                return $resource(apiEndpoint + '/events/:role/:page/:eventId', {
+                return $resource(getEndpoint() + '/events/:role/:page/:eventId', {
                         role: '@_role',
                         page: '@_page',
                         eventId: '@_eventId'
@@ -38,35 +41,36 @@ angular.module('Watch')
                 )
             },
             alerts: function () {
-                return $resource(apiEndpoint + '/alerts/:alert', {
+                return $resource(getEndpoint() + '/alerts/:alert', {
                     alert: '@_alert'
                 }, {cache: apiCache})
             },
             roles: function () {
-                $resource(apiEndpoint + '/roles/:role', {
+                return $resource(getEndpoint() + '/roles/:role', {
                     role: '@_role'
                 }, {cache: apiCache})
             },
             comms: function () {
-                return $resource(apiEndpoint + '/comms/:commId', {
+                return $resource(getEndpoint() + '/comms/:commId', {
                         commId: '@_commId'
                     },
                     {cache: apiCache})
             },
             timers: function () {
-                return $resource(apiEndpoint + '/timers/:timerId', {
+                return $resource(getEndpoint() + '/timers/:roleId/:timerId', {
+                    roleId: '@_roleId',
                     timerId: '@_timerId'
                 }, {
                     'update': {method: 'PUT'}
                 })
             },
             eventTimers: function () {
-                return $resource(apiEndpoint + '/events/:eventId/timer', {
+                return $resource(getEndpoint() + '/events/:eventId/timer', {
                     eventId: '@_eventId'
                 })
             },
             time: function () {
-                return $resource(apiEndpoint + '/time', null, {
+                return $resource(getEndpoint() + '/time', null, {
                     query: {
                         method: 'GET',
                         isArray: false
@@ -80,7 +84,13 @@ angular.module('Watch')
                 return AppState.getServer();
             },
             function (newVal) {
-                serverUrl = newVal;
+                if(newVal) {
+                    serverUrl = newVal;
+                    $rootScope.$emit('push', {
+                        type: 'server',
+                        data: null
+                    });
+                }
             },
             true);
 
@@ -103,67 +113,86 @@ angular.module('Watch')
         updateTime();
         return api;
     })
-    .run(function ($rootScope, $cacheFactory, $websocket, ServerAddress, WebsocketPort) {
-        var ws = $websocket.$new('ws://' + ServerAddress + ':' + WebsocketPort);
-        ws.$on('$open', function () {
-            console.info("Websocket connection open");
-        });
-
-        ws.$on('$close', function () {
-            console.info("Websocket connection closed");
-        });
-
-        ws.$on('alert', function (data) {
-            $cacheFactory.removeAll();
-            $rootScope.$emit('push', {
-                type: 'alert',
-                data: data
+    .run(function ($rootScope, $cacheFactory, $websocket, DefaultServerAddress, WebsocketPort, AppState) {
+        var createWebSocket = function(serverAddress) {
+            var ws = $websocket.$new('ws://' + serverAddress + ':' + WebsocketPort);
+            ws.$on('$open', function () {
+                console.info("Websocket connection open");
             });
-        });
 
-        ws.$on('comms', function (data) {
-            $cacheFactory.removeAll();
-            $rootScope.$emit('push', {
-                type: 'comms',
-                data: data
+            ws.$on('$close', function () {
+                console.info("Websocket connection closed");
             });
-        });
 
-        ws.$on('event', function (data) {
-            $cacheFactory.removeAll();
-            $rootScope.$emit('push', {
-                type: 'event',
-                data: data
+            ws.$on('alert', function (data) {
+                $cacheFactory.removeAll();
+                $rootScope.$emit('push', {
+                    type: 'alert',
+                    data: data
+                });
             });
-        });
 
-        ws.$on('timers', function (data) {
-            $cacheFactory.removeAll();
-            $rootScope.$emit('push', {
-                type: 'timers',
-                data: data
+            ws.$on('comms', function (data) {
+                $cacheFactory.removeAll();
+                $rootScope.$emit('push', {
+                    type: 'comms',
+                    data: data
+                });
             });
-        });
 
-        ws.$on('upload', function (data) {
-            $cacheFactory.removeAll();
-            $rootScope.$emit('push', {
-                type: 'upload',
-                data: data
+            ws.$on('event', function (data) {
+                $cacheFactory.removeAll();
+                $rootScope.$emit('push', {
+                    type: 'event',
+                    data: data
+                });
             });
-        });
 
-        ws.$on('roles', function (data) {
-            $rootScope.$emit('push', {
-                type: 'roles',
-                data: data
+            ws.$on('timers', function (data) {
+                $cacheFactory.removeAll();
+                $rootScope.$emit('push', {
+                    type: 'timers',
+                    data: data
+                });
             });
-        });
 
-        ws.$on('delete', function (data) {
-            $rootScope.$emit('push', {
-                type: 'delete',
-                data: data
+            ws.$on('upload', function (data) {
+                $cacheFactory.removeAll();
+                $rootScope.$emit('push', {
+                    type: 'upload',
+                    data: data
+                });
             });
-        });
+
+            ws.$on('roles', function (data) {
+                $rootScope.$emit('push', {
+                    type: 'roles',
+                    data: data
+                });
+            });
+
+            ws.$on('delete', function (data) {
+                $rootScope.$emit('push', {
+                    type: 'delete',
+                    data: data
+                });
+            });
+        };
+
+        var socket = createWebSocket(DefaultServerAddress);
+
+        $rootScope.$watch(
+            function () {
+                return AppState.getServer();
+            },
+            function (newVal) {
+                if(newVal) {
+                    if(socket && socket.$ready()) {
+                        socket.$close();
+                        var url = newVal.splice(0, newVal.lastIndexOf(':'));
+                        socket = createWebSocket(url);
+                    }
+                }
+            },
+            true);
     });
