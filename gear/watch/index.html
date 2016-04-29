@@ -53,9 +53,9 @@
 
             <div class="flex-spacer"></div>
             <object class="dashboard-icon" data="img/bluetooth.svg" id="bluetooth" type="image/svg+xml"
-                    sb-load="onBluetoothSvgReady()"></object>
+                    sb-load="onBluetoothSvgReady()" style="display: none"></object>
             <object class="dashboard-icon" data="img/wifi.svg" id="wifi" type="image/svg+xml"
-                    sb-load="onWifiSvgReady()"></object>
+                    sb-load="onWifiSvgReady()" style="display: none"></object>
             <object class="dashboard-icon" data="img/battery0.svg" type="image/svg+xml"
                     ng-show="battery.getLevel() < 10"></object>
             <object class="dashboard-icon" data="img/battery1.svg" type="image/svg+xml"
