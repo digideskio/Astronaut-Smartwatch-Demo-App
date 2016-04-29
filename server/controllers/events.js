@@ -96,6 +96,9 @@ router.post('/', function (req, res) {
     } else {
         newEvent.id = 0;
     }
+
+    newEvent.status = 'scheduled';
+
     eventsModel.events.push(newEvent);
     sortEvents();
     ws.broadcast(JSON.stringify({

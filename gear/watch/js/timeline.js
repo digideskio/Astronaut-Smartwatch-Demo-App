@@ -13,6 +13,8 @@ angular.module('Watch')
                 $scope.events = data.events;
                 $scope.pendingScroll = true;
                 $scope.firstEventIndex = data.firstEventIndex;
+            }, function(err) {
+                $scope.busy = false;
             });
         };
 

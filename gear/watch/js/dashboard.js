@@ -128,15 +128,22 @@ angular.module("Watch")
 
         $scope.getAlertCount = function (alertStatus) {
             if ($scope.alerts) {
-                return _.filter($scope.alerts, function (alert) {
-                    var isAck = alert.ack && alert.ack.includes(AppState.activeRole);
+                var total = 0;
+                for (var i = 0; i < $scope.alerts.length; i++) {
+                    var alert = $scope.alerts[i];
                     if (alertStatus) {
-                        return alert.status == alertStatus;
+                        if (alert.status === alertStatus) {
+                            total++;
+                        }
                     } else {
-                        return !isAck;
+                        if (!_.contains(alert.ack, AppState.activeRole)) {
+                            total++;
+                        }
                     }
-                }).length;
-            } else {
+                }
+                return total;
+            }
+            else {
                 return 0;
             }
         }

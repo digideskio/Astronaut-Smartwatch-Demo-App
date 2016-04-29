@@ -41,8 +41,8 @@
 
 <div class="ui-page ui-page-active" id="config" ng-controller="SetupServerCtrl">
     <div class="dashboard-cont">
-        <h2>Provide server url:port</h2>
-        <input ng-model="server.url" style="height: 50px">
+        <h2 style="color:#eee; font-size:34px;">Provide server url:port</h2>
+        <input ng-model="server.url" style="font-size: 36px; margin: auto; width: 100%;">
         <button ng-click="save()" style="margin-top: 20px;">Save</button>
     </div>
 </div>
@@ -56,6 +56,8 @@
                     sb-load="onBluetoothSvgReady()" style="display: none"></object>
             <object class="dashboard-icon" data="img/wifi.svg" id="wifi" type="image/svg+xml"
                     sb-load="onWifiSvgReady()" style="display: none"></object>
+            <object class="dashboard-icon" data="img/loading.svg" type="image/svg+xml" id="network-loading" ng-show="state.isNetworkUsed()"></object>
+            <object class="dashboard-icon" data="img/error.svg" type="image/svg+xml" id="no-network" ng-show="state.isNetworkError()"></object>
             <object class="dashboard-icon" data="img/battery0.svg" type="image/svg+xml"
                     ng-show="battery.getLevel() < 10"></object>
             <object class="dashboard-icon" data="img/battery1.svg" type="image/svg+xml"
@@ -145,6 +147,8 @@
         <div class="circle-white" id="nav-circle-4"></div>
         <div class="circle-white" id="nav-circle-5"></div>
         <div class="circle-white" id="nav-circle-6"></div>
+        <object class="dashboard-icon" style="margin-left: auto" data="img/loading.svg" type="image/svg+xml" ng-show="state.isNetworkUsed()"></object>
+        <object class="dashboard-icon" data="img/error.svg" type="image/svg+xml" ng-show="state.isNetworkError()"></object>
         <span class="clock">{{state.getTime().format("HH:mm")}}</span>
     </div>
     <div id="hsectionchanger" class="ui-content">
@@ -368,7 +372,8 @@
                         <h2 class="timer-title"><span>{{tm.name}}</span><br><span
                                 class="timer-sub">{{timeLeft($index)}}</span></h2>
                         <div class="flex-spacer"></div>
-                        <img src="img/clear.png" class="detail-timer-delete" ng-click="removeTimer($index)">
+                        <img src="img/clear.png" class="detail-timer-delete" ng-click="removeTimer($index)"
+                             ng-show="tm.isCustom">
                     </div>
                 </div>
                 <div style="text-align: center; margin: 20px auto;">
@@ -384,7 +389,7 @@
             <section class="ui-section" ng-controller="AlertsCtrl">
                 <div class="alerts-counters"><span class="alerts-count" ng-click="sort('time')"
                                                    ng-class="{selected: sortDate}">{{getAlertCount()}} new&nbsp;|&nbsp;</span><span
-                        class="critical-alerts-count" ng-click="sort('type')" ng-class="{selected: sortType}">{{getAlertCount('Emergency')}} critical</span>
+                        class="critical-alerts-count" ng-click="sort('type')" ng-class="{selected: sortType}">{{getAlertCount("Emergency")}} critical</span>
                 </div>
                 <div>
                     <div class="alerts-list">
@@ -398,7 +403,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="events-placeholder" ng-show='busy'>Loading data...</div>
+                    <div class="events-placeholder" ng-show="busy && (!alerts || alerts.length == 0)">Loading data...
+                    </div>
                     <div class="events-placeholder" ng-show="!busy && (!alerts || alerts.length == 0)">No alerts</div>
                 </div>
             </section>
@@ -474,9 +480,15 @@
                 <h2 class="detail-small">{{currentData.event.notes}}</h2>
             </div>
             <div style="text-align: center; margin: 20px auto;">
-                <button ng-click="startEvent()" style="font-size: 22px;" ng-disabled="!shouldShowStartEvent()">Start Event</button>
-                <button style="margin-top: 20px; margin-bottom: 20px; font-size: 22px;" ng-click="stopEvent()" ng-disabled="!shouldShowStopEvent()">Stop Event</button>
-                <button style="font-size: 22px;" ng-click="trackTime()" ng-disabled="!shouldShowAddTimer()">Add to Timers</button>
+                <button ng-click="startEvent()" style="font-size: 22px;" ng-disabled="!shouldShowStartEvent()">Start
+                    Event
+                </button>
+                <button style="margin-top: 20px; margin-bottom: 20px; font-size: 22px;" ng-click="stopEvent()"
+                        ng-disabled="!shouldShowStopEvent()">Stop Event
+                </button>
+                <button style="font-size: 22px;" ng-click="trackTime()" ng-disabled="!shouldShowAddTimer()">Add to
+                    Timers
+                </button>
             </div>
         </div>
     </div>

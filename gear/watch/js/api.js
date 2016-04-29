@@ -1,22 +1,56 @@
 angular.module('Watch')
-    .config(['$provide',
-        function ($provide) {
-            $provide.decorator('$cacheFactory', function ($delegate) {
-                $delegate.removeAll = function () {
-                    angular.forEach($delegate.info(), function (ob, key) {
-                        $delegate.get(key).removeAll();
-                    });
-                };
+    .config(['$provide', function ($provide, $httpProvider) {
+        $provide.decorator('$cacheFactory', function ($delegate) {
+            $delegate.removeAll = function () {
+                angular.forEach($delegate.info(), function (ob, key) {
+                    $delegate.get(key).removeAll();
+                });
+            };
 
-                $delegate.destroyAll = function () {
-                    angular.forEach($delegate.info(), function (ob, key) {
-                        $delegate.get(key).destroy();
-                    });
-                };
-                return $delegate;
-            });
-        }
+            $delegate.destroyAll = function () {
+                angular.forEach($delegate.info(), function (ob, key) {
+                    $delegate.get(key).destroy();
+                });
+            };
+            return $delegate;
+        });
+    }
     ])
+    .config(function ($httpProvider) {
+        $httpProvider.interceptors.push("WatchInterceptor");
+    })
+    .factory('WatchInterceptor', function ($q, AppState) {
+        return {
+            // optional method
+            'request': function (config) {
+                config.timeout = 10000;
+                AppState.setNetworkUsed(true);
+                return config;
+            },
+
+            // optional method
+            'requestError': function (rejection) {
+                AppState.setNetworkError(true);
+                console.error("FAIL");
+                return $q.reject(rejection);
+            },
+
+
+            // optional method
+            'response': function (response) {
+                AppState.setNetworkUsed(false);
+                return response;
+            },
+
+            // optional method
+            'responseError': function (rejection) {
+                console.error("FAIL");
+                AppState.setNetworkError(true);
+                return $q.reject(rejection);
+            }
+        };
+    })
+
     .constant('DefaultServerAddress', '10.0.0.75')
     .constant('RefreshInterval', '60000')  // once a minute
     .constant('DefaultRestPort', 3000)
@@ -46,11 +80,11 @@ angular.module('Watch')
                 }, {cache: apiCache})
             },
             alertAck: function () {
-                return $resource(getEndpoint() + '/alerts/:alertId/ack/:roleId', {
+                return $resource(getEndpoint() + '/alerts/ack/:alertId/:roleId', {
                         alertId: '@_alertId',
                         roleId: '@_roleId'
                     }, {
-                        'update': {method: 'PUT'}
+                        'update': {method: 'PUT', isArray: true}
                     }, {cache: apiCache}
                 )
             },
@@ -141,6 +175,14 @@ angular.module('Watch')
                 });
             });
 
+            ws.$on('alerts', function (data) {
+                $cacheFactory.removeAll();
+                $rootScope.$emit('push', {
+                    type: 'alerts',
+                    data: data
+                });
+            });
+
             ws.$on('comms', function (data) {
                 $cacheFactory.removeAll();
                 $rootScope.$emit('push', {
@@ -204,4 +246,4 @@ angular.module('Watch')
                 }
             },
             true);
-    });
+    })

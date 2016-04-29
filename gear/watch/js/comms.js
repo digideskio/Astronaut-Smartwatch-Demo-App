@@ -134,6 +134,7 @@ angular.module('Watch')
         $scope.drawOutages = function (info) {
             $scope.aosSnap = Snap("#aos");
             var paper = $scope.aosSnap.select("#out");
+            paper.clear();
 
             var leftOut = moment().subtract(11, 'minutes');
             var rightOut = moment().add(55, 'minutes');
@@ -185,7 +186,7 @@ angular.module('Watch')
         $scope.drawBandOutage = function (paper, startX, outage, band) {
             var top = band == 'Ku' ? 5 : 29;
 
-            var rect = paper.rect(startX, top, outage.start, 19);
+            var rect = paper.rect(startX, top, outage.start, 16);
             rect.attr({
                 fill: '#2094FA',
                 rx: 10
@@ -213,7 +214,7 @@ angular.module('Watch')
                 'font-family': 'Open Sans',
                 'font-size': '18px',
                 'font-weight': '900',
-                fill: '#333'
+                fill: '#fff'
             });
         }
     });

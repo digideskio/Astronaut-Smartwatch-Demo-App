@@ -15,6 +15,8 @@ angular.module('Watch')
         Api.alerts().query(function (data) {
             $scope.busy = false;
             $scope.alerts = data;
+        }, function (err) {
+            $scope.busy = false;
         });
 
         $scope.showAlert = function (alert) {
@@ -22,13 +24,17 @@ angular.module('Watch')
             if (!alert.ack) {
                 alert.ack = [];
             }
-            alert.ack.push(AppState.activeRole);
+            if (alert.ack.indexOf(AppState.activeRole) == -1) {
+                alert.ack.push(AppState.activeRole);
+                Api.alertAck().update({alertId: AppState.alert.id, roleId: AppState.activeRole}, {}, function (result) {
+                    $scope.alerts = result;
+                    console.error("ACK OK");
+                }, function (err) {
+                    console.error("ACK FAIL");
+                });
+            }
             AppState.currentScreen = 'alert-details';
             tau.changePage('alert-details');
-
-            Api.alertAck().update({alertId: AppState.alert.id, roleId: AppState.activeRole}, {}, function (result) {
-                $scope.alerts = result;
-            });
         };
 
         $scope.sort = function (predicate) {
@@ -42,8 +48,8 @@ angular.module('Watch')
             } else {
                 $scope.sortType = true;
                 $scope.sortDate = false;
-                $scope.alerts.sort(function (l, r) {
-                    return sortPriority[l.status] > sortPriority[r.status];
+                $scope.alerts = orderBy($scope.alerts, function (alert) {
+                    return sortPriority[alert.status];
                 });
             }
         };
@@ -70,15 +76,22 @@ angular.module('Watch')
 
         $scope.getAlertCount = function (alertStatus) {
             if ($scope.alerts) {
-                return _.filter($scope.alerts, function (alert) {
-                    var isAck = alert.ack && alert.ack.includes(AppState.activeRole);
+                var total = 0;
+                for (var i = 0; i < $scope.alerts.length; i++) {
+                    var alert = $scope.alerts[i];
                     if (alertStatus) {
-                        return alert.status == alertStatus;
+                        if (alert.status === alertStatus) {
+                            total++;
+                        }
                     } else {
-                        return !isAck;
+                        if (!_.contains(alert.ack, AppState.activeRole)) {
+                            total++;
+                        }
                     }
-                }).length;
-            } else {
+                }
+                return total;
+            }
+            else {
                 return 0;
             }
         };

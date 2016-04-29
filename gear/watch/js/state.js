@@ -12,7 +12,9 @@ angular.module('Watch')
             event: {},
             alert: {},
             uuid: Uuid.create(),
-            time: moment()
+            time: moment(),
+            networkUsed: false,
+            networkError: false
         };
 
         currentState.getActiveRole = function () {
@@ -61,6 +63,26 @@ angular.module('Watch')
 
         currentState.getTime = function () {
             return currentState.time;
+        };
+
+        currentState.setNetworkUsed = function (isUsed) {
+            currentState.networkUsed = isUsed;
+            if (isUsed) {
+                currentState.networkError = false;
+            }
+        };
+
+        currentState.isNetworkUsed = function () {
+            return currentState.networkUsed;
+        };
+
+        currentState.setNetworkError = function () {
+            currentState.networkUsed = false;
+            currentState.networkError = true;
+        };
+
+        currentState.isNetworkError = function () {
+            return currentState.networkError;
         };
 
         $interval(function () {

@@ -11,7 +11,7 @@ angular.module("Watch")
         $scope.activeNotifications = [];
 
         $rootScope.$on('push', function (event, message) {
-            if (message.data && !message.data.show) {
+            if (message.data && message.data.controlNotification && !message.data.notify) {
                 return;
             }
 

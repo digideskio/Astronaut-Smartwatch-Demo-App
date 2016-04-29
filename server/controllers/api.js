@@ -283,7 +283,7 @@ router.get('/time', function (req, res) {
     });
 });
 
-router.put('/alerts/:alertId/ack/:role', function (req, res) {
+router.put('/alerts/ack/:alertId/:role', function (req, res) {
     var alertId = req.params.alertId;
     var role = req.params.role;
     var alert = _.find(alertsModel.alerts, function (a) {
@@ -296,6 +296,11 @@ router.put('/alerts/:alertId/ack/:role', function (req, res) {
 
         alert.ack.push(role);
     }
+
+    ws.broadcast(JSON.stringify({
+        event: 'alerts',
+        data: alertsModel.alerts
+    }));
 
     res.json(alertsModel.alerts);
 });
