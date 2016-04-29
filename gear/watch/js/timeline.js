@@ -154,7 +154,7 @@ angular.module('Watch')
                     AppState.event.hasTimer = true;
                     Timers.add(timer);
                 }, function () {
-                    alert("Reached max number of events!");
+                    alert("Reached max number of timers!");
                 });
             }
         };
